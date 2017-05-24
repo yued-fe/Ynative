@@ -1,0 +1,21 @@
+{
+    "name": "ynative",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.android.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node node_modules/react-native/local-cli/cli.js start"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "16.0.0-alpha.6",
+        "react-native": "^0.44.0",
+        "react-redux": "^4.4.6",
+        "redux": "^3.6.0",
+        "redux-thunk": "^2.1.0",
+        "react-navigation": "^1.0.0-beta.11",
+        "react-native-deprecated-custom-components":"^0.1.0"
+    }
+}

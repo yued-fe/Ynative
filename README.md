@@ -2,25 +2,30 @@
 ## 简介
 Ynative是一个原生壳子，希望实现原生代码和RN、Hybrid的混合开发。
 ## 如何运行
+
 1、[React-Native开发环境搭建](https://facebook.github.io/react-native/docs/getting-started.html)
+
 2、clone Ynative
+
 3、cd Ynative && cd IOS || Android && npm install
+
 4、run
-###debug模式
+
+### debug模式
 在项目根目录(IOS或Android文件夹下)执行
 ```
 npm start
 ```
-####IOS
+#### IOS
 两种运行方式：
 - 在根目录执行react-native run-ios
 - 或者使用Xcode来编译运行
-####Android
+#### Android
 两种运行方式：
 - 打开模拟器，在根目录执行./gradlew installDebug
 - 或者使用Android Studio来编译运行
 
-###离线模式
+### 离线模式
 ####IOS(未测试)
 打包(如果bundle目录不存在，需要提前创建一个)
 ```
@@ -40,7 +45,7 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
 两种运行方式：
 - 在根目录执行react-native run-ios
 - 或者使用Xcode来编译运行
-####Android
+#### Android
 打包(如果assets目录不存在，需要提前创建一个)
 ```
 react-native unbundle --platform android --dev false --entry-file index.android.js --bundle-output app/src/main/assets/index.android.bundle --assets-dest app/src/main/res/

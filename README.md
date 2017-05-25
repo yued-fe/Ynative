@@ -69,7 +69,7 @@ react-native unbundle --platform android --dev false --entry-file index.android.
 - [x] RN差量更新
 - [x] RN白屏优化(Android)
 - [ ] RN组件的扩展（UI、API）
-- [ ] RN状态管理的优化（Redux）
+- [x] RN状态管理的优化（Redux）
 - [ ] RN布局的优化（ListView的优化）
 ## Hybrid目标能力
 - [ ] 原生应用加入WebView支持
@@ -82,5 +82,6 @@ react-native unbundle --platform android --dev false --entry-file index.android.
 .
 ├── IOS                                          // 详细见目录内的README
 ├── Android                                      // 详细见目录内的README
+├── ScreenShot                                   // 用于存放项目截图、MD文档图片
 
 ```

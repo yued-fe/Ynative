@@ -1,0 +1,1 @@
+__d(function(e,t,n,o){"use strict";var r=t(65),c=r.createHostRootFiber;o.createFiberRoot=function(e){var t=c(),n={current:t,containerInfo:e,isScheduled:!1,nextScheduledRoot:null,context:null,pendingContext:null};return t.stateNode=n,n}},64);

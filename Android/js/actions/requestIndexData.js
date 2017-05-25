@@ -1,87 +1,58 @@
-/**
- * Created by wangdi on 25/11/16.
- */
 'use strict';
 
 import * as types from './actionTypes';
-import fetchUrl from '../constants/fetchUrl';
-import fetchWithTimeout from '../utils/fetchWithTimeout';
-import {getYesterdayFromDate} from '../utils/getDate';
-import HomeDataDAO from '../dao/HomeDataDAO';
-import Toast from 'react-native-root-toast';
-import px2dp from '../utils/px2dp';
+import requestUrl from '../api/api';
+import IndexLocalData from '../persistence/indexLocalData';
 
 function requestData() {
     return {
-        type: types.FETCH_HOME_DATE_REQUEST,
+        type: types.FETCH_INDEX_DATE_REQUEST,
     };
 }
 
-function receiveData(json, date){
+function fetchSuccess(json){
     return {
-        type: types.FETCH_HOME_DATA_SUCCESS,
-        dataSource: json,
-        dataTime: date
+        type: types.FETCH_INDEX_DATA_SUCCESS,
+        dataSource: json
     }
 }
 
 function fetchFailure() {
     return {
-        type: types.FETCH_HOME_DATA_FAILURE
+        type: types.FETCH_INDEX_DATA_FAILURE
     };
 }
 
-function isValidData(responseData) {
-    if(responseData.category.length > 0)
-        return true;
-    return false;
-}
 
-export function onlyFetchLocalData(date) {
-    return (dispatch)=> {
-        var dao = new HomeDataDAO();
-        dao.fetchLocalData(date).then((localData) => {
-            //Toast.show('local', {position: px2dp(-80)});
-            dispatch(receiveData(localData, date));
-        }, (localData) => {
-            //Toast.show('local', {position: px2dp(-80)});
-            dispatch(onlyFetchLocalData(getYesterdayFromDate(date)));
-        });
-    }
-}
-
-export function fetchDataIfNeed(date) {
-    const url = fetchUrl.daily + date;
+export function fetchData() {
+    const url = requestUrl.getBookStoreInfo;
     return (dispatch) => {
-        dispatch(requestData());
-        var dao = new HomeDataDAO();
-        dao.fetchLocalData(date).then((localData) => {
-            Toast.show('已是最新数据了', {position: px2dp(-80)});
-            dispatch(receiveData(localData, date));
+        dispatch(requestData());//相当于showloading 
+        let indexLocalDataAction = new IndexLocalData(); 
+        indexLocalDataAction.fetchLocalData().then((localData) => {
+            dispatch(fetchSuccess(localData));
         }, (localData)=>{
-            fetchWithTimeout(5000, fetch(url))
-                .then(response => response.json())
-                .then(json => {
-                    if(isValidData(json)){
-                        //save data action is only triggered once for one day
-                        Toast.show('欢迎阅读新干货', {position: px2dp(-80)});
-                        dao.save(json, date);
-                        dispatch(receiveData(json, date));
-                    }else{
-                        if(localData === null) {
-                            //if today's data is also null, it will fetch yesterday's data
-                            Toast.show('今日未更新，为您获取往日干货', {position: px2dp(-80)});
-                            dispatch(fetchDataIfNeed(getYesterdayFromDate(date)));
-                        }else {
-                            Toast.show('今日干货还未更新', {position: px2dp(-80)});
-                            dispatch(receiveData(localData, date));
-                        }
-                    }
+            //注释部分可开启跨域post请求
+            // let formData = new FormData();  
+            // formData.append("name","admin");  
+            // formData.append("password","admin123");
+            fetch(url,{
+                //method: "POST",
+                method: "GET",
+                //mode: 'cors',
+                // cache: 'default',
+                // headers: {
+                //     'Content-Type': 'application/x-www-form-urlencoded',
+                //     'Access-Control-Allow-Origin':'*',
+                //     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+                // },
+                //body: formData
+            }).then(response => response.json()).then(json => {
+                    indexLocalDataAction.save(json.data);
+                    dispatch(fetchSuccess(json.data));
                 }).catch((error)=>{
-                    Toast.show('获取数据失败', {position: px2dp(-80)});
                     dispatch(fetchFailure());
+                });
             });
-        });
-
     }
 }

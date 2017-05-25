@@ -3,10 +3,15 @@
 ## 说明
 
 1、嵌入现有原生应用（已加入）
+
 2、预加载（已加入）
+
 3、调用原生应用方法（用到时加入）
+
 4、热更新（用到时加入）
+
 5、Redux (已加入)
+
 
 ## 项目布局
 
@@ -84,13 +89,16 @@
 
 > component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
-![]()
+![](https://github.com/yued-fe/Ynative/blob/master/ScreenShot/redux.jpg)
 
 - 用了react-redux之后流程是这样的：
 
 > component --> actionCreator(data) --> reducer --> component
 
-![]()
+![](https://github.com/yued-fe/Ynative/blob/master/ScreenShot/react-redux.png)
 
-具体文档可以参加[Redux中文](http://cn.redux.js.org/index.html)[react-redux中文](http://cn.redux.js.org/docs/react-redux/api.html)[Redux英文](http://redux.js.org/)
-[react-redux中文](http://redux.js.org/docs/api/)
+具体文档可以参见
+- [Redux中文](http://cn.redux.js.org/index.html)
+- [react-redux中文](http://cn.redux.js.org/docs/react-redux/api.html)
+- [Redux英文](http://redux.js.org/)
+- [react-redux中文](http://redux.js.org/docs/api/)

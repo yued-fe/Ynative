@@ -84,7 +84,7 @@
         └── toastUtil.js                                   //提供简易弹层
 ```
 ## Redux
-开发用到redux、react-redux,需要多流程有个大概的了解:
+开发用到redux、react-redux,需要对流程有个大概的了解:
 - 如果只使用redux，那么流程是这样的：
 
 > component --> dispatch(action) --> reducer --> subscribe --> getState --> component

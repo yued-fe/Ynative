@@ -22,6 +22,6 @@ export default class App extends React.Component{
     }
 
     componentDidMount(){
-        //SplashScreen.hide();//如果首页非RN，取消这句
+        SplashScreen.hide();//如果首页非RN，取消这句
     }
 }

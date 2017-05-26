@@ -33,12 +33,13 @@
 │           │               ├── BaseActivity.java           //重写ReactActivity，加入预加载bundle的能力    
 │           │               ├── MainActivity.java           //Android程序入口
 │           │               ├── MainApplication.java        //实例化RNJavaReactPackage中注册的模块
-│           │               ├── MyRnActivity.java           //RN入口文件，继承BaseActivity
+│           │               ├── MyRnActivity.java           //RN入口文件(首页是native)，继承BaseActivity
 │           │               ├── RNJavaReactPackage.java     //注册原生提供给RN用的模块
 │           │               ├── ReactInfo.java              //预加载相关的bean文件
 │           │               ├── ReactPreLoader.java         //预加载实现代码
-│           │               ├── SplashScreen                //伪启动图预加载bundle实现
-│           │               └── SplashScreenModule          //伪启动图预加载bundle方法，这里还需要再加一个原生的启动图，和这里的启动图一致
+│           │               ├── SplashScreen.java           //伪启动图预加载bundle实现
+│           │               ├── SplashScreenModule.java     //伪启动图预加载bundle方法，这里还需要再加一个原生的启动图，和这里的启动图一致
+│           │               └── HomeActivity.java           //首页是RN,用这个Activity（如果热加载方面问题，可参考之前的MyRNActivity)
 │           └── res                                         //资源文件
 │               ├── drawable
 │               ├── layout                                  //布局文件

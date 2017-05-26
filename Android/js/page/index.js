@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
 //把你需要的一些state丢到顶层,组件里直接用this.props调用
 const mapStateToProps = (state) => {
     return {
+        error: state.indexDataState.error,
         loading: state.indexDataState.loading,
         hasData: state.indexDataState.hasData,
         dataSource: state.indexDataState.dataSource

@@ -36,11 +36,15 @@
 │           │               ├── MyRnActivity.java           //RN入口文件，继承BaseActivity
 │           │               ├── RNJavaReactPackage.java     //注册原生提供给RN用的模块
 │           │               ├── ReactInfo.java              //预加载相关的bean文件
-│           │               └── ReactPreLoader.java         //预加载实现代码
+│           │               ├── ReactPreLoader.java         //预加载实现代码
+│           │               ├── SplashScreen                //伪启动图预加载bundle实现
+│           │               └── SplashScreenModule          //伪启动图预加载bundle方法，这里还需要再加一个原生的启动图，和这里的启动图一致
 │           └── res                                         //资源文件
 │               ├── drawable
 │               ├── layout                                  //布局文件
-│               │   └── activity_main.xml
+│               │   ├── activity_main.xml
+│               │   └── launch_screen.xml
+│               │    
 │               ├── mipmap-hdpi                             //支持ic_launcher_round.png(圆形)和ic_launcher.png(方形)，推荐像素72*72
 │               │   └── ic_launcher.png
 │               ├── mipmap-mdpi                             //同上，推荐像素48*48
@@ -65,6 +69,8 @@
     ├── app.js                                             //合并了IOS和Android的入口。用Provider作为state的顶层分发，cover到所有组件。
     ├── components                                         //公共的组件写在这个文件夹
     │   └── backPageComponent.js                           //用于监听安卓回退的组件，理论上二级页面都可继承
+    ├── native_modules                                     //这里放RN与原生打交道的接口
+    │   └── splashScreen.js.                               //利用启动图解决首次加载慢的问题
     ├── page                                               //这里编写我们的页面
     │   ├── index.js                                       //首页
     │   └── rank.js                                        //排行榜页

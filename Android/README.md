@@ -39,7 +39,8 @@
 │           │               ├── ReactPreLoader.java         //预加载实现代码
 │           │               ├── SplashScreen.java           //伪启动图预加载bundle实现
 │           │               ├── SplashScreenModule.java     //伪启动图预加载bundle方法，这里还需要再加一个原生的启动图，和这里的启动图一致
-│           │               └── HomeActivity.java           //首页是RN,用这个Activity（如果热加载方面问题，可参考之前的MyRNActivity)
+│           │               ├── HomeActivity.java           //首页是RN,用这个Activity（如果热加载方面问题，可参考之前的MyRNActivity)
+│           │               └── SplashActivity.java         //首页是RN(方案二)
 │           └── res                                         //资源文件
 │               ├── drawable
 │               ├── layout                                  //布局文件

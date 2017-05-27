@@ -35,9 +35,10 @@ public class HomeActivity extends ReactActivity {
             if (Build.VERSION.SDK_INT >= 23) {
                 if (Settings.canDrawOverlays(this)) {
                     SplashScreen.show(this,true);
-                    //TODO:回退有bug
+                    //TODO:回退有bug 离线就不会有这个bug
                     Intent intent = new Intent(this,HomeActivity.class);
                     startActivity(intent);
+                    HomeActivity.this.finish();
                 } else {
                     Toast.makeText(HomeActivity.this, "权限授予失败，无法开启悬浮窗", Toast.LENGTH_SHORT).show();
                 }

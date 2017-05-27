@@ -25,14 +25,20 @@
             <!--</intent-filter>-->
         <!--</activity>-->
         <!--首页为RN 方案2-->
-        <activity android:name=".SplashActivity">
+        <!--<activity android:name=".SplashActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--<activity android:name=".MyRnActivity"/>-->
+        <!--首页为RN 方案3-->
+        <activity android:name=".MyPureRnActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyRnActivity"/>
-        <!--<activity android:name=".MyPureRnActivity"/>-->
         <!--首页为Native-->
         <!--<activity android:name=".MainActivity">-->
             <!--<intent-filter>-->

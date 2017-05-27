@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MyRnActivity"/>
+        <!--<activity android:name=".MyPureRnActivity"/>-->
         <!--首页为Native-->
         <!--<activity android:name=".MainActivity">-->
             <!--<intent-filter>-->

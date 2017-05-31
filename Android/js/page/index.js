@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/requestIndexData';
 import {StyleSheet, View, Text,Dimensions,ActivityIndicator} from 'react-native';
 import RankPage from './rank';
+import CategoryPage from './category';
 
 class IndexPage extends Component{
 
@@ -25,6 +26,9 @@ class IndexPage extends Component{
 
                 <Text style={styles.instructions} onPress={() => this.goRankPage()}>
                     点我跳转到排行榜
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goCategoryPage()}>
+                    点我跳转到分类页
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
@@ -48,7 +52,9 @@ class IndexPage extends Component{
     goRankPage () {
         this.switchPage(RankPage);
     }
-
+    goCategoryPage () {
+        this.switchPage(CategoryPage);
+    }
     loadData () {
         //设置了mapDispatchToProps可以这么调用
         this.props.actions.fetchData();

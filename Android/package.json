@@ -16,6 +16,7 @@
         "redux": "^3.6.0",
         "redux-thunk": "^2.1.0",
         "react-navigation": "^1.0.0-beta.11",
-        "react-native-deprecated-custom-components":"^0.1.0"
+        "react-native-deprecated-custom-components":"^0.1.0",
+        "react-native-navigationbar": "^0.4.5"
     }
 }

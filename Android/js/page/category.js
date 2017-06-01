@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
-
+import NavigationBar from 'react-native-navigationbar'
 class CategoryPage extends Component{
 
     constructor(props){
@@ -14,9 +14,14 @@ class CategoryPage extends Component{
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.headertext} onPress={() => this.goBack()}>分类</Text>
-                </View>
+                <NavigationBar title="分类"
+                    barStyle={styles.navBar}
+                    backHidden={false}
+                    barTintColor='white'
+                    statusbarPadding = {false}
+                    backFunc={() => {
+                        this.props.navigator.pop()
+                    }}/>
                 <ListView
                     style={styles.content}
                     dataSource={this.state.dataSource}
@@ -167,6 +172,9 @@ const styles = StyleSheet.create({
     headertext: {
         marginLeft:10,
         color: "#33373d"
+    },
+    navBar: {
+        // height:20
     },
     container: {
         flex: 1,

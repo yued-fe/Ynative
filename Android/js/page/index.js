@@ -7,6 +7,7 @@ import * as Actions from '../actions/requestIndexData';
 import {StyleSheet, View, Text,Dimensions,ActivityIndicator} from 'react-native';
 import RankPage from './rank';
 import CategoryPage from './category';
+import WebViewPage from './webview';
 
 class IndexPage extends Component{
 
@@ -30,6 +31,9 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.goCategoryPage()}>
                     点我跳转到分类页
                 </Text>
+                <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
+                    点我跳转到webview页
+                </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
                 </Text>
@@ -52,9 +56,18 @@ class IndexPage extends Component{
     goRankPage () {
         this.switchPage(RankPage);
     }
+
     goCategoryPage () {
         this.switchPage(CategoryPage);
     }
+
+    goWebviewPage () {
+        this.props.navigator.push({
+            component: WebViewPage,
+            args: {title: "起点M站",url: "http://m.qidian.com/"}
+        });
+    }
+
     loadData () {
         //设置了mapDispatchToProps可以这么调用
         this.props.actions.fetchData();

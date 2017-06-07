@@ -14,6 +14,9 @@ android {
         ndk{
             abiFilters "armeabi-v7a", "x86"
         }
+        packagingOptions {
+            exclude "lib/arm64-v8a/librealm-jni.so"
+        }
     }
     buildTypes {
         release {

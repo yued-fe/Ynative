@@ -61,6 +61,8 @@ public class MyPureRnActivity extends Activity implements DefaultHardwareBackBtn
                 Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 startActivityForResult(serviceIntent,ALERT_WINDOW_PERMISSION_CODE);
             }
+        } else {
+            loadapp();
         }
 
     }

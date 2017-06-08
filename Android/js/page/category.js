@@ -37,7 +37,7 @@ class CategoryPage extends Component{
         return (
             <View style={styles.listContainer}>
                 <View style={styles.title}>
-                    {rowId == 0 ? <Text style={styles.green}>| </Text> : <Text style={styles.blue}>| </Text>}
+                    {rowId == 0 ? <Text style={styles.red}>| </Text> : <Text style={styles.blue}>| </Text>}
                     <Text style={styles.titlefontsize}>{rowData.categoryName}</Text>
                 </View>
                 <View style={styles.info}>
@@ -189,6 +189,9 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginLeft:10,
         marginRight:10
+    },
+    red: {
+        color: "#ff3955"
     },
     green: {
         color: "#65c541"

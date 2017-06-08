@@ -15,7 +15,7 @@ class RankPage extends Component{
         return(
             <View style={styles.container}>
                 <Text style={styles.instructions}>
-                    排行榜
+                    排行榜1
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.goBack()}>
                     回到首页

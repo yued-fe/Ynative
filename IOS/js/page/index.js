@@ -7,6 +7,7 @@ import * as Actions from '../actions/requestIndexData';
 import {StyleSheet, View, Text,Dimensions,ActivityIndicator} from 'react-native';
 import RankPage from './rank';
 import CategoryPage from './category';
+import CatDetailPage from './catdetail';
 import WebViewPage from './webview';
 
 class IndexPage extends Component{
@@ -31,6 +32,9 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.goCategoryPage()}>
                     点我跳转到分类页
                 </Text>
+                <Text style={styles.instructions} onPress={() => this.goCatDetailPage()}>
+                    点我跳转到二级分类页
+                </Text>    
                 <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
                     点我跳转到webview页
                 </Text>
@@ -59,6 +63,10 @@ class IndexPage extends Component{
 
     goCategoryPage () {
         this.switchPage(CategoryPage);
+    }
+
+    goCatDetailPage () {
+        this.switchPage(CatDetailPage);
     }
 
     goWebviewPage () {

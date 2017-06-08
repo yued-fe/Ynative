@@ -1,8 +1,8 @@
 {
     "name": "ynative",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.android.js",//这里可以让IOS和Android统一命名，共用配置文件
+    "description": "main是入口文件，这里可以让IOS和Android统一命名，共用配置文件",
+    "main": "index.android.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node node_modules/react-native/local-cli/cli.js start"

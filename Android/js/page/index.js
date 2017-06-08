@@ -8,6 +8,7 @@ import {StyleSheet, View, Text,Dimensions,ActivityIndicator} from 'react-native'
 import RankPage from './rank';
 import CategoryPage from './category';
 import WebViewPage from './webview';
+import BookStorePage from './bookStore';
 
 class IndexPage extends Component{
 
@@ -34,6 +35,9 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
                     点我跳转到webview页
                 </Text>
+                <Text style={styles.instructions} onPress={() => this.gobookStore()}>
+                    点我跳转到书城页
+                </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
                 </Text>
@@ -55,6 +59,9 @@ class IndexPage extends Component{
 
     goRankPage () {
         this.switchPage(RankPage);
+    }
+    gobookStore () {
+        this.switchPage(BookStorePage);
     }
 
     goCategoryPage () {
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#F5FCFF',        
     },
     instructions: {
         textAlign: 'center',

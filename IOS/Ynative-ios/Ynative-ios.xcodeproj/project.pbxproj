@@ -1,0 +1,161 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		64D0766F1EE92B3600801E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13B07F961A680F5B00A75B9A;
+			remoteInfo = RNReadnovel;
+		};
+		64D076711EE92B3600801E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E356EE1AD99517003FC87E;
+			remoteInfo = RNReadnovelTests;
+		};
+		64D076731EE92B3600801E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D02E47B1E0B4A5D006451C7;
+			remoteInfo = "RNReadnovel-tvOS";
+		};
+		64D076751EE92B3600801E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D02E4901E0B4A5D006451C7;
+			remoteInfo = "RNReadnovel-tvOSTests";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		64D076531EE92B3500801E81 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../../RNReadnovel/ios/assets; sourceTree = "<group>"; };
+		64D076541EE92B3500801E81 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; name = build; path = ../../../RNReadnovel/ios/build; sourceTree = "<group>"; };
+		64D076551EE92B3500801E81 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; name = main.jsbundle; path = ../../../RNReadnovel/ios/main.jsbundle; sourceTree = "<group>"; };
+		64D076561EE92B3500801E81 /* main.jsbundle.meta */ = {isa = PBXFileReference; lastKnownFileType = file; name = main.jsbundle.meta; path = ../../../RNReadnovel/ios/main.jsbundle.meta; sourceTree = "<group>"; };
+		64D076571EE92B3500801E81 /* RNReadnovel */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNReadnovel; path = ../../../RNReadnovel/ios/RNReadnovel; sourceTree = "<group>"; };
+		64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReadnovel.xcodeproj; path = ../../../RNReadnovel/ios/RNReadnovel.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		64D0764C1EE92A3B00801E81 = {
+			isa = PBXGroup;
+			children = (
+				64D076531EE92B3500801E81 /* assets */,
+				64D076541EE92B3500801E81 /* build */,
+				64D076551EE92B3500801E81 /* main.jsbundle */,
+				64D076561EE92B3500801E81 /* main.jsbundle.meta */,
+				64D076571EE92B3500801E81 /* RNReadnovel */,
+				64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		64D076591EE92B3500801E81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				64D076701EE92B3600801E81 /* RNReadnovel.app */,
+				64D076721EE92B3600801E81 /* RNReadnovelTests.xctest */,
+				64D076741EE92B3600801E81 /* RNReadnovel-tvOS.app */,
+				64D076761EE92B3600801E81 /* RNReadnovel-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		64D0764D1EE92A3B00801E81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+			};
+			buildConfigurationList = 64D076501EE92A3B00801E81 /* Build configuration list for PBXProject "Ynative-ios" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 64D0764C1EE92A3B00801E81;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 64D076591EE92B3500801E81 /* Products */;
+					ProjectRef = 64D076581EE92B3500801E81 /* RNReadnovel.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		64D076701EE92B3600801E81 /* RNReadnovel.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RNReadnovel.app;
+			remoteRef = 64D0766F1EE92B3600801E81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		64D076721EE92B3600801E81 /* RNReadnovelTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNReadnovelTests.xctest;
+			remoteRef = 64D076711EE92B3600801E81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		64D076741EE92B3600801E81 /* RNReadnovel-tvOS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "RNReadnovel-tvOS.app";
+			remoteRef = 64D076731EE92B3600801E81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		64D076761EE92B3600801E81 /* RNReadnovel-tvOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "RNReadnovel-tvOSTests.xctest";
+			remoteRef = 64D076751EE92B3600801E81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin XCBuildConfiguration section */
+		64D076511EE92A3B00801E81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		64D076521EE92A3B00801E81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		64D076501EE92A3B00801E81 /* Build configuration list for PBXProject "Ynative-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64D076511EE92A3B00801E81 /* Debug */,
+				64D076521EE92A3B00801E81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 64D0764D1EE92A3B00801E81 /* Project object */;
+}

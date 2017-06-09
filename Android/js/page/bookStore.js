@@ -55,7 +55,7 @@ class BookStorePage extends Component{
                     <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} /><Text style={styles.navText}>完本</Text></View> 
                     <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} /><Text style={styles.navText}>分类</Text></View>                
                 </View>  
-                <Text style={styles.title}>热门小说</Text>    
+                <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>    
                 <ScrollView horizontal={true} style={styles.bookList}>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
@@ -102,8 +102,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 
     slide: {
@@ -117,17 +115,15 @@ const styles = StyleSheet.create({
         height: 250
     },
     nav: {
-        height: 100,                
-        flex: 1,
+        height: 60,        
         flexDirection:'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     iconBox: {
-        flex: 1,
+        height: 10,                
         alignItems: 'center',        
-        height: 100
     },
     iconImg: {
     },
@@ -138,9 +134,10 @@ const styles = StyleSheet.create({
     },
     navText: {
         color: '#333',
+        fontSize: 14,        
     },
     bookListItem: { 
-        flex: 1,
+        height: 200,
         paddingTop: 15,
         paddingLeft: 10,
         paddingRight: 10, 
@@ -148,7 +145,14 @@ const styles = StyleSheet.create({
     },
     title: {    
         flexDirection:'row',        
-        justifyContent: 'flex-start',        
+    },
+    titleText: {
+        fontSize: 16,
+        color: "#33373d",
+        borderLeftWidth: 1,
+        borderLeftColor: '#ff3955',
+        paddingLeft: 10,
+        marginLeft: 10
     },
     bookList: {
         height: 50,

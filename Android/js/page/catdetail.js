@@ -43,7 +43,7 @@ class CatDetailPage extends Component{
             <Text>综合</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem,styles.tabItemActive }  onPress={() => this.onTabSelect('item2')}>
+        <TouchableOpacity style={[styles.tabItem,styles.tabItemActive] }  onPress={() => this.onTabSelect('item2')}>
           <View>
             <Text style={styles.tabTextActive}>字数</Text>
           </View>

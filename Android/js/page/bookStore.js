@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text,Dimensions,ActivityIndicator, Image, ScrollView} from 'react-native';
+import {StyleSheet, View, Text,Dimensions,ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
 import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
 import CatDetailPage from './catdetail';
@@ -22,10 +22,30 @@ class BookStorePage extends Component{
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />                       
                 </Swiper>    
                 <View style={styles.nav}>
-                    <View style={styles.iconBox}><Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} /><Text style={styles.navText} onPress={() => this.goRankPage()}>排行榜</Text></View> 
-                    <View style={styles.iconBox}><Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} /><Text style={styles.navText} onPress={() => this.goSearchPage()}>新书</Text></View>
-                    <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} /><Text style={styles.navText} onPress={() => this.goCatDetailPage()}>完本</Text></View> 
-                    <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} /><Text style={styles.navText} onPress={() => this.goCategoryPage()}>分类</Text></View>                
+                    <TouchableHighlight onPress={() => this.goRankPage()}>
+                        <View style={styles.iconBox}>
+                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} />
+                            <Text style={styles.navText} >排行榜</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goSearchPage()}>
+                        <View style={styles.iconBox}>
+                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Text style={styles.navText} >新书</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goCatDetailPage()}>
+                        <View style={styles.iconBox}>
+                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} />
+                            <Text style={styles.navText} >完本</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goCategoryPage()}>
+                        <View style={styles.iconBox}>
+                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} />
+                            <Text style={styles.navText} >分类</Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>  
                 <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>    
                 <ScrollView horizontal={true} style={styles.bookList}>
@@ -106,10 +126,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     iconBox: {
-        height: 10,                
+        height: 60,
         alignItems: 'center',        
     },
     iconImg: {
+
     },
     bookCover: {
         flex: 1,

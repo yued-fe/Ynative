@@ -46,13 +46,15 @@ class CategoryPage extends Component{
                     {rowData.subList.map((item, index) => {
                         return(
                             <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <View style={styles.infoitem}>
-                                    <Image style={styles.infoimg} source={{uri:item.img}} />
-                                    <View style={styles.infoword}>
-                                        <Text style={styles.infoname}>{item.name}</Text>
-                                        <Text style={styles.infonum}>{item.num}本</Text>
+                                <TouchableHighlight onPress={() => this.goCatDetailPage()}>
+                                    <View style={styles.infoitem}>
+                                        <Image style={styles.infoimg} source={{uri:item.img}} />
+                                        <View style={styles.infoword}>
+                                            <Text style={styles.infoname}>{item.name}</Text>
+                                            <Text style={styles.infonum}>{item.num}本</Text>
+                                        </View>
                                     </View>
-                                </View>
+                                </TouchableHighlight>
                             </View>
                         )})
                     }

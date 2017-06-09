@@ -15,6 +15,7 @@
 		"react-native-navigationbar": "^0.4.5",
 		"react-native-splash-screen": "^2.1.0",
 		"react-native-swiper": "^1.5.4",
+		"react-native-tabbar": "^1.0.0",
 		"react-native-vector-icons": "^4.2.0",
 		"react-redux": "^4.4.8",
 		"react-timer-mixin": "^0.13.3",

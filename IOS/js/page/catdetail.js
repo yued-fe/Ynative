@@ -1,19 +1,25 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
+import Tabbar from 'react-native-tabbar'
 
 class CatDetailPage extends Component{
 
     constructor(props){
         super(props);
+        this.tabarRef = null;
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows(DATA)
         };
     }
 
+  onTabSelect(tab) {
+    this.setState({ tab })
+  }
+  
     goBack () {
         this.props.navigator.pop();
     }
@@ -32,7 +38,29 @@ class CatDetailPage extends Component{
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
-                   <ListView
+        <View style={styles.tabsContainer}>
+        <TouchableOpacity style={styles.tabItem} onPress={() => this.onTabSelect('item1')}>
+          <View>
+            <Text>综合</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabItem,styles.tabItemActive }  onPress={() => this.onTabSelect('item2')}>
+          <View>
+            <Text style={styles.tabTextActive}>字数</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabItem}  onPress={() => this.onTabSelect('item3')}>
+          <View>
+            <Text>点击</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tabItem}  onPress={() => this.onTabSelect('item4')}>
+          <View>
+            <Text>时间</Text>
+          </View>
+        </TouchableOpacity>      
+        </View>
+            <ListView
                     style={styles.content}
                     dataSource={this.state.dataSource}
                     renderRow={(rowData,sectionId,rowId) => this._renderRow(rowData,rowId)}
@@ -47,6 +75,7 @@ class CatDetailPage extends Component{
                 <View style={styles.info}>
                     {rowData.records.map((item, index) => {
                         return(
+
                             <View key={index}>
                                 <View onPress={this.goDetailPage()} style={styles.infoitem}>
                                     <Image style={styles.infoimg} source={{uri:'https://qidian.qpic.cn/qdbimg/349573/c_' + item.bid + '/150'}} />
@@ -159,7 +188,43 @@ const DATA = [
 ];
 
 const styles = StyleSheet.create({
-    container: {
+     tabsContainer: {
+        // height: 1000,
+        // flex: 1,
+        marginTop:5,
+        flexDirection: 'row',
+        borderColor: "#f0f1f2",
+        justifyContent: "flex-start",
+        marginLeft:20,
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
+      },
+      scrollView: {
+        backgroundColor: 'yellow'
+      },
+      tabItem: {
+        // flex: 1,
+        marginRight:10,
+        height:10,
+        marginTop:10,
+        // borderWidth:1,
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      tabItemActive:{
+        marginRight:10,
+        marginTop:5,
+        height:19,
+        alignItems: 'center',
+        justifyContent: 'center',    
+        borderBottomWidth:1,
+        borderBottomColor:'#ff3955',
+      },
+      tabTextActive:{
+        color:'#ff3955',
+      },
+      container: {
         flex: 1,
         justifyContent: 'center',
         padding:0,

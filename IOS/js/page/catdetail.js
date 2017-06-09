@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding:0,
         alignItems: 'center',
+        backgroundColor: "#fff"
     },
     instructions: {
         textAlign: 'center',

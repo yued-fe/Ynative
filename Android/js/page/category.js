@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 class CategoryPage extends Component{
 
@@ -18,7 +18,7 @@ class CategoryPage extends Component{
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
-                    statusbarPadding = {false}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     infoimg: {
         width:40,
         height:60,
-        marginRight:5
+        marginRight:10
     },
     infoword: {
         justifyContent: "center"

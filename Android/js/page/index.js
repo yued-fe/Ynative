@@ -4,10 +4,12 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/requestIndexData';
-import {StyleSheet, View, Text,Dimensions,ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, Dimensions,ActivityIndicator} from 'react-native';
 import RankPage from './rank';
 import CategoryPage from './category';
 import WebViewPage from './webview';
+import SearchDemoPage from './searchDemo';
+//import searchResultPage from './searchResult';
 
 class IndexPage extends Component{
 
@@ -33,6 +35,9 @@ class IndexPage extends Component{
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
                     点我跳转到webview页
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goSearchDemoPage()}>
+                    点我跳转到搜索页
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
@@ -66,6 +71,9 @@ class IndexPage extends Component{
             component: WebViewPage,
             args: {title: "起点M站",url: "http://m.qidian.com/"}
         });
+    }
+    goSearchDemoPage () {
+        this.switchPage(SearchDemoPage);
     }
 
     loadData () {

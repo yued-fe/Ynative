@@ -6,6 +6,7 @@ import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
 import CatDetailPage from './catdetail';
 import RankPage from './rank';
+import SearchPage from './searchDemo';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -22,7 +23,7 @@ class BookStorePage extends Component{
                 </Swiper>    
                 <View style={styles.nav}>
                     <View style={styles.iconBox}><Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} /><Text style={styles.navText} onPress={() => this.goRankPage()}>排行榜</Text></View> 
-                    <View style={styles.iconBox}><Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} /><Text style={styles.navText} onPress={() => this.goRankPage()}>新书</Text></View> 
+                    <View style={styles.iconBox}><Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} /><Text style={styles.navText} onPress={() => this.goSearchPage()}>新书</Text></View>
                     <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} /><Text style={styles.navText} onPress={() => this.goCatDetailPage()}>完本</Text></View> 
                     <View style={styles.iconBox}><Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} /><Text style={styles.navText} onPress={() => this.goCategoryPage()}>分类</Text></View>                
                 </View>  
@@ -53,6 +54,10 @@ class BookStorePage extends Component{
 
     goRankPage () {
         this.switchPage(RankPage);
+    }
+
+    goSearchPage () {
+        this.switchPage(SearchPage)
     }
 
     switchPage(component){

@@ -23,7 +23,7 @@ class CatDetailPage extends Component{
     }
     render(){
         return(
-            <View style={styles.container}>
+            <View style={styles.headercontainer}>
                 <NavigationBar title="现代言情"
                     barStyle={styles.navBar}
                     backHidden={false}
@@ -165,6 +165,9 @@ const styles = StyleSheet.create({
         padding:0,
         alignItems: 'center',
         backgroundColor: "#fff"
+    },
+    headercontainer: {
+        flex: 1,
     },
     instructions: {
         textAlign: 'center',

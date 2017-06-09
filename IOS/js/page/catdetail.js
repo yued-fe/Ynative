@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap', 
         alignItems: 'flex-start',
         flexDirection:'row',
+        justifyContent: "flex-end"
     },
     infoword: {
         justifyContent: "center"
@@ -260,8 +261,10 @@ const styles = StyleSheet.create({
         borderColor:'#ffa100',
         borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: "flex-end",
         padding:2,
+        height:15,
+        alignContent: "center", 
         marginRight:5,
     },
     infocategorytxt:{
@@ -272,8 +275,10 @@ const styles = StyleSheet.create({
         borderColor:'#ff3955',
         borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: "flex-end",
+        alignContent: "center", 
         padding:2,
+        height:15,
         marginRight:5,
     },
     infostatustxt:{
@@ -285,8 +290,10 @@ const styles = StyleSheet.create({
         borderColor:'#4284ee',
         borderWidth: 1,
         padding:2,
+        height:15,
+        alignContent: "center", 
         flexDirection: 'row',
-        justifyContent: "center",
+        justifyContent: "flex-end",
         marginLeft:5,
     },
     infowordscnttxt:{
@@ -312,7 +319,8 @@ const styles = StyleSheet.create({
     infoname: {
         fontWeight:"bold",
         fontSize:16,
-        color:"#000"
+        color:"#000",
+        marginLeft:5
     },
     infonum: {
         color:"#969ba3"

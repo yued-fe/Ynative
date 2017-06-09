@@ -147,6 +147,8 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     title: {    
+        flexDirection:'row',        
+        justifyContent: 'flex-start',        
     },
     bookList: {
         height: 50,

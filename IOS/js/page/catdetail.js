@@ -16,20 +16,20 @@ class CatDetailPage extends Component{
         };
     }
 
-  onTabSelect(tab) {
-    this.setState({ tab })
-  }
-  
+      onTabSelect(tab) {
+        this.setState({ tab })
+      }
+
     goBack () {
         this.props.navigator.pop();
     }
-
     goDetailPage () {
         
     }
+
     render(){
         return(
-            <View style={styles.container}>
+            <View style={styles.headercontainer}>
                 <NavigationBar title="现代言情"
                     barStyle={styles.navBar}
                     backHidden={false}
@@ -248,9 +248,8 @@ const styles = StyleSheet.create({
     navBar: {
         // height:20
     },
-    container: {
-        flex: 1,
-        backgroundColor: "#fff"
+    headercontainer: {
+        flex:1
     },
     content: {
         marginTop: 10,

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform,TouchableOpacity} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import Tabbar from 'react-native-tabbar'
 
@@ -9,14 +9,13 @@ class CatDetailPage extends Component{
 
     constructor(props){
         super(props);
-        this.tabarRef = null;
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows(DATA)
         };
     }
 
-  onTabSelect(tab) {
+    onTabSelect(tab) {
     this.setState({ tab })
   }
   
@@ -29,12 +28,12 @@ class CatDetailPage extends Component{
     }
     render(){
         return(
-            <View style={styles.container}>
+            <View style={styles.headercontainer}>
                 <NavigationBar title="现代言情"
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
-                    statusbarPadding = {true}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -188,7 +187,7 @@ const DATA = [
 ];
 
 const styles = StyleSheet.create({
-     tabsContainer: {
+    tabsContainer: {
         // height: 1000,
         // flex: 1,
         marginTop:5,
@@ -197,8 +196,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginLeft:20,
         flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+        alignItems: 'flex-start'
       },
       scrollView: {
         backgroundColor: 'yellow'
@@ -206,7 +204,7 @@ const styles = StyleSheet.create({
       tabItem: {
         // flex: 1,
         marginRight:10,
-        height:10,
+        height:15,
         marginTop:10,
         // borderWidth:1,
         alignItems: 'center',
@@ -214,7 +212,7 @@ const styles = StyleSheet.create({
       },
       tabItemActive:{
         marginRight:10,
-        marginTop:5,
+        marginTop:8,
         height:19,
         alignItems: 'center',
         justifyContent: 'center',    
@@ -224,11 +222,16 @@ const styles = StyleSheet.create({
       tabTextActive:{
         color:'#ff3955',
       },
-      container: {
+    container: {
         flex: 1,
         justifyContent: 'center',
         padding:0,
         alignItems: 'center',
+        backgroundColor: "#fff"
+    },
+    headercontainer: {
+        flex: 1,
+        backgroundColor: "#fff"
     },
     instructions: {
         textAlign: 'center',
@@ -247,10 +250,6 @@ const styles = StyleSheet.create({
     },
     navBar: {
         // height:20
-    },
-    container: {
-        flex: 1,
-        backgroundColor: "#fff"
     },
     content: {
         marginTop: 10,
@@ -317,7 +316,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap', 
         alignItems: 'flex-start',
         flexDirection:'row',
-        justifyContent: "flex-end"
     },
     infoword: {
         justifyContent: "center"
@@ -326,10 +324,8 @@ const styles = StyleSheet.create({
         borderColor:'#ffa100',
         borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: "flex-end",
+        justifyContent: "center",
         padding:2,
-        height:15,
-        alignContent: "center", 
         marginRight:5,
     },
     infocategorytxt:{
@@ -340,10 +336,8 @@ const styles = StyleSheet.create({
         borderColor:'#ff3955',
         borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: "flex-end",
-        alignContent: "center", 
+        justifyContent: "center",
         padding:2,
-        height:15,
         marginRight:5,
     },
     infostatustxt:{
@@ -355,10 +349,8 @@ const styles = StyleSheet.create({
         borderColor:'#4284ee',
         borderWidth: 1,
         padding:2,
-        height:15,
-        alignContent: "center", 
         flexDirection: 'row',
-        justifyContent: "flex-end",
+        justifyContent: "center",
         marginLeft:5,
     },
     infowordscnttxt:{
@@ -384,8 +376,7 @@ const styles = StyleSheet.create({
     infoname: {
         fontWeight:"bold",
         fontSize:16,
-        color:"#000",
-        marginLeft:5
+        color:"#000"
     },
     infonum: {
         color:"#969ba3"

@@ -9,7 +9,7 @@ import RankPage from './rank';
 import CategoryPage from './category';
 import WebViewPage from './webview';
 import SearchDemoPage from './searchDemo';
-//import searchResultPage from './searchResult';
+import BookStorePage from './bookStore';
 
 class IndexPage extends Component{
 
@@ -39,6 +39,9 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.goSearchDemoPage()}>
                     点我跳转到搜索页
                 </Text>
+                <Text style={styles.instructions} onPress={() => this.gobookStore()}>
+                    点我跳转到书城页
+                </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
                 </Text>
@@ -60,6 +63,9 @@ class IndexPage extends Component{
 
     goRankPage () {
         this.switchPage(RankPage);
+    }
+    gobookStore () {
+        this.switchPage(BookStorePage);
     }
 
     goCategoryPage () {
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#F5FCFF',        
     },
     instructions: {
         textAlign: 'center',

@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
+import CatDetailPage from './catdetail';
+
 class CategoryPage extends Component{
 
     constructor(props){
@@ -44,7 +46,7 @@ class CategoryPage extends Component{
                     {rowData.subList.map((item, index) => {
                         return(
                             <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <View onPress={this.goDetailPage()} style={styles.infoitem}>
+                                <View style={styles.infoitem}>
                                     <Image style={styles.infoimg} source={{uri:item.img}} />
                                     <View style={styles.infoword}>
                                         <Text style={styles.infoname}>{item.name}</Text>
@@ -59,8 +61,14 @@ class CategoryPage extends Component{
         );
     }
 
-    goDetailPage () {
-        
+    goCatDetailPage () {
+        this.switchPage(CatDetailPage);
+    }
+
+    switchPage(component){
+        this.props.navigator.push({
+            component: component
+        });
     }
 
     goBack () {
@@ -204,6 +212,10 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     titlefontsize: {
+        // borderLeftWidth:1,
+        // borderLeftColor:"red",
+        // paddingLeft:5,
+        // height: 20,
         fontSize: 16,
         color: "#33373d"
     },

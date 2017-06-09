@@ -21,7 +21,6 @@ class CatDetailPage extends Component{
     goDetailPage () {
         
     }
-
     render(){
         return(
             <View style={styles.container}>
@@ -29,7 +28,7 @@ class CatDetailPage extends Component{
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
-                    statusbarPadding = {false}
+                    statusbarPadding = {true}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -55,7 +54,16 @@ class CatDetailPage extends Component{
                                         <Text style={styles.infoname}>{item.bName}</Text>
                                         <Text numberOfLines={2} style={styles.desc}>{item.desc}</Text>
                                         <View style={styles.infometa}>
-                                        <Text style={styles.infoauth}>{item.bAuth}</Text>
+                                            <Text style={styles.infoauth}>{item.bAuth}</Text>
+                                                <View style={styles.infocategory}>
+                                                    <Text style={styles.infocategorytxt}>{item.cat}</Text>
+                                                </View>
+                                                <View style={styles.infostatus}>
+                                                    <Text style={styles.infostatustxt}>{item.state}</Text>
+                                                </View>
+                                                <View style={styles.infowordscnt}>
+                                                    <Text style={styles.infowordscnttxt}>{item.cnt}</Text>
+                                                </View>
                                         </View>
                                     </View>
                                 </View>
@@ -154,8 +162,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        padding:0,
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
     instructions: {
         textAlign: 'center',
@@ -184,10 +192,14 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     listContainer:{
+        paddingBottom:20,
+        paddingLeft:20,
+        paddingRight:20,
         flex:1,
         marginBottom: 5,
-        marginLeft:10,
-        marginRight:10
+        marginRight:20,
+        justifyContent:'center',
+        flexDirection:'row'
     },
     green: {
         color: "#65c541"
@@ -201,7 +213,7 @@ const styles = StyleSheet.create({
     },
     titlefontsize: {
         fontSize: 16,
-        color: "#33373d"
+        color: "#33373e"
     },
     info : {
         flexDirection: "row",
@@ -227,25 +239,72 @@ const styles = StyleSheet.create({
     infoimg: {
         width:60,
         height:80,
-        marginRight:5
+        marginRight:5,
+        shadowColor: '#000000',
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1.0
     },
     infometa:{
-
+        flexWrap: 'wrap', 
+        alignItems: 'flex-start',
+        flexDirection:'row',
     },
     infoword: {
         justifyContent: "center"
     },
+    infocategory:{
+        borderColor:'#ffa100',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: "center",
+        padding:2,
+        marginRight:5,
+    },
+    infocategorytxt:{
+        color:'#ffa100',
+        fontSize:8
+    },
+    infostatus:{
+        borderColor:'#ff3955',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: "center",
+        padding:2,
+        marginRight:5,
+    },
+    infostatustxt:{
+        color:'#ff3955',
+        fontSize:8,
+
+    },
+    infowordscnt:{
+        borderColor:'#4284ee',
+        borderWidth: 1,
+        padding:2,
+        flexDirection: 'row',
+        justifyContent: "center",
+        marginLeft:5,
+    },
+    infowordscnttxt:{
+        color:'#4284ee',
+        fontSize:8
+    },
     infoauth:{
+        flex:1,
         flexDirection: 'row',
         justifyContent: "center",
         color:'#969ba3',
         marginLeft:5,
     },
     desc:{
-        flex:0.5, //height (according to its parent),
+        flex:1, //height (according to its parent),
         flexDirection: 'row',
         padding:5,
-        marginRight:5,
+        marginRight:10,
         color:'#969ba3',
         alignItems: 'center',
         justifyContent: 'center',

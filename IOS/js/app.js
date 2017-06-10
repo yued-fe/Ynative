@@ -13,6 +13,7 @@ export default class App extends React.Component{
             <Provider store={store}>
                 <Navigator
                     initialRoute={{component: IndexPage}}
+                    configureScene={() => Navigator.SceneConfigs.HorizontalSwipeJumpFromRight}
                     renderScene={(route, navigator) =>
                         <route.component {...route.args} navigator={navigator} />
                     }

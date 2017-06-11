@@ -75,7 +75,7 @@ class IndexPage extends Component{
     goWebviewPage () {
         this.props.navigator.push({
             component: WebViewPage,
-            args: {title: "起点M站",url: "http://m.qidian.com/"}
+            args: {title: "起点M站",url: "https://m.qidian.com/"}
         });
     }
     goSearchDemoPage () {

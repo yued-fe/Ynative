@@ -106,6 +106,7 @@ class RankPage extends Component {
         this.props.navigator.push({
             component: WebViewPage,
             args: {
+                anim: "customPushFromRight",
                 title: book.bName,
                 url: `https://m.readnovel.com/book/${book.bid}`,
             },

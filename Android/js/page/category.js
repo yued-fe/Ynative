@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import CatDetailPage from './catdetail';
+import MultiTitleComponent from '../components/multiTitleComponent';
+import px2dp from '../utils/pxtodpUtil';
 
 class CategoryPage extends Component{
 
@@ -38,10 +40,11 @@ class CategoryPage extends Component{
 
         return (
             <View style={styles.listContainer}>
-                <View style={styles.title}>
-                    {rowId == 0 ? <Text style={styles.red}>| </Text> : <Text style={styles.blue}>| </Text>}
-                    <Text style={styles.titlefontsize}>{rowData.categoryName}</Text>
-                </View>
+                <MultiTitleComponent
+                    categoryName={rowData.categoryName}
+                    borderColor={rowId == 0 ? "red" : "blue"}
+                    hasMoreBtn={true}
+                />
                 <View style={styles.info}>
                     {rowData.subList.map((item, index) => {
                         return(
@@ -71,10 +74,6 @@ class CategoryPage extends Component{
         this.props.navigator.push({
             component: component
         });
-    }
-
-    goBack () {
-        this.props.navigator.pop();
     }
 };
 
@@ -173,16 +172,6 @@ const DATA = [
 ];
 
 const styles = StyleSheet.create({
-    header: {
-        height:44,
-        borderWidth: 1,
-        borderColor: "#f0f1f2",
-        justifyContent: "center"
-    },
-    headertext: {
-        marginLeft:10,
-        color: "#33373d"
-    },
     navBar: {
         // height:20
     },
@@ -191,35 +180,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     content: {
-        marginTop: 10,
-        marginBottom: 10
+        marginBottom: px2dp(16)
     },
     listContainer:{
-        flex:1,
-        marginBottom: 5,
-        marginLeft:10,
-        marginRight:10
-    },
-    red: {
-        color: "#ff3955"
-    },
-    green: {
-        color: "#65c541"
-    },
-    blue: {
-        color: "#3988ff"
-    },
-    title: {
-        flexDirection: "row",
-        marginBottom: 5
-    },
-    titlefontsize: {
-        // borderLeftWidth:1,
-        // borderLeftColor:"red",
-        // paddingLeft:5,
-        // height: 20,
-        fontSize: 16,
-        color: "#33373d"
+        flex:1
     },
     info : {
         flexDirection: "row",
@@ -228,30 +192,33 @@ const styles = StyleSheet.create({
     },
     infowrapper: {
         height:80,
-        width:(Dimensions.get('window').width-20)/2
+        width:(Dimensions.get('window').width)/2
     },
     infowrapperbc: {
        backgroundColor: "#f6f7f9" 
     },
     infoitem: {
-        marginTop:10,
-        marginBottom:10,
-        flexDirection: "row"
+        marginTop:px2dp(12),
+        marginBottom:px2dp(12),
+        flexDirection: "row",
+        paddingLeft: px2dp(16),
+        paddingRight: px2dp(16)
     },
     infoimg: {
-        width:40,
-        height:60,
-        marginRight:10
+        width:px2dp(39),
+        height:px2dp(52),
+        marginRight:px2dp(12)
     },
     infoword: {
         justifyContent: "center"
     },
     infoname: {
         fontWeight:"bold",
-        fontSize:16,
+        fontSize:px2dp(16),
         color:"#000"
     },
     infonum: {
+        fontSize:px2dp(12),
         color:"#969ba3"
     }
 });

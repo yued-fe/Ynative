@@ -23,8 +23,14 @@ class CatDetailPage extends Component{
     goBack () {
         this.props.navigator.pop();
     }
-    goDetailPage () {
-        
+    goDetailPage (book) {
+         this.props.navigator.push({
+                    component: WebViewPage,
+                    args: {
+                        title: book.bName,
+                        url: `https://m.readnovel.com/book/${book.bid}`,
+                    },
+        });
     }
 
     render(){
@@ -77,7 +83,7 @@ class CatDetailPage extends Component{
                         return(
 
                             <View key={index}>
-                                <View onPress={this.goDetailPage()} style={styles.infoitem}>
+                                <View onPress={() => this.goDetailPage(item.bid)} style={styles.infoitem}>
                                     <Image style={styles.infoimg} source={{uri:'https://qidian.qpic.cn/qdbimg/349573/c_' + item.bid + '/150'}} />
                                     <View style={styles.infoword}>
                                         <Text style={styles.infoname}>{item.bName}</Text>

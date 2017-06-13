@@ -15,6 +15,7 @@
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-navigationbar": "^0.4.5",
     "react-native-swiper": "^1.5.4",
+    "react-native-tabbar": "^1.0.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",

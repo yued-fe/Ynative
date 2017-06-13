@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
+import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,Dimensions,Platform,InteractionManager,ActivityIndicator} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import CatDetailPage from './catdetail';
 import MultiTitleComponent from '../components/multiTitleComponent';
@@ -11,8 +11,36 @@ class CategoryPage extends Component{
         super(props);
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows(DATA)
+            dataSource: ds,
+            didMount: false,
+            hasError: false
         };
+    }
+
+    componentDidMount(){
+        InteractionManager.runAfterInteractions(() => {
+            this.fetchData();
+        });
+    }
+
+    fetchData() {
+        fetch('https://m.readnovel.com/majax/category')
+            .then(response => response.json())
+            .then((result) => {
+                let resData = [{categoryName:"女生频道",subList:[]},{categoryName:"男生频道",subList:[]}];
+                resData[0].subList = result.data.info.female;
+                resData[1].subList = result.data.info.male;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(resData),
+                    didMount: true
+                });
+            })
+            .catch((error)=>{
+                this.setState({
+                    didMount: true,
+                    hasError: true
+                });
+            });
     }
 
     render() {
@@ -26,24 +54,37 @@ class CategoryPage extends Component{
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
-                <ListView
-                    style={styles.content}
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData,sectionId,rowId) => this._renderRow(rowData,rowId)}
-                    automaticallyAdjustContentInsets={false}
-                />
+                {this.state.didMount ?
+                    <ListView
+                        style={styles.content}
+                        dataSource={this.state.dataSource}
+                        renderRow={(rowData,sectionId,rowId) => this._renderRow(rowData,sectionId,rowId)}
+                        automaticallyAdjustContentInsets={false}
+                    />
+                    :
+                    this.state.hasError ?
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <Text style={{marginTop: 10}}>页面错误</Text>
+                        </View>
+                        :
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <ActivityIndicator size="large"/>
+                            <Text style={{marginTop: 10}}>拼命加载中</Text>
+                        </View>
+                }
+
             </View>
         );
     }
 
-    _renderRow(rowData,rowId) {
+    _renderRow(rowData,sectionId,rowId) {
 
         return (
             <View style={styles.listContainer}>
                 <MultiTitleComponent
                     categoryName={rowData.categoryName}
                     borderColor={rowId == 0 ? "red" : "blue"}
-                    hasMoreBtn={true}
+                    hasMoreBtn={false}
                 />
                 <View style={styles.info}>
                     {rowData.subList.map((item, index) => {
@@ -51,10 +92,10 @@ class CategoryPage extends Component{
                             <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
                                 <TouchableHighlight onPress={() => this.goCatDetailPage()}>
                                     <View style={styles.infoitem}>
-                                        <Image style={styles.infoimg} source={{uri:item.img}} />
+                                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+item.coverBid+"/90"}} />
                                         <View style={styles.infoword}>
-                                            <Text style={styles.infoname}>{item.name}</Text>
-                                            <Text style={styles.infonum}>{item.num}本</Text>
+                                            <Text style={styles.infoname}>{item.catName}</Text>
+                                            <Text style={styles.infonum}>{item.catNum}本</Text>
                                         </View>
                                     </View>
                                 </TouchableHighlight>
@@ -66,110 +107,17 @@ class CategoryPage extends Component{
         );
     }
 
-    goCatDetailPage () {
-        this.switchPage(CatDetailPage);
+    goCatDetailPage (catId) {
+        this.switchPage(CatDetailPage,{catId:catId});
     }
 
-    switchPage(component){
+    switchPage(component,args){
         this.props.navigator.push({
-            component: component
+            component: component,
+            args:args
         });
     }
 };
-
-const DATA = [
-    {
-        categoryName:"女生频道",
-        subList:[
-            {
-                name: "现代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "古代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "浪漫青春",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "现代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "古代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "浪漫青春",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            }
-        ]
-    },
-    {
-        categoryName:"男生频道",
-        subList:[
-            {
-                name: "玄幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "奇幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "武侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "仙侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "奇幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "武侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "仙侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            }
-
-        ]
-    }
-];
 
 const styles = StyleSheet.create({
     navBar: {

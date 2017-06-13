@@ -40,6 +40,7 @@ export default class MultiTitleComponent extends Component{
 
 const styles = StyleSheet.create({
     titleWrapper: {
+        flex:1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",

@@ -4,9 +4,10 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text,Dimensions,ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
 import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
-import CatDetailPage from './catdetail';
+import FreePage from './free';
+import NewPage from './new';
+import FinishPage from './finish';
 import RankPage from './rank';
-import SearchPage from './searchDemo';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -28,13 +29,19 @@ class BookStorePage extends Component{
                             <Text style={styles.navText} >排行榜</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goSearchPage()}>
+                    <TouchableHighlight onPress={() => this.goFreePage()}>
+                        <View style={styles.iconBox}>
+                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Text style={styles.navText} >免费</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.goNewPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >新书</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goCatDetailPage()}>
+                    <TouchableHighlight onPress={() => this.goFinishPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} />
                             <Text style={styles.navText} >完本</Text>
@@ -68,16 +75,20 @@ class BookStorePage extends Component{
         this.switchPage(CategoryPage);
     }
 
-    goCatDetailPage () {
-        this.switchPage(CatDetailPage);
-    }
-
     goRankPage () {
         this.switchPage(RankPage);
     }
 
-    goSearchPage () {
-        this.switchPage(SearchPage)
+    goFreePage () {
+        this.switchPage(FreePage);
+    }
+
+    goNewPage () {
+        this.switchPage(NewPage);
+    }
+
+    goFinishPage () {
+        this.switchPage(FinishPage);
     }
 
     switchPage(component){

@@ -7,9 +7,14 @@ import * as Actions from '../actions/requestIndexData';
 import {StyleSheet, View, Text, Dimensions,ActivityIndicator} from 'react-native';
 import RankPage from './rank';
 import CategoryPage from './category';
+import FreePage from './free';
+import NewPage from './new';
+import FinishPage from './finish';
 import WebViewPage from './webview';
 import SearchDemoPage from './searchDemo';
 import BookStorePage from './bookStore';
+import CatDetailPage from './catdetail';
+import AnimatedPage from './animated';
 
 class IndexPage extends Component{
 
@@ -26,21 +31,32 @@ class IndexPage extends Component{
                 <Text style={styles.instructions}>
                     首页
                 </Text>
-
+                <Text style={styles.instructions} onPress={() => this.goBack()}>
+                    回退
+                </Text>
                 <Text style={styles.instructions} onPress={() => this.goRankPage()}>
-                    点我跳转到排行榜
+                    点我跳转到排行榜(转场1)
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.goCategoryPage()}>
-                    点我跳转到分类页
+                    点我跳转到分类页(转场2)
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goNewPage()}>
+                    点我跳转到新书页（转场3）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goFinishPage()}>
+                    点我跳转到完本页（转场4）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goFreePage()}>
+                    点我跳转到免费页（转场5）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.goCatDetailPage()}>
+                    点我跳转到二级分类页（转场6）
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
-                    点我跳转到webview页
+                    点我跳转到webview页（转场7）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goSearchDemoPage()}>
-                    点我跳转到搜索页
-                </Text>
-                <Text style={styles.instructions} onPress={() => this.gobookStore()}>
-                    点我跳转到书城页
+                <Text style={styles.instructions} onPress={() => this.goAnimatedPage()}>
+                    点我跳转到动画页（转场8）
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
@@ -48,23 +64,28 @@ class IndexPage extends Component{
 
                 {this.props.loading?<ActivityIndicator animating={this.state.animating} style={[styles.centering,{height: 80}]} size="large"/>:null}
 
-                {(this.props.error && !this.props.hasData) ?
-                    <Text style={styles.instructions}>请求失败</Text>
-                    :
-                    ((this.props.hasData) ?
+                {
+                    (this.props.error && !this.props.hasData) ?
+                        <Text style={styles.instructions}>请求失败</Text>
+                        :
+                        ((this.props.hasData) ?
                             <Text style={styles.instructions}>请求结果：{this.props.dataSource.rankBookInfo.hot[0].authorName}</Text>
                             :
                             null
-                    )
+                        )
                 }
             </View>
         );
+    }
+    goBack () {
+        this.props.navigator.pop();
     }
 
     goRankPage () {
         this.switchPage(RankPage);
     }
-    gobookStore () {
+
+    goBookStore () {
         this.switchPage(BookStorePage);
     }
 
@@ -72,12 +93,33 @@ class IndexPage extends Component{
         this.switchPage(CategoryPage);
     }
 
+    goCatDetailPage () {
+        this.switchPage(CatDetailPage);
+    }
+
+    goFreePage () {
+        this.switchPage(FreePage);
+    }
+
+    goFinishPage () {
+        this.switchPage(FinishPage);
+    }
+
+    goNewPage () {
+        this.switchPage(NewPage);
+    }
+
     goWebviewPage () {
         this.props.navigator.push({
             component: WebViewPage,
-            args: {title: "起点M站",url: "https://m.qidian.com/"}
+            args: {title: "起点M站",url: "https://m.qidian.com/",anim:"customPushFromRight"}
         });
     }
+
+    goAnimatedPage () {
+        this.switchPage(AnimatedPage);
+    }
+
     goSearchDemoPage () {
         this.switchPage(SearchDemoPage);
     }
@@ -92,9 +134,10 @@ class IndexPage extends Component{
         */
     }
 
-    switchPage(component){
+    switchPage(component,args){
         this.props.navigator.push({
-            component: component
+            component: component,
+            args:args
         });
     }
 

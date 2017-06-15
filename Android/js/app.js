@@ -20,21 +20,35 @@ export default class App extends React.Component{
                         <route.component {...route.args} navigator={navigator} />
                     }
                     configureScene = {(route,routeStack) => {
+                        /**
+                         * PushFromRight
+                         * PushFromLeft
+                         * FloatFromRight
+                         * FloatFromLeft
+                         * FloatFromBottom
+                         * FloatFromBottomAndroid
+                         * FadeAndroid
+                         * SwipeFromLeft
+                         * HorizontalSwipeJump
+                         * HorizontalSwipeJumpFromRight
+                         * HorizontalSwipeJumpFromLeft
+                         * VerticalUpSwipeJump
+                         * VerticalDownSwipeJump
+                         */
                         if (route.args) {
                             if (route.args.anim === 'floatFromBottom') {
                                 return Platform.OS === 'android' ?
                                     Navigator.SceneConfigs.FloatFromBottomAndroid : Navigator.SceneConfigs.FloatFromBottom;
                             }
-
-                            if (Platform.OS === 'ios' && route.args.anim === 'floatFromLeft') {
+                            if (route.args.anim === 'floatFromLeft') {
                                 return Navigator.SceneConfigs.FloatFromLeft;
                             }
 
-                            if (Platform.OS === 'ios' && route.args.anim === 'floatFromRight') {
+                            if (route.args.anim === 'floatFromRight') {
                                 return Navigator.SceneConfigs.FloatFromRight;
                             }
 
-                            if (Platform.OS === 'ios' && route.args.anim === 'pushFromRight') {
+                            if (route.args.anim === 'pushFromRight') {
                                 return Navigator.SceneConfigs.PushFromRight;
                             }
 

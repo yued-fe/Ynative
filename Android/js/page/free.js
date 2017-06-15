@@ -3,6 +3,7 @@ import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,Dimensions,Platfo
 import NavigationBar from 'react-native-navigationbar'
 import MultiTitleComponent from '../components/multiTitleComponent';
 import SingleDataComponent from '../components/singleDataComponent';
+import TestPage from './index';
 import px2dp from '../utils/pxtodpUtil';
 
 class CategoryPage extends Component{
@@ -53,6 +54,8 @@ class CategoryPage extends Component{
                     backHidden={false}
                     barTintColor='white'
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
+                    actionName = "测试"
+                    actionFunc = {this.goTestPage.bind(this)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -106,6 +109,13 @@ class CategoryPage extends Component{
                 </View>
             </View>
         );
+    }
+
+
+    goTestPage(){
+        this.props.navigator.push({
+            component: TestPage
+        });
     }
 }
 

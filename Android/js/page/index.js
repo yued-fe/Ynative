@@ -34,29 +34,53 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.goBack()}>
                     回退
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goRankPage()}>
-                    点我跳转到排行榜(转场1)
+                <Text style={styles.instructions} onPress={() => this.switchPage(RankPage,{anim:"floatFromBottom"})}>
+                    点我跳转到排行榜(转场1-floatFromBottom)
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goCategoryPage()}>
-                    点我跳转到分类页(转场2)
+                <Text style={styles.instructions} onPress={() => this.switchPage(CategoryPage,{anim:"floatFromLeft"})}>
+                    点我跳转到分类页(转场2-floatFromLeft)
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goNewPage()}>
-                    点我跳转到新书页（转场3）
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"floatFromRight"})}>
+                    点我跳转到新书页（转场3-floatFromRight）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goFinishPage()}>
-                    点我跳转到完本页（转场4）
+                <Text style={styles.instructions} onPress={() => this.switchPage(FinishPage,{anim:"pushFromLeft"})}>
+                    点我跳转到完本页（转场4-pushFromLeft）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goFreePage()}>
-                    点我跳转到免费页（转场5）
+                <Text style={styles.instructions} onPress={() => this.switchPage(FreePage,{anim:"pushFromRight"})}>
+                    点我跳转到免费页（转场5-pushFromRight）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goCatDetailPage()}>
-                    点我跳转到二级分类页（转场6）
+                <Text style={styles.instructions} onPress={() => this.switchPage(CatDetailPage,{anim:"swipeFromLeft"})}>
+                    点我跳转到二级分类页（转场6-swipeFromLeft）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goWebviewPage()}>
-                    点我跳转到webview页（转场7）
+                <Text style={styles.instructions} onPress={() => this.switchPage(WebViewPage,{title: "起点M站",url: "https://m.qidian.com/",anim:"horizontalSwipeJump"})}>
+                    点我跳转到webview页（转场7-horizontalSwipeJump）
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goAnimatedPage()}>
-                    点我跳转到动画页（转场8）
+                <Text style={styles.instructions} onPress={() => this.switchPage(AnimatedPage,{anim:"verticalUpSwipeJump"})}>
+                    点我跳转到动画页（转场8-verticalUpSwipeJump）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"verticalDownSwipeJump"})}>
+                    点我跳转到新书页（转场9-verticalDownSwipeJump）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"customPushFromRight"})}>
+                    点我跳转到新书页（转场10-customPushFromRight）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"animationScaleInRight"})}>
+                    点我跳转到新书页（转场11-animationScaleInRight）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"animationScaleInRightDown"})}>
+                    点我跳转到新书页（转场12-animationScaleInRightDown）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"animationScaleInRightUp"})}>
+                    点我跳转到新书页（转场13-animationScaleInRightUp）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"animationRotateInLeft"})}>
+                    点我跳转到新书页（转场14-animationRotateInLeft）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"customAnimation"})}>
+                    点我跳转到新书页（转场15-customAnimation）
+                </Text>
+                <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"switchMain"})}>
+                    点我跳转到新书页（转场16-switchMain）
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
@@ -76,52 +100,6 @@ class IndexPage extends Component{
                 }
             </View>
         );
-    }
-    goBack () {
-        this.props.navigator.pop();
-    }
-
-    goRankPage () {
-        this.switchPage(RankPage);
-    }
-
-    goBookStore () {
-        this.switchPage(BookStorePage);
-    }
-
-    goCategoryPage () {
-        this.switchPage(CategoryPage);
-    }
-
-    goCatDetailPage () {
-        this.switchPage(CatDetailPage);
-    }
-
-    goFreePage () {
-        this.switchPage(FreePage);
-    }
-
-    goFinishPage () {
-        this.switchPage(FinishPage);
-    }
-
-    goNewPage () {
-        this.switchPage(NewPage);
-    }
-
-    goWebviewPage () {
-        this.props.navigator.push({
-            component: WebViewPage,
-            args: {title: "起点M站",url: "https://m.qidian.com/",anim:"customPushFromRight"}
-        });
-    }
-
-    goAnimatedPage () {
-        this.switchPage(AnimatedPage);
-    }
-
-    goSearchDemoPage () {
-        this.switchPage(SearchDemoPage);
     }
 
     loadData () {

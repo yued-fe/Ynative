@@ -8,6 +8,9 @@ import {
     Text,
     TouchableHighlight,
     View,
+    ActivityIndicator,
+    Platform,
+    InteractionManager
 } from 'react-native';
 import NavigationBar from 'react-native-navigationbar';
 // import SvgUri from 'react-native-svg-uri';
@@ -35,24 +38,37 @@ class RankPage extends Component {
 
         this.state = {
             ds: ds.cloneWithRows(ranks),
+            didMount: false,
+            hasError: false
         };
     }
 
     componentDidMount() {
-        fetch('https://m.readnovel.com/majax/rank')
-            .then(response => response.json())
-            .then((result) => {
-                const state = this.state;
+        InteractionManager.runAfterInteractions(() => {
+            fetch('https://m.readnovel.com/majax/rank')
+                .then(response => response.json())
+                .then((result) => {
+                    const state = this.state;
 
-                const ranks = this.ranks.map((rank) => {
-                    rank.books = result.data[rank.dataKey] || [];
-                    return Object.assign({}, rank);
+                    const ranks = this.ranks.map((rank) => {
+                        rank.books = result.data[rank.dataKey] || [];
+                        return Object.assign({}, rank);
+                    });
+
+                    state.ds = state.ds.cloneWithRows(ranks);
+
+                    this.setState(state);
+                    this.setState({
+                        didMount: true
+                    });
+                })
+                .catch((error)=>{
+                    this.setState({
+                        didMount: true,
+                        hasError: true
+                    });
                 });
-
-                state.ds = state.ds.cloneWithRows(ranks);
-
-                this.setState(state);
-            });
+        });
     }
 
     render() {
@@ -65,13 +81,24 @@ class RankPage extends Component {
                     statusbarPadding={false}
                     backFunc={() => this.props.navigator.pop()}
                 />
-
-                <ListView
-                    style={styles.list}
-                    dataSource={this.state.ds}
-                    renderRow={(rank, sectionId, index) => this._renderRank(rank, index)}
-                    automaticallyAdjustContentInsets={false}
-                />
+                {this.state.didMount ?
+                    <ListView
+                        style={styles.list}
+                        dataSource={this.state.ds}
+                        renderRow={(rank, sectionId, index) => this._renderRank(rank, index)}
+                        automaticallyAdjustContentInsets={false}
+                    />
+                    :
+                    this.state.hasError ?
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <Text style={{marginTop: 10}}>页面错误</Text>
+                        </View>
+                        :
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <ActivityIndicator size="large"/>
+                            <Text style={{marginTop: 10}}>拼命加载中</Text>
+                        </View>
+                }
             </View>
         );
     }

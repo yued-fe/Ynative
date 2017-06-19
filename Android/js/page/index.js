@@ -4,7 +4,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/requestIndexData';
-import {StyleSheet, View, Text, Dimensions,ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, Dimensions,ActivityIndicator,Easing} from 'react-native';
 import RankPage from './rank';
 import CategoryPage from './category';
 import FreePage from './free';
@@ -15,13 +15,16 @@ import SearchDemoPage from './searchDemo';
 import BookStorePage from './bookStore';
 import CatDetailPage from './catdetail';
 import AnimatedPage from './animated';
+import CircleTransition from '../utils/circleTransition';
 
 class IndexPage extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            animating:true
+            animating:true,
+            customLeftMargin: 0,
+            customTopMargin: 0,
         };
     }
 
@@ -82,6 +85,20 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={() => this.switchPage(NewPage,{anim:"switchMain"})}>
                     点我跳转到新书页（转场16-switchMain）
                 </Text>
+                <Text style={styles.instructions} onPress={(evt) => this.startCircleTransition(evt,NewPage,{anim:"switchMain"})}>
+                    点我跳转到新书页（转场17-circleTransition）
+                </Text>
+                <CircleTransition
+                    ref={(circle) => { this.circleTransition = circle }}
+                    color={'orange'}
+                    position={'left'}
+                    expand
+                    customLeftMargin={this.state.customLeftMargin}
+                    customTopMargin={this.state.customTopMargin}
+                    transitionBuffer={10}
+                    duration={1200}
+                    easing={Easing.linear}
+                />
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
                 </Text>
@@ -110,6 +127,16 @@ class IndexPage extends Component{
                 import {fetchData} from '../actions/requestIndexData';
                 store.dispatch(fetchData());
         */
+    }
+
+    startCircleTransition(event,component,args){
+        let pressLocationX = event.nativeEvent.locationX;
+        let pressLocationY = event.nativeEvent.locationY;
+        this.setState({
+            customLeftMargin: pressLocationX,
+            customTopMargin: pressLocationY
+        })
+        this.circleTransition.start(()=>this.switchPage(component,args));
     }
 
     switchPage(component,args){

@@ -16,12 +16,12 @@ class BookStorePage extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <Swiper style={styles.wrapper} width={'100%'} height={250} loop={true} autoplay={true}>
+                <Swiper style={styles.wrapper} width={Dimensions.get('window').width} height={250} loop={true} autoplay={true}>
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ca9c6ea4e5d70f2542e4a0791e82b3cb/0'}} />
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/cab2778493c43e33237adff16b62308e/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />                       
-                </Swiper>    
+                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
+                </Swiper>
                 <View style={styles.nav}>
                     <TouchableHighlight onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
@@ -54,7 +54,7 @@ class BookStorePage extends Component{
                         </View>
                     </TouchableHighlight>
                 </View>  
-                <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>    
+                <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>
                 <ScrollView horizontal={true} style={styles.bookList}>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
@@ -66,7 +66,7 @@ class BookStorePage extends Component{
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                </ScrollView>     
+                </ScrollView>
             </View>
         );
     }

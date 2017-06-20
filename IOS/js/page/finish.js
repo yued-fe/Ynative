@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,Dimensions,Platform,InteractionManager,ActivityIndicator} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
-import CatDetailPage from './catdetail';
 import MultiTitleComponent from '../components/multiTitleComponent';
+import SingleDataComponent from '../components/singleDataComponent';
 import px2dp from '../utils/pxtodpUtil';
 
 class CategoryPage extends Component{
@@ -24,12 +24,16 @@ class CategoryPage extends Component{
     }
 
     fetchData() {
-        fetch('https://m.readnovel.com/majax/category')
+        fetch('https://m.readnovel.com/majax/channel/finish')
             .then(response => response.json())
             .then((result) => {
-                let resData = [{categoryName:"女生频道",subList:[]},{categoryName:"男生频道",subList:[]}];
-                resData[0].subList = result.data.info.female;
-                resData[1].subList = result.data.info.male;
+                let resData = [{categoryName:"最新完结",subList:[],more:""},{categoryName:"经典必读",subList:[],more:""},{categoryName:"畅销完本",subList:[],more:""}];
+                resData[0].subList = result.data.new;
+                resData[0].more = result.data.newMore;
+                resData[1].subList = result.data.classic;
+                resData[1].more = result.data.classicMore;
+                resData[2].subList = result.data.hot;
+                resData[2].more = result.data.hotMore;
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(resData),
                     didMount: true
@@ -46,7 +50,7 @@ class CategoryPage extends Component{
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar title="分类"
+                <NavigationBar title="完本"
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
@@ -83,41 +87,29 @@ class CategoryPage extends Component{
             <View style={styles.listContainer}>
                 <MultiTitleComponent
                     categoryName={rowData.categoryName}
-                    borderColor={rowId == 0 ? "red" : "blue"}
-                    hasMoreBtn={false}
+                    borderColor={"red"}
+                    hasMoreBtn={true}
+                    moreType={"category"}
+                    moreParams={rowData.more}
+                    customLeft={rowId == 2 ? "hotfinish" : ""}
+                    navigator = {this.props.navigator}
                 />
                 <View style={styles.info}>
-                    {rowData.subList.map((item, index) => {
-                        return(
-                            <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <TouchableHighlight onPress={() => this.goCatDetailPage()}>
-                                    <View style={styles.infoitem}>
-                                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+item.coverBid+"/90"}} />
-                                        <View style={styles.infoword}>
-                                            <Text style={styles.infoname}>{item.catName}</Text>
-                                            <Text style={styles.infonum}>{item.catNum}本</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            </View>
-                        )})
+                    {
+                        rowData.subList.map((item, index) => {
+                            return <SingleDataComponent
+                                item = {item}
+                                index = {index}
+                                key = {rowData.categoryName+index}
+                                navigator = {this.props.navigator}
+                            />
+                        })
                     }
                 </View>
             </View>
         );
     }
-
-    goCatDetailPage (catId) {
-        this.switchPage(CatDetailPage,{catId:catId});
-    }
-
-    switchPage(component,args){
-        this.props.navigator.push({
-            component: component,
-            args:args
-        });
-    }
-};
+}
 
 const styles = StyleSheet.create({
     navBar: {
@@ -134,40 +126,7 @@ const styles = StyleSheet.create({
         flex:1
     },
     info : {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        flexWrap: "wrap"
-    },
-    infowrapper: {
-        height:px2dp(76),
-        width:(Dimensions.get('window').width)/2
-    },
-    infowrapperbc: {
-       backgroundColor: "#f6f7f9" 
-    },
-    infoitem: {
-        marginTop:px2dp(12),
-        marginBottom:px2dp(12),
-        flexDirection: "row",
-        paddingLeft: px2dp(16),
-        paddingRight: px2dp(16)
-    },
-    infoimg: {
-        width:px2dp(39),
-        height:px2dp(52),
-        marginRight:px2dp(12)
-    },
-    infoword: {
-        justifyContent: "center"
-    },
-    infoname: {
-        fontWeight:"bold",
-        fontSize:px2dp(16),
-        color:"#000"
-    },
-    infonum: {
-        fontSize:px2dp(12),
-        color:"#969ba3"
+        flex:1
     }
 });
 

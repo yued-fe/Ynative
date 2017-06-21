@@ -26,13 +26,13 @@ npm start
 - 或者使用Android Studio来编译运行
 
 ### 离线模式
-#### IOS(未测试)
+#### IOS
 打包(如果bundle目录不存在，需要提前创建一个)
 ```
-react-native bundle --platform ios --dev false --entry-file index.ios.js --bundle-output bundle/index.ios.jsbundle --assets-dest bundle
+react-native bundle --platform ios --dev false --entry-file index.ios.js --bundle-output ios/bundle/index.ios.jsbundle --assets-dest ios/bundle
 ```
 将 assets 和 index.ios.jsbundle 引入工程
->注意: assets 目录导入工程中时，要选择 Create folder references，因为这是图片素材。
+>注意: assets 目录导入工程中时，要选择 Create folder references，因为这是图片素材(直接将bundle下的assert和index.ios.jsbundle拖入项目，会弹出选项)。
 
 修改AppDelegate中的代码
 ```

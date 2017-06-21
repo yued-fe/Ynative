@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,Dimensions,Platform,InteractionManager,ActivityIndicator} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
-import CatDetailPage from './catdetail';
 import MultiTitleComponent from '../components/multiTitleComponent';
+import SingleDataComponent from '../components/singleDataComponent';
+import TestPage from './index';
 import px2dp from '../utils/pxtodpUtil';
 
 class CategoryPage extends Component{
@@ -24,12 +25,14 @@ class CategoryPage extends Component{
     }
 
     fetchData() {
-        fetch('https://m.readnovel.com/majax/category')
+        fetch('https://m.readnovel.com/majax/channel/free')
             .then(response => response.json())
             .then((result) => {
-                let resData = [{categoryName:"女生频道",subList:[]},{categoryName:"男生频道",subList:[]}];
-                resData[0].subList = result.data.info.female;
-                resData[1].subList = result.data.info.male;
+                let resData = [{categoryName:"人气免费",subList:[],more:""},{categoryName:"新书免费",subList:[],more:""}];
+                resData[0].subList = result.data.pop;
+                resData[0].more = result.data.popMore;
+                resData[1].subList = result.data.new;
+                resData[1].more = result.data.newMore;
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(resData),
                     didMount: true
@@ -46,11 +49,13 @@ class CategoryPage extends Component{
     render() {
         return (
             <View style={styles.container}>
-                <NavigationBar title="分类"
+                <NavigationBar title="免费"
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
+                    actionName = "测试"
+                    actionFunc = {this.goTestPage.bind(this)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -83,41 +88,36 @@ class CategoryPage extends Component{
             <View style={styles.listContainer}>
                 <MultiTitleComponent
                     categoryName={rowData.categoryName}
-                    borderColor={rowId == 0 ? "red" : "blue"}
-                    hasMoreBtn={false}
+                    borderColor={"red"}
+                    hasMoreBtn={true}
+                    moreType={"category"}
+                    moreParams={rowData.more}
+                    customLeft={rowId == 0 ? "hotfree" : ""}
+                    navigator = {this.props.navigator}
                 />
                 <View style={styles.info}>
-                    {rowData.subList.map((item, index) => {
-                        return(
-                            <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <TouchableHighlight onPress={() => this.goCatDetailPage()}>
-                                    <View style={styles.infoitem}>
-                                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+item.coverBid+"/90"}} />
-                                        <View style={styles.infoword}>
-                                            <Text style={styles.infoname}>{item.catName}</Text>
-                                            <Text style={styles.infonum}>{item.catNum}本</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            </View>
-                        )})
+                    {
+                        rowData.subList.map((item, index) => {
+                            return <SingleDataComponent
+                                item = {item}
+                                index = {index}
+                                key = {rowData.categoryName+index}
+                                navigator = {this.props.navigator}
+                            />
+                        })
                     }
                 </View>
             </View>
         );
     }
 
-    goCatDetailPage (catId) {
-        this.switchPage(CatDetailPage,{catId:catId});
-    }
 
-    switchPage(component,args){
+    goTestPage(){
         this.props.navigator.push({
-            component: component,
-            args:args
+            component: TestPage
         });
     }
-};
+}
 
 const styles = StyleSheet.create({
     navBar: {
@@ -134,40 +134,7 @@ const styles = StyleSheet.create({
         flex:1
     },
     info : {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        flexWrap: "wrap"
-    },
-    infowrapper: {
-        height:px2dp(76),
-        width:(Dimensions.get('window').width)/2
-    },
-    infowrapperbc: {
-       backgroundColor: "#f6f7f9" 
-    },
-    infoitem: {
-        marginTop:px2dp(12),
-        marginBottom:px2dp(12),
-        flexDirection: "row",
-        paddingLeft: px2dp(16),
-        paddingRight: px2dp(16)
-    },
-    infoimg: {
-        width:px2dp(39),
-        height:px2dp(52),
-        marginRight:px2dp(12)
-    },
-    infoword: {
-        justifyContent: "center"
-    },
-    infoname: {
-        fontWeight:"bold",
-        fontSize:px2dp(16),
-        color:"#000"
-    },
-    infonum: {
-        fontSize:px2dp(12),
-        color:"#969ba3"
+        flex:1
     }
 });
 

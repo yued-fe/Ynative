@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 1,
         textAlign: 'center',
+        backgroundColor:'rgba(0,0,0,0.1)'
     },
     books: {
         flex: 1,

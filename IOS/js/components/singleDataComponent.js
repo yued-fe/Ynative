@@ -1,5 +1,5 @@
 import React, {Component,PropTypes} from 'react';
-import {StyleSheet,View,Text,Image,TouchableHighlight,Dimensions} from 'react-native';
+import {StyleSheet,View,Text,Image,TouchableHighlight,Dimensions,Platform} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
     },
     authorname: {
         color:'#969ba3',
-        fontSize:px2dp(13)
+        fontSize:px2dp(13),
+        marginTop: (Platform.OS === 'android' ? px2dp(0) : px2dp(3))
     },
     infometaright: {
         flexDirection: "row"

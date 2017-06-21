@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     titleRightText: {
-        marginTop: (Platform.OS === 'android' ? px2dp(0) : px2dp(2)),
+        marginTop: (Platform.OS === 'android' ? px2dp(0) : px2dp(3)),
         fontSize: px2dp(14),
         color: "#969ba3"
     },

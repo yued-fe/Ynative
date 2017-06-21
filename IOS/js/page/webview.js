@@ -245,10 +245,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     modalItem: {
-        width: px2dp(150),
+       // width: px2dp(150),
         height: px2dp(30),
         flexDirection: 'row',
         alignItems: 'center'
+
     }
 });
 

@@ -1,7 +1,8 @@
 import React, {Component,PropTypes} from 'react';
-import {StyleSheet,View,Text,Image,TouchableHighlight,Dimensions,Platform} from 'react-native';
+import {StyleSheet,View,Text,Image,TouchableHighlight,Dimensions,Platform,PixelRatio} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
+import theme from '../utils/themeUtil';
 
 export default class SingleDataComponent extends Component{
 
@@ -13,7 +14,7 @@ export default class SingleDataComponent extends Component{
         const {item, index} = this.props;
         return(
             <View style={[styles.infowrapper,index!==0?styles.infowrapperborder:""]} key={this.props.index}>
-                <TouchableHighlight underlayColor='#fff' onPress={() => this.goDetailPage(this.props.item)}>
+                <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goDetailPage(this.props.item)}>
                     <View style={styles.infoitem}>
                         <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.item.bid+"/150"}} />
                         <View style={styles.infoword}>
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
         marginLeft: px2dp(16)
     },
     infowrapperborder: {
-        borderTopWidth: 2,
+        borderTopWidth: 2/PixelRatio.get(),
         borderTopColor: "#f0f1f2"
     },
     infoitem: {

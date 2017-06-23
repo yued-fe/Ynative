@@ -4,6 +4,7 @@ import NavigationBar from 'react-native-navigationbar'
 import MultiTitleComponent from '../components/multiTitleComponent';
 import SingleDataComponent from '../components/singleDataComponent';
 import px2dp from '../utils/pxtodpUtil';
+import theme from '../utils/themeUtil';
 
 class CategoryPage extends Component{
 
@@ -51,11 +52,9 @@ class CategoryPage extends Component{
         return (
             <View style={styles.container}>
                 <NavigationBar title="新书"
-                    barStyle={styles.navBar}
-                    backHidden={false}
-                    barTintColor='white'
+                    barTintColor = {theme.barTintColor}
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
-                    backFunc={() => {
+                    backFunc = {() => {
                         this.props.navigator.pop()
                     }}/>
                 {this.state.didMount ?
@@ -111,12 +110,9 @@ class CategoryPage extends Component{
 }
 
 const styles = StyleSheet.create({
-    navBar: {
-        // height:20
-    },
     container: {
         flex: 1,
-        backgroundColor: "#fff"
+        backgroundColor: theme.containerBackgroundColor
     },
     content: {
         marginBottom: px2dp(16)

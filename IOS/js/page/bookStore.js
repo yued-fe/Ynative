@@ -9,25 +9,55 @@ import FreePage from './free';
 import NewPage from './new';
 import FinishPage from './finish';
 import RankPage from './rank';
-import BookListItem from '../components/BookListItem'
+import BookListH from '../components/BookListH';
+import NavigationBar from 'react-native-navigationbar';
 import MultiTitleComponent from '../components/multiTitleComponent';
-import Module from '../components/Module';
+import Toast from 'react-native-root-toast';
 
 
 class BookStorePage extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            loading: true
+        }
+    }
+    componentWillMount() {
+        fetch('https://app.readnovel.com/ajax/book/getBookStoreInfo')
+            .then(response => response.json())
+            .then((result) => {
+                this.setState({
+                    data:  result.data,
+                    loading: false
+                });
+            })
+            .catch((error) => {
+                this.setState({
+
+                });
+            })
     }
     render(){
+        let swiperimgs = [];
+        if(!this.state.loading) {
+            let adTop = this.state.data.adInfo.adTop;
+            for (var i in adTop) {
+                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'}  source={{uri: adTop[i].adImgUrl}} />)
+                swiperimgs.push(img);
+            }
+        }
         return(
             <View style={styles.container}>
-                <Swiper style={styles.wrapper} width={Dimensions.get('window').width} height={250} loop={true} autoplay={true}>
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ca9c6ea4e5d70f2542e4a0791e82b3cb/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/cab2778493c43e33237adff16b62308e/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
+                <NavigationBar
+                    title="书城"
+                    titleColor={'#fff'}
+                    backIconHidden={true}
+                    barTintColor='#ff3955'
+                    />
+                <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
+                    {swiperimgs}
                 </Swiper>
-                <View style={styles.nav}>
+                <View style={[styles.nav, styles.module]}>
                     <TouchableHighlight onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(27)} height={px2dp(24)}  source={require('../res/rank.png')} />
@@ -44,6 +74,7 @@ class BookStorePage extends Component{
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(19)} height={px2dp(24)}  source={require('../res/newbook.png')} />
                             <Text style={styles.navText} >新书</Text>
+
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => this.goFinishPage()}>
@@ -59,23 +90,37 @@ class BookStorePage extends Component{
                         </View>
                     </TouchableHighlight>
                 </View>
-                <MultiTitleComponent
-                    categoryName = '热门小说'
-                    borderColor= "red"
-                    hasMoreBtn= { true }
-                />
-                <ScrollView horizontal={true} style={styles.bookList}>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                </ScrollView>
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '热门小说'
+                      borderColor= "red"
+                      hasMoreBtn= { true }
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotBookInfo}>
+
+                      </BookListH>
+                      :
+                      <Text>464556</Text>
+                  }
+                </View>
+
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '排行榜'
+                      borderColor= "red"
+                      hasMoreBtn= { true }
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotBookInfo}>
+
+                      </BookListH>
+                      :
+                      <Text>464556</Text>
+                  }
+                </View>
             </View>
         );
     }
@@ -109,13 +154,18 @@ class BookStorePage extends Component{
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: '#f6f7f9'
+        backgroundColor: 'red'
     },
     container: {
-        flex: 1,
         backgroundColor: '#f6f7f9'
     },
-
+    module: {
+        backgroundColor: '#fff',
+        marginBottom: px2dp(12)
+    },
+    hotModule: {
+        height: px2dp(216)
+    },
     slide: {
         width: '100%',
         flex: 1,
@@ -123,19 +173,20 @@ const styles = StyleSheet.create({
     },
     image: {
         backgroundColor: 'transparent',
-        width: '100%',
-        height: 250
+    },
+    navBar: {
+
     },
     nav: {
-        height: 60,
+        height: px2dp(82),
         flexDirection:'row',
         justifyContent: 'space-around',
-        marginTop: 10,
-        marginBottom: 10,
+        alignItems: 'center',
     },
     iconBox: {
-        height: 60,
+        height: px2dp(58),
         alignItems: 'center',
+        justifyContent: 'center'
     },
     iconImg: {
 
@@ -155,9 +206,6 @@ const styles = StyleSheet.create({
         borderLeftColor: '#ff3955',
         paddingLeft: 10,
         marginLeft: 10
-    },
-    bookList: {
-        height: 50,
     },
     loadingView: {
         position: 'absolute',

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 
 class Module extends Component {
@@ -11,13 +11,15 @@ class Module extends Component {
     render() {
         return(
             <View style={styles.module}>
+              <Text>dgfgfrh</Text>
             </View>
         );
     }
 }
 const styles = StyleSheet.create({
     module: {
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      height: 1000
     }
 });
 export default Module;

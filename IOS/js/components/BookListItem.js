@@ -11,8 +11,8 @@ class BookListItem extends Component {
     render() {
         return(
             <View style={styles.bookListItem}>
-                <Image style={styles.bookCover} source={{uri: 'https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150'}} />
-                <Text style={styles.bookName}>{this.props.bookName}</Text>
+                <Image style={styles.bookCover} source={{uri: this.props.bookCover}} />
+                <Text style={styles.bookName}  numberOfLines={2}>{this.props.bookName}</Text>
                 <Text style={styles.authorName}>{this.props.authorName}</Text>
             </View>
         );
@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
         height: px2dp(88)
     },
     bookName: {
+        width: px2dp(66),
+        flexWrap: 'wrap',
         fontSize: px2dp(13),
         lineHeight: px2dp(18),
         color: 'rgb(51, 55, 61)',

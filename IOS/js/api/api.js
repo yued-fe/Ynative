@@ -1,5 +1,5 @@
 'use strict';
 
 export default {
-    getBookStoreInfo: "http://devapp.readnovel.com/ajax/book/getBookStoreInfo"
+    getBookStoreInfo: "http://app.readnovel.com/ajax/book/getBookStoreInfo"
 }

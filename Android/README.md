@@ -67,13 +67,15 @@
     ├── actions                                            //Redux actions相关文件夹，理论上一个页面对应一个actions
     │   ├── actionTypes.js                                 //存放所有action的名称
     │   └── requestIndexData.js                            //首页action，用于把事件的要素提供给reducer，action本身不修改state值
+    ├── animation                                          //动画
+    │   └── myNavigatorScene.js                            //首页转场动画
     ├── api                                                //api相关文件夹
     │   └── api.js                                         //存放所有的请求地址
     ├── app.js                                             //合并了IOS和Android的入口。用Provider作为state的顶层分发，cover到所有组件。
     ├── components                                         //公共的组件写在这个文件夹
     │   └── backPageComponent.js                           //用于监听安卓回退的组件，理论上二级页面都可继承
     ├── native_modules                                     //这里放RN与原生打交道的接口
-    │   └── splashScreen.js.                               //利用启动图解决首次加载慢的问题
+    │   └── splashScreen.js                                //利用启动图解决首次加载慢的问题
     ├── page                                               //这里编写我们的页面
     │   ├── index.js                                       //首页
     │   └── rank.js                                        //排行榜页
@@ -90,7 +92,9 @@
     └── utils                                              //公共方法写在这里
         ├── fetchUtil.js                                   //对fetch封装（待完善）
         ├── formatUtil.js                                  //提供日期、字符转换
-        └── toastUtil.js                                   //提供简易弹层
+        ├── toastUtil.js                                   //提供简易弹层
+        ├── pxtodpUtil.js                                  //将像素（PX）转成DP
+        └── themeUtil.js                                   //主题统一管理
 ```
 ## Redux
 开发用到redux、react-redux,需要对流程有个大概的了解:

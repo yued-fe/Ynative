@@ -1,14 +1,46 @@
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,StyleSheet,View,Text,Dimensions,Platform,InteractionManager,ActivityIndicator} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
+import CatDetailPage from './catdetail';
+import MultiTitleComponent from '../components/multiTitleComponent';
+import px2dp from '../utils/pxtodpUtil';
+
 class CategoryPage extends Component{
 
     constructor(props){
         super(props);
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows(DATA)
+            dataSource: ds,
+            didMount: false,
+            hasError: false
         };
+    }
+
+    componentDidMount(){
+        InteractionManager.runAfterInteractions(() => {
+            this.fetchData();
+        });
+    }
+
+    fetchData() {
+        fetch('https://m.readnovel.com/majax/category')
+            .then(response => response.json())
+            .then((result) => {
+                let resData = [{categoryName:"女生频道",subList:[]},{categoryName:"男生频道",subList:[]}];
+                resData[0].subList = result.data.info.female;
+                resData[1].subList = result.data.info.male;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(resData),
+                    didMount: true
+                });
+            })
+            .catch((error)=>{
+                this.setState({
+                    didMount: true,
+                    hasError: true
+                });
+            });
     }
 
     render() {
@@ -18,39 +50,55 @@ class CategoryPage extends Component{
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
-                    statusbarPadding = {false}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
-                <ListView
-                    style={styles.content}
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData,sectionId,rowId) => this._renderRow(rowData,rowId)}
-                    automaticallyAdjustContentInsets={false}
-                />
+                {this.state.didMount ?
+                    <ListView
+                        style={styles.content}
+                        dataSource={this.state.dataSource}
+                        renderRow={(rowData,sectionId,rowId) => this._renderRow(rowData,sectionId,rowId)}
+                        automaticallyAdjustContentInsets={false}
+                    />
+                    :
+                    this.state.hasError ?
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <Text style={{marginTop: 10}}>页面错误</Text>
+                        </View>
+                        :
+                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                            <ActivityIndicator size="large"/>
+                            <Text style={{marginTop: 10}}>拼命加载中</Text>
+                        </View>
+                }
+
             </View>
         );
     }
 
-    _renderRow(rowData,rowId) {
+    _renderRow(rowData,sectionId,rowId) {
 
         return (
             <View style={styles.listContainer}>
-                <View style={styles.title}>
-                    {rowId == 0 ? <Text style={styles.green}>| </Text> : <Text style={styles.blue}>| </Text>}
-                    <Text style={styles.titlefontsize}>{rowData.categoryName}</Text>
-                </View>
+                <MultiTitleComponent
+                    categoryName={rowData.categoryName}
+                    borderColor={rowId == 0 ? "red" : "blue"}
+                    hasMoreBtn={false}
+                />
                 <View style={styles.info}>
                     {rowData.subList.map((item, index) => {
                         return(
                             <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <View onPress={this.goDetailPage()} style={styles.infoitem}>
-                                    <Image style={styles.infoimg} source={{uri:item.img}} />
-                                    <View style={styles.infoword}>
-                                        <Text style={styles.infoname}>{item.name}</Text>
-                                        <Text style={styles.infonum}>{item.num}本</Text>
+                                <TouchableHighlight onPress={() => this.goCatDetailPage()}>
+                                    <View style={styles.infoitem}>
+                                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+item.coverBid+"/90"}} />
+                                        <View style={styles.infoword}>
+                                            <Text style={styles.infoname}>{item.catName}</Text>
+                                            <Text style={styles.infonum}>{item.catNum}本</Text>
+                                        </View>
                                     </View>
-                                </View>
+                                </TouchableHighlight>
                             </View>
                         )})
                     }
@@ -59,120 +107,19 @@ class CategoryPage extends Component{
         );
     }
 
-    goDetailPage () {
-        
+    goCatDetailPage (catId) {
+        this.switchPage(CatDetailPage,{catId:catId});
     }
 
-    goBack () {
-        this.props.navigator.pop();
+    switchPage(component,args){
+        this.props.navigator.push({
+            component: component,
+            args:args
+        });
     }
 };
 
-const DATA = [
-    {
-        categoryName:"女生频道",
-        subList:[
-            {
-                name: "现代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "古代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "浪漫青春",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "现代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "古代言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "浪漫青春",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻言情",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            }
-        ]
-    },
-    {
-        categoryName:"男生频道",
-        subList:[
-            {
-                name: "玄幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "奇幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "武侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "仙侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "玄幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "奇幻",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "武侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            },
-            {
-                name: "仙侠",
-                num: 25633,
-                img: "https://qidian.qpic.cn/qdbimg/349573/c_25377889000533901/90"  
-            }
-
-        ]
-    }
-];
-
 const styles = StyleSheet.create({
-    header: {
-        height:44,
-        borderWidth: 1,
-        borderColor: "#f0f1f2",
-        justifyContent: "center"
-    },
-    headertext: {
-        marginLeft:10,
-        color: "#33373d"
-    },
     navBar: {
         // height:20
     },
@@ -181,28 +128,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     content: {
-        marginTop: 10,
-        marginBottom: 10
+        marginBottom: px2dp(16)
     },
     listContainer:{
-        flex:1,
-        marginBottom: 5,
-        marginLeft:10,
-        marginRight:10
-    },
-    green: {
-        color: "#65c541"
-    },
-    blue: {
-        color: "#3988ff"
-    },
-    title: {
-        flexDirection: "row",
-        marginBottom: 5
-    },
-    titlefontsize: {
-        fontSize: 16,
-        color: "#33373d"
+        flex:1
     },
     info : {
         flexDirection: "row",
@@ -210,31 +139,34 @@ const styles = StyleSheet.create({
         flexWrap: "wrap"
     },
     infowrapper: {
-        height:80,
-        width:(Dimensions.get('window').width-20)/2
+        height:px2dp(76),
+        width:(Dimensions.get('window').width)/2
     },
     infowrapperbc: {
        backgroundColor: "#f6f7f9" 
     },
     infoitem: {
-        marginTop:10,
-        marginBottom:10,
-        flexDirection: "row"
+        marginTop:px2dp(12),
+        marginBottom:px2dp(12),
+        flexDirection: "row",
+        paddingLeft: px2dp(16),
+        paddingRight: px2dp(16)
     },
     infoimg: {
-        width:40,
-        height:60,
-        marginRight:5
+        width:px2dp(39),
+        height:px2dp(52),
+        marginRight:px2dp(12)
     },
     infoword: {
         justifyContent: "center"
     },
     infoname: {
         fontWeight:"bold",
-        fontSize:16,
+        fontSize:px2dp(16),
         color:"#000"
     },
     infonum: {
+        fontSize:px2dp(12),
         color:"#969ba3"
     }
 });

@@ -16,26 +16,20 @@ class CatDetailPage extends Component{
         };
     }
 
-      onTabSelect(tab) {
-        this.setState({ tab })
-      }
-
+  onTabSelect(tab) {
+    this.setState({ tab })
+  }
+  
     goBack () {
         this.props.navigator.pop();
     }
-    goDetailPage (book) {
-         this.props.navigator.push({
-                    component: WebViewPage,
-                    args: {
-                        title: book.bName,
-                        url: `https://m.readnovel.com/book/${book.bid}`,
-                    },
-        });
-    }
 
+    goDetailPage () {
+        
+    }
     render(){
         return(
-            <View style={styles.headercontainer}>
+            <View style={styles.container}>
                 <NavigationBar title="现代言情"
                     barStyle={styles.navBar}
                     backHidden={false}
@@ -83,7 +77,7 @@ class CatDetailPage extends Component{
                         return(
 
                             <View key={index}>
-                                <View onPress={() => this.goDetailPage(item.bid)} style={styles.infoitem}>
+                                <View onPress={this.goDetailPage()} style={styles.infoitem}>
                                     <Image style={styles.infoimg} source={{uri:'https://qidian.qpic.cn/qdbimg/349573/c_' + item.bid + '/150'}} />
                                     <View style={styles.infoword}>
                                         <Text style={styles.infoname}>{item.bName}</Text>
@@ -235,7 +229,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding:0,
         alignItems: 'center',
-        backgroundColor: "#fff"
     },
     instructions: {
         textAlign: 'center',
@@ -255,8 +248,9 @@ const styles = StyleSheet.create({
     navBar: {
         // height:20
     },
-    headercontainer: {
-        flex:1
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
     },
     content: {
         marginTop: 10,

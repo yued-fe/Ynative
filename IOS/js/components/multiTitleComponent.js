@@ -4,6 +4,7 @@ import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 import CatDetailPage from '../page/catdetail';
 import RankPage from '../page/rank';
+import theme from '../utils/themeUtil';
 
 export default class MultiTitleComponent extends Component{
 
@@ -53,7 +54,7 @@ export default class MultiTitleComponent extends Component{
                 </View>
                 {
                     hasMoreBtn ?
-                        <TouchableHighlight underlayColor='#fff' onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
+                        <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
                             <View style={styles.titleRight}>
                                 <Text style={styles.titleRightText}>更多</Text>
                                 <Image style={styles.titleRightImg} source={require('../res/icon-arrow-r.png')} />

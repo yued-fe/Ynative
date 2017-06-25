@@ -13,6 +13,7 @@ import {
     InteractionManager
 } from 'react-native';
 import NavigationBar from 'react-native-navigationbar';
+import theme from '../utils/themeUtil';
 // import SvgUri from 'react-native-svg-uri';
 
 import WebViewPage from './webview';
@@ -75,10 +76,10 @@ class RankPage extends Component {
         return(
             <View style={styles.view}>
                 <NavigationBar title="排行榜"
-                    barStyle={styles.nav}
-                    backHidden={false}
-                    barTintColor='white'
-                    statusbarPadding={(Platform.OS === 'android' ? false : true)}
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => this.props.navigator.pop()}
                 />
                 {this.state.didMount ?

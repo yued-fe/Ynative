@@ -13,6 +13,7 @@ import BookListH from '../components/BookListH';
 import NavigationBar from 'react-native-navigationbar';
 import MultiTitleComponent from '../components/multiTitleComponent';
 import Toast from 'react-native-root-toast';
+import theme from '../utils/themeUtil';
 
 
 class BookStorePage extends Component{
@@ -42,7 +43,7 @@ class BookStorePage extends Component{
         if(!this.state.loading) {
             let adTop = this.state.data.adInfo.adTop;
             for (var i in adTop) {
-                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'}  source={{uri: adTop[i].adImgUrl}} />)
+                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: adTop[i].adImgUrl}} />)
                 swiperimgs.push(img);
             }
         }
@@ -50,40 +51,40 @@ class BookStorePage extends Component{
             <View style={styles.container}>
                 <NavigationBar
                     title="书城"
-                    titleColor={'#fff'}
+                    titleColor={theme.barTitleColor}
                     backIconHidden={true}
-                    barTintColor='#ff3955'
+                    barTintColor={theme.barTintColor}
                     />
                 <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
                     {swiperimgs}
                 </Swiper>
                 <View style={[styles.nav, styles.module]}>
-                    <TouchableHighlight onPress={() => this.goRankPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(27)} height={px2dp(24)}  source={require('../res/rank.png')} />
                             <Text style={styles.navText} >排行榜</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFreePage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFreePage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >免费</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goNewPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goNewPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(19)} height={px2dp(24)}  source={require('../res/newbook.png')} />
                             <Text style={styles.navText} >新书</Text>
 
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFinishPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFinishPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(18)} height={px2dp(26)}  source={require('../res/end.png')} />
                             <Text style={styles.navText} >完本</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goCategoryPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goCategoryPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/sort.png')} />
                             <Text style={styles.navText} >分类</Text>
@@ -94,7 +95,7 @@ class BookStorePage extends Component{
                   <MultiTitleComponent
                       categoryName = '热门小说'
                       borderColor= "red"
-                      hasMoreBtn= { true }
+                      hasMoreBtn= { false }
                   />
                   {
                       !this.state.loading ?
@@ -111,6 +112,8 @@ class BookStorePage extends Component{
                       categoryName = '排行榜'
                       borderColor= "red"
                       hasMoreBtn= { true }
+                      moreType={"rank"}
+                      navigator = {this.props.navigator}
                   />
                   {
                       !this.state.loading ?

@@ -53,6 +53,8 @@ class CategoryPage extends Component{
             <View style={styles.container}>
                 <NavigationBar title="完本"
                     barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc = {() => {
                         this.props.navigator.pop()
@@ -88,7 +90,7 @@ class CategoryPage extends Component{
                     categoryName={rowData.categoryName}
                     borderColor={"red"}
                     hasMoreBtn={true}
-                    moreType={"category"}
+                    moreType={"catdetail"}
                     moreParams={rowData.more}
                     customLeft={rowId == 2 ? "hotfinish" : ""}
                     navigator = {this.props.navigator}

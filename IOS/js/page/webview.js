@@ -65,12 +65,15 @@ class WebViewPage extends BackPageComponent {
                 <NavigationBar
                     title={this.props.title}
                     barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     rightBtnIcon = "more"
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}
                     actionName = "更多"
+                    actionTextColor = {theme.barTitleColor}
                     actionFunc = {this._btnOnPressCallback.bind(this, 7)}
                 />
                 <Modal

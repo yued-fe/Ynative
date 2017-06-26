@@ -8,7 +8,7 @@ import {store} from './store/index';
 import IndexPage from './page/index';
 import BookStorePage from './page/bookStore';
 import SplashScreen from './native_modules/splashScreen';
-import cunstomSceneConfigs from './utils/myNavigatorScene';
+import cunstomSceneConfigs from './animation/myNavigatorScene';
 
 export default class App extends React.Component{
     render(){
@@ -101,7 +101,7 @@ export default class App extends React.Component{
                             }
                         }
 
-                        return Navigator.SceneConfigs.FloatFromRight
+                        return Navigator.SceneConfigs.PushFromRight;
                     }}
                 />
             </Provider>

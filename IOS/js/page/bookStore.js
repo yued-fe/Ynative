@@ -1,87 +1,129 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text,Dimensions,ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
+import px2dp from '../utils/pxtodpUtil';
 import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
 import FreePage from './free';
 import NewPage from './new';
 import FinishPage from './finish';
 import RankPage from './rank';
+import BookListH from '../components/BookListH';
+import NavigationBar from 'react-native-navigationbar';
+import MultiTitleComponent from '../components/multiTitleComponent';
+import Toast from 'react-native-root-toast';
+import theme from '../utils/themeUtil';
 
-import SearchModal from '../components/SearchModal';
 
 class BookStorePage extends Component{
-    state = {
-        searchModalVisible: false,
-    }
     constructor(props){
         super(props);
+        this.state = {
+            loading: true
+        }
+    }
+    componentWillMount() {
+        fetch('https://app.readnovel.com/ajax/book/getBookStoreInfo')
+            .then(response => response.json())
+            .then((result) => {
+                this.setState({
+                    data:  result.data,
+                    loading: false
+                });
+            })
+            .catch((error) => {
+                this.setState({
+
+                });
+            })
     }
     render(){
+        let swiperimgs = [];
+        if(!this.state.loading) {
+            let adTop = this.state.data.adInfo.adTop;
+            for (var i in adTop) {
+                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: adTop[i].adImgUrl}} />)
+                swiperimgs.push(img);
+            }
+        }
         return(
             <View style={styles.container}>
-                <Swiper style={styles.wrapper} width={Dimensions.get('window').width} height={250} loop={true} autoplay={true}>
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ca9c6ea4e5d70f2542e4a0791e82b3cb/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/cab2778493c43e33237adff16b62308e/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
+                <NavigationBar
+                    title="书城"
+                    titleColor={theme.barTitleColor}
+                    backIconHidden={true}
+                    barTintColor={theme.barTintColor}
+                    />
+                <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
+                    {swiperimgs}
                 </Swiper>
-                <View style={styles.searchButtonWrap} >
-                  <TouchableHighlight onPress={() => {
-                      this.setState({
-                        searchModalVisible: true
-                      });
-                    }} >
-                    <Text style={styles.searchButton}> 点击搜索 </Text>
-                  </TouchableHighlight>
-                </View>
-                <SearchModal visible={this.state.searchModalVisible} />
-                <View style={styles.nav}>
-                    <TouchableHighlight onPress={() => this.goRankPage()}>
+                <View style={[styles.nav, styles.module]}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} />
+                            <Image style={styles.iconImg} width={px2dp(27)} height={px2dp(24)}  source={require('../res/rank.png')} />
                             <Text style={styles.navText} >排行榜</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFreePage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFreePage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >免费</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goNewPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goNewPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Image style={styles.iconImg} width={px2dp(19)} height={px2dp(24)}  source={require('../res/newbook.png')} />
                             <Text style={styles.navText} >新书</Text>
+
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFinishPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFinishPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} />
+                            <Image style={styles.iconImg} width={px2dp(18)} height={px2dp(26)}  source={require('../res/end.png')} />
                             <Text style={styles.navText} >完本</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goCategoryPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goCategoryPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} />
+                            <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/sort.png')} />
                             <Text style={styles.navText} >分类</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
-                <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>
-                <ScrollView horizontal={true} style={styles.bookList}>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                </ScrollView>
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '热门小说'
+                      borderColor= "red"
+                      hasMoreBtn= { false }
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotBookInfo}>
+
+                      </BookListH>
+                      :
+                      <Text>464556</Text>
+                  }
+                </View>
+
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '排行榜'
+                      borderColor= "red"
+                      hasMoreBtn= { true }
+                      moreType={"rank"}
+                      navigator = {this.props.navigator}
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotBookInfo}>
+
+                      </BookListH>
+                      :
+                      <Text>464556</Text>
+                  }
+                </View>
             </View>
         );
     }
@@ -112,79 +154,50 @@ class BookStorePage extends Component{
         });
     }
 }
-class BookListItem extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return(
-            <View style={styles.bookListItem}>
-                <Image style={styles.bookCover} source={{uri: 'https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150'}} />
-                <Text>{this.props.bookName}</Text>
-                <Text>{this.props.authorName}</Text>
-            </View>
-        );
-    }
-}
 
 const styles = StyleSheet.create({
     wrapper: {
+        backgroundColor: 'red'
     },
     container: {
-        flex: 1,
+        backgroundColor: '#f6f7f9'
     },
-
+    module: {
+        backgroundColor: '#fff',
+        marginBottom: px2dp(12)
+    },
+    hotModule: {
+        height: px2dp(216)
+    },
     slide: {
         width: '100%',
         flex: 1,
         justifyContent: 'center',
     },
-    searchButtonWrap: {
-        backgroundColor: '#fff',
-        paddingTop: 5,
-        paddingBottom: 5,
-    },
-    searchButton: {
-        color: "#999",
-        fontSize: 14,
-        textAlign: 'center',
-        paddingTop: 5,
-        paddingBottom: 5,
-    },
     image: {
         backgroundColor: 'transparent',
-        width: '100%',
-        height: 250
+    },
+    navBar: {
+
     },
     nav: {
-        height: 60,
+        height: px2dp(82),
         flexDirection:'row',
         justifyContent: 'space-around',
-        marginTop: 10,
-        marginBottom: 10,
+        alignItems: 'center',
     },
     iconBox: {
-        height: 60,
+        height: px2dp(58),
         alignItems: 'center',
+        justifyContent: 'center'
     },
     iconImg: {
 
     },
-    bookCover: {
-        flex: 1,
-        width: 100,
-        height: 90
-    },
     navText: {
-        color: '#333',
-        fontSize: 14,
-    },
-    bookListItem: {
-        height: 200,
-        paddingTop: 15,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingBottom: 10
+        color: 'rgb(51, 55, 61)',
+        fontSize: px2dp(12),
+        lineHeight: px2dp(18)
     },
     title: {
         flexDirection:'row',
@@ -196,9 +209,6 @@ const styles = StyleSheet.create({
         borderLeftColor: '#ff3955',
         paddingLeft: 10,
         marginLeft: 10
-    },
-    bookList: {
-        height: 50,
     },
     loadingView: {
         position: 'absolute',

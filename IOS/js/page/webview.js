@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/pxtodpUtil';
 import ShareUtil from '../utils/shareUtil';
 import Toast from 'react-native-root-toast';
+import theme from '../utils/themeUtil';
 
 class WebViewPage extends BackPageComponent {
     constructor (props) {
@@ -63,14 +64,16 @@ class WebViewPage extends BackPageComponent {
             <View style={styles.container}>
                 <NavigationBar
                     title={this.props.title}
-                    backHidden={false}
-                    barTintColor='white'
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     rightBtnIcon = "more"
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}
                     actionName = "更多"
+                    actionTextColor = {theme.barTitleColor}
                     actionFunc = {this._btnOnPressCallback.bind(this, 7)}
                 />
                 <Modal
@@ -206,7 +209,7 @@ class ModalItem extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff"
+        backgroundColor: theme.containerBackgroundColor
     },
     contentContainer: {
         flex: 1,
@@ -245,10 +248,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     modalItem: {
-        width: px2dp(150),
+       // width: px2dp(150),
         height: px2dp(30),
         flexDirection: 'row',
         alignItems: 'center'
+
     }
 });
 

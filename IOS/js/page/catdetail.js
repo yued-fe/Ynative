@@ -1,9 +1,10 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import Tabbar from 'react-native-tabbar'
+import theme from '../utils/themeUtil';
 
 class CatDetailPage extends Component{
 
@@ -31,10 +32,10 @@ class CatDetailPage extends Component{
         return(
             <View style={styles.container}>
                 <NavigationBar title="现代言情"
-                    barStyle={styles.navBar}
-                    backHidden={false}
-                    barTintColor='white'
-                    statusbarPadding = {true}
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -244,9 +245,6 @@ const styles = StyleSheet.create({
     headertext: {
         marginLeft:10,
         color: "#33373d"
-    },
-    navBar: {
-        // height:20
     },
     container: {
         flex: 1,

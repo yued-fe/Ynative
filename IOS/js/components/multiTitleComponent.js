@@ -4,6 +4,11 @@ import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 import CatDetailPage from '../page/catdetail';
 import RankPage from '../page/rank';
+import FreePage from '../page/free';
+import FinishPage from '../page/finish';
+import NewPage from '../page/new';
+import CategoryPage from '../page/category';
+import theme from '../utils/themeUtil';
 
 export default class MultiTitleComponent extends Component{
 
@@ -53,7 +58,7 @@ export default class MultiTitleComponent extends Component{
                 </View>
                 {
                     hasMoreBtn ?
-                        <TouchableHighlight underlayColor='#fff' onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
+                        <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
                             <View style={styles.titleRight}>
                                 <Text style={styles.titleRightText}>更多</Text>
                                 <Image style={styles.titleRightImg} source={require('../res/icon-arrow-r.png')} />
@@ -67,10 +72,18 @@ export default class MultiTitleComponent extends Component{
     }
 
     goMorePage (type,params) {
-        if(type === "category"){
+        if(type === "catdetail"){
             this.switchPage(CatDetailPage,{params:params});
         } else if(type === "rank"){
             this.switchPage(RankPage,{});
+        } else if(type === "new"){
+           this.switchPage(NewPage,{});
+        } else if(type === "free"){
+           this.switchPage(FreePage,{});
+        } else if(type === "finish"){
+           this.switchPage(FinishPage,{});
+        }  else if(type === "category"){
+           this.switchPage(CategoryPage,{});
         } else {
 
         }
@@ -86,7 +99,6 @@ export default class MultiTitleComponent extends Component{
 
 const styles = StyleSheet.create({
     titleWrapper: {
-        flex:1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
@@ -117,7 +129,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     titleRightText: {
-        marginTop: (Platform.OS === 'android' ? px2dp(0) : px2dp(2)),
+        marginTop: (Platform.OS === 'android' ? px2dp(0) : px2dp(3)),
         fontSize: px2dp(14),
         color: "#969ba3"
     },

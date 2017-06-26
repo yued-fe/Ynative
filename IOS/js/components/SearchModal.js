@@ -1,6 +1,10 @@
 'use strict'
 import React, { Component } from 'react'
+import SearchTopNav from './SearchTopNav';
+import Icon from 'react-native-vector-icons/EvilIcons'
+import SearchResult from '../page/searchResult';
 import {
+    AsyncStorage,
     StyleSheet,
     Text,
     View,
@@ -11,61 +15,110 @@ import {
     Button
     } from 'react-native'
 
-
-
 class SearchModal extends Component {
-
-    timer = null
 
     state = {
         modalVisible: false,
         showSearchRecommend: false,
-        historyWords: [
-            { name: '娱乐圈' },
-            { name: '警示对' },
-            { name: '种田' },
-            { name: '天命凤凰' },
-        ],
-        hotWords: [
-            { name: '娱乐圈' },
-            { name: '警示对' },
-            { name: '种田' },
-        ]
+        historyWords: [ ],
+        hotWords: [ ]
     }
 
     constructor (props) {
         super(props)
+        this.reset()
+    }
+
+    reset() {
+        this.getHot()
+        this.getHistory()
+    }
+
+    getHot() {
+        fetch('https://m.readnovel.com/majax/search/auto?kw=')
+            .then(response => response.json())
+            .then((result) => {
+                this.setState({
+                    hotWords: result.data.popWords,
+                });
+            })
+            .catch((error) => {
+                this.setState({
+
+                });
+            })
+    }
+
+    getHistory() {
+        AsyncStorage.getItem('searchHistory', (err, rawHistory) => {
+            if (err || !rawHistory) return;
+            var history = JSON.parse(rawHistory);
+            this.setState({
+                historyWords: history.map((i) => { return { name: i } })
+            });
+        })
+    }
+
+    clearHistory() {
+        AsyncStorage.removeItem('searchHistory')
+        this.setState({
+            historyWords: [] 
+        });
     }
 
     componentWillReceiveProps(props) {
         this.setState({
             modalVisible: props.visible
         });
-    }
-
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
+        this.reset()
     }
 
     getSearchRecommend(text) {
-        clearTimeout(this.timer);
 
         if (text.length) {
-            this.timer = setTimeout(() => {
-                this.setState({
-                    showSearchRecommend: true,
-                    searchRecommend: [
-                        { title: '天命凤凰', id: 15 },
-                        { title: '天命凤凰', id: 16 },
-                    ]
+            fetch('https://m.readnovel.com/majax/search/auto?kw='+text)
+                .then(response => response.json())
+                .then((result) => {
+                    this.setState({
+                        showSearchRecommend: true,
+                        searchRecommend: result.data.bookInfo,
+                    });
                 })
-            }, 2000)
+                .catch((error) => {
+                    this.setState({
+
+                    });
+                })
         } else {
             this.setState({
                 showSearchRecommend: false,
                 searchRecommend: []
             })
         }
+    }
+
+    closeModal() {
+        this.props.onClose();
+    }
+
+    goDetailPage(id) {
+        this.closeModal();
+        this.props.navigator.push({
+            component: SearchResult,
+            args: {
+                keyword: text
+            }
+        });
+    }
+
+    searchWord(text) {
+        this.closeModal();
+        this.props.navigator.push({
+            component: SearchResult,
+            args: {
+                keyword: text
+            }
+        });
     }
 
     render () {
@@ -76,39 +129,19 @@ class SearchModal extends Component {
                 visible={this.state.modalVisible}
                 onRequestClose={function(){}}
                 >
-                <View style={{
-                  marginTop: 22,
-                  paddingTop: 6,
-                  paddingBottom: 6,
-                  paddingLeft: 15,
-                  paddingRight: 15,
-                  flexDirection: 'row',
-                  backgroundColor: '#fff',
-                 }}>
-                    <TextInput
-                        style={{
-                          height: 32,
-                          width: 300,
-                          paddingLeft: 20,
-                          paddingRight: 20,
-                          backgroundColor: '#f0f0f0',
-                          color: '#777'
-                        }}
-                        onChangeText={(text) => {
-                            this.getSearchRecommend(text);
-                        }}
-                    />
-                    <TouchableHighlight onPress={() => {
-                      this.setState({
-                        modalVisible: false
-                      })
-                    }}>
-                      <Text style={{
-                        paddingTop: 9,
-                        paddingLeft: 14,
-                      }}>取消</Text>
-                    </TouchableHighlight>
-                </View>
+                <SearchTopNav
+                    defaultSearchValue={this.props.defaultSearchValue}
+                    navigator={this.props.navigator}
+                    onCancelButtonPress={() => {
+                        this.props.onClose();
+                    }}
+                    onChangeText={(text) => {
+                        this.getSearchRecommend(text);
+                    }}
+                    onSubmitEditing={(event) => {
+                        this.closeModal();
+                    }}
+                 />
 
                 { this.state.showSearchRecommend ?
 
@@ -118,7 +151,11 @@ class SearchModal extends Component {
                           paddingRight: 15,
                         }}>
                             { this.state.searchRecommend.map((word) => {
-                                return <TouchableHighlight key={word.id}>
+                                return <TouchableHighlight key={word.id}
+                                    onPress={() => {
+                                        this.goDetailPage(word.id);
+                                    }}
+                                >
                                   <View
                                     style={{
                                       paddingTop: 10,
@@ -127,7 +164,15 @@ class SearchModal extends Component {
                                       borderBottomColor: '#eee',
                                     }}
                                   >
-                                  <Text>{ word.title }</Text>
+                                  <Text>
+                                        <Icon style={{
+                                            backgroundColor: '#fff',
+                                        }} 
+                                        size={22}
+                                        color="#999"
+                                        name="search" />
+                                      { word.name }
+                                  </Text>
                                   </View>
                                 </TouchableHighlight>
                             }) }
@@ -140,21 +185,49 @@ class SearchModal extends Component {
                             <Text style={styles.blockTitle}>大家都在搜</Text>
                             <View style={styles.wordsWrap}>
                                 { this.state.hotWords.map((word, index) => {
-                                    return <Words title={word.name} key={index} />
+                                    return <Word title={word.name} key={index} onPress={() => {
+                                            this.searchWord(word.name);
+                                        }} />
                                 }) }
                             </View>
                         </View>
+                        { this.state.historyWords.length ?
                         <View>
-                            <Text style={styles.blockTitle}>搜索历史</Text>
-                            <TouchableHighlight>
-                              <Text>清空</Text>
-                            </TouchableHighlight>
+                            <View>
+                                <Text style={styles.blockTitle}>搜索历史</Text>
+                                <TouchableHighlight 
+                                    style={{
+                                        position: 'absolute',
+                                        right: 0,
+                                        top: 15,
+                                        zIndex: 2,
+                                    }}
+                                    onPress={() => { this.clearHistory() }}
+                                    >
+                                <Text style={{
+                                }}>
+                                    <Icon style={{
+                                        backgroundColor: '#f0f0f0',
+                                    }} 
+                                    size={22}
+                                    color="#000"
+                                    name="trash" />
+                                    清空
+                                </Text>
+                                </TouchableHighlight>
+
+                            </View>
                             <View style={styles.wordsWrap}>
                                 { this.state.historyWords.map((word, index) => {
-                                    return <Words title={word.name} key={index} />
+                                    return <Word title={word.name} key={index} onPress={() => {
+                                            this.searchWord(word.name);
+                                        }} />
                                 }) }
                             </View>
                         </View>
+                        :
+                        null
+                         }
                     </ScrollView>
                  }
 
@@ -164,7 +237,7 @@ class SearchModal extends Component {
     }
 }
 
-class Words extends Component {
+class Word extends Component {
 
     constructor (props) {
         super(props)
@@ -172,9 +245,7 @@ class Words extends Component {
 
     render () {
         return (
-            <TouchableHighlight style={styles.word} onPress={() => {
-
-            }}>
+            <TouchableHighlight style={styles.word} onPress={ this.props.onPress }>
                 <Text style={{
                   color: '#999',
                 }}> { this.props.title } </Text>
@@ -182,7 +253,6 @@ class Words extends Component {
         )
     }
 }
-
 
 
 const styles = StyleSheet.create({

@@ -12,15 +12,20 @@ import RankPage from './rank';
 import BookListH from '../components/BookListH';
 import NavigationBar from 'react-native-navigationbar';
 import MultiTitleComponent from '../components/multiTitleComponent';
+import SearchModal from '../components/SearchModal';
 import Toast from 'react-native-root-toast';
+import Icon from 'react-native-vector-icons/EvilIcons'
 import theme from '../utils/themeUtil';
 
 
 class BookStorePage extends Component{
     constructor(props){
         super(props);
+
         this.state = {
-            loading: true
+            loading: true,
+            defaultSearchValue: '新婚无爱，替罪前妻',
+            searchModalVisible: false,
         }
     }
     componentWillMount() {
@@ -58,6 +63,38 @@ class BookStorePage extends Component{
                 <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
                     {swiperimgs}
                 </Swiper>
+
+                <View style={styles.searchButtonWrap} >
+                  <TouchableHighlight onPress={() => {
+                      this.setState({
+                        searchModalVisible: true
+                      });
+                    }} >
+                    <Text style={styles.searchButton}> 
+
+                        <Icon style={{
+                            marginRight: 30
+                         }} 
+                        size={18}
+                        color="#999"
+                        name="search" />
+                        
+                        { this.state.defaultSearchValue }
+
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+                <SearchModal 
+                    defaultSearchValue={this.state.defaultSearchValue}
+                    navigator={this.props.navigator}
+                    visible={this.state.searchModalVisible}
+                    onClose={() => {
+                        this.setState({
+                            searchModalVisible: false
+                        })
+                    }}
+                     />
+
                 <View style={[styles.nav, styles.module]}>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
@@ -224,7 +261,20 @@ const styles = StyleSheet.create({
     loadingImage: {
         width: 60,
         height: 60
-    }
+    },
+    searchButtonWrap: {
+        backgroundColor: '#fff',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+    searchButton: {
+        color: "#999",
+        fontSize: 14,
+        textAlign: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+
 });
 const { width } = Dimensions.get('window');
 

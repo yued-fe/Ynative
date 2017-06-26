@@ -8,6 +8,7 @@ import {
 import NavigationBar from 'react-native-navigationbar'
 import SearchTopNav from '../components/SearchTopNav';
 import theme from '../utils/themeUtil';
+import SingleDataComponent from '../components/singleDataComponent';
 
 class SearchResult extends Component{
 
@@ -118,28 +119,14 @@ class SearchResult extends Component{
             </View>
         );
     }
-    _renderRow(book) {
-        console.log(book)
+    _renderRow(rowData,sectionId,rowId) {
         return (
-            <View onPress={this.goDetailPage()} style={styles.infoitem}>
-                <Image style={styles.infoimg} source={{uri:'https://qidian.qpic.cn/qdbimg/349573/c_' + book.bid + '/150'}} />
-                <View style={styles.infoword}>
-                    <Text style={styles.infoname}>{book.bName}</Text>
-                    <Text numberOfLines={2} style={styles.desc}>{book.desc}</Text>
-                    <View style={styles.infometa}>
-                        <Text style={styles.infoauth}>{book.bAuth}</Text>
-                            <View style={styles.infocategory}>
-                                <Text style={styles.infocategorytxt}>{book.cat}</Text>
-                            </View>
-                            <View style={styles.infostatus}>
-                                <Text style={styles.infostatustxt}>{book.state}</Text>
-                            </View>
-                            <View style={styles.infowordscnt}>
-                                <Text style={styles.infowordscnttxt}>{book.cnt}</Text>
-                            </View>
-                    </View>
-                </View>
-            </View>
+            <SingleDataComponent
+                item = {rowData}
+                index = {rowId}
+                key = {rowId}
+                navigator = {this.props.navigator}
+            />
         );
     }
 

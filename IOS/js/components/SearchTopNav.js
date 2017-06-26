@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import SearchResult from '../page/searchResult';
+import theme from '../utils/themeUtil';
 import {
     StyleSheet,
     Text,
@@ -86,7 +87,7 @@ class SearchTopNav extends Component {
                         this.searchWord(event.nativeEvent.text);
                     }}
                 />
-                <TouchableHighlight onPress={() => {
+                <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => {
                     this.props.onCancelButtonPress();
                 }}>
                     <Text style={{

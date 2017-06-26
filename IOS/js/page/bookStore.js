@@ -9,7 +9,12 @@ import NewPage from './new';
 import FinishPage from './finish';
 import RankPage from './rank';
 
+import SearchModal from '../components/SearchModal';
+
 class BookStorePage extends Component{
+    state = {
+        searchModalVisible: false,
+    }
     constructor(props){
         super(props);
     }
@@ -22,6 +27,16 @@ class BookStorePage extends Component{
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/cab2778493c43e33237adff16b62308e/0'}} />
                     <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
                 </Swiper>
+                <View style={styles.searchButtonWrap} >
+                  <TouchableHighlight onPress={() => {
+                      this.setState({
+                        searchModalVisible: true
+                      });
+                    }} >
+                    <Text style={styles.searchButton}> 点击搜索 </Text>
+                  </TouchableHighlight>
+                </View>
+                <SearchModal visible={this.state.searchModalVisible} />
                 <View style={styles.nav}>
                     <TouchableHighlight onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
@@ -53,7 +68,7 @@ class BookStorePage extends Component{
                             <Text style={styles.navText} >分类</Text>
                         </View>
                     </TouchableHighlight>
-                </View>  
+                </View>
                 <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>
                 <ScrollView horizontal={true} style={styles.bookList}>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
@@ -106,7 +121,7 @@ class BookListItem extends Component {
             <View style={styles.bookListItem}>
                 <Image style={styles.bookCover} source={{uri: 'https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150'}} />
                 <Text>{this.props.bookName}</Text>
-                <Text>{this.props.authorName}</Text>                
+                <Text>{this.props.authorName}</Text>
             </View>
         );
     }
@@ -124,13 +139,25 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
+    searchButtonWrap: {
+        backgroundColor: '#fff',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+    searchButton: {
+        color: "#999",
+        fontSize: 14,
+        textAlign: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
     image: {
         backgroundColor: 'transparent',
         width: '100%',
         height: 250
     },
     nav: {
-        height: 60,        
+        height: 60,
         flexDirection:'row',
         justifyContent: 'space-around',
         marginTop: 10,
@@ -138,7 +165,7 @@ const styles = StyleSheet.create({
     },
     iconBox: {
         height: 60,
-        alignItems: 'center',        
+        alignItems: 'center',
     },
     iconImg: {
 
@@ -150,17 +177,17 @@ const styles = StyleSheet.create({
     },
     navText: {
         color: '#333',
-        fontSize: 14,        
+        fontSize: 14,
     },
-    bookListItem: { 
+    bookListItem: {
         height: 200,
         paddingTop: 15,
         paddingLeft: 10,
-        paddingRight: 10, 
+        paddingRight: 10,
         paddingBottom: 10
     },
-    title: {    
-        flexDirection:'row',        
+    title: {
+        flexDirection:'row',
     },
     titleText: {
         fontSize: 16,

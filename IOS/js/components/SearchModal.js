@@ -11,35 +11,6 @@ import {
     Button
     } from 'react-native'
 
-var HistoryWords = [
-    { title: '娱乐圈', id: 1 },
-    { title: '警示对', id: 2 },
-    { title: '种田', id: 3 },
-    { title: '天命凤凰', id: 4 },
-    { title: '天命凤凰', id: 5 },
-    { title: '天命凤凰', id: 6 },
-    { title: '天命凤凰', id: 7 },
-    { title: '天命凤凰', id: 8 },
-];
-
-var HotWords = [
-    { title: '娱乐圈', id: 1 },
-    { title: '警示对', id: 2 },
-    { title: '种田', id: 3 },
-    { title: '天命凤凰', id: 4 },
-    { title: '天命凤凰', id: 5 },
-    { title: '天命凤凰', id: 6 },
-    { title: '天命凤凰', id: 7 },
-    { title: '天命凤凰', id: 8 },
-    { title: '娱乐圈', id: 9 },
-    { title: '警示对', id: 10 },
-    { title: '种田', id: 11 },
-    { title: '天命凤凰', id: 12 },
-    { title: '天命凤凰', id: 13 },
-    { title: '天命凤凰', id: 14 },
-    { title: '天命凤凰', id: 15 },
-    { title: '天命凤凰', id: 16 },
-];
 
 
 class SearchModal extends Component {
@@ -49,6 +20,17 @@ class SearchModal extends Component {
     state = {
         modalVisible: false,
         showSearchRecommend: false,
+        historyWords: [
+            { name: '娱乐圈' },
+            { name: '警示对' },
+            { name: '种田' },
+            { name: '天命凤凰' },
+        ],
+        hotWords: [
+            { name: '娱乐圈' },
+            { name: '警示对' },
+            { name: '种田' },
+        ]
     }
 
     constructor (props) {
@@ -88,28 +70,66 @@ class SearchModal extends Component {
 
     render () {
         return (
+          <View style={{marginTop: 22}}>
             <Modal
                 transparent={false}
                 visible={this.state.modalVisible}
                 onRequestClose={function(){}}
                 >
-                <View>
+                <View style={{
+                  marginTop: 22,
+                  paddingTop: 6,
+                  paddingBottom: 6,
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                  flexDirection: 'row',
+                  backgroundColor: '#fff',
+                 }}>
                     <TextInput
+                        style={{
+                          height: 32,
+                          width: 300,
+                          paddingLeft: 20,
+                          paddingRight: 20,
+                          backgroundColor: '#f0f0f0',
+                          color: '#777'
+                        }}
                         onChangeText={(text) => {
                             this.getSearchRecommend(text);
                         }}
                     />
-                    <Button title="取消" onPress={() => {
-                        this.setModalVisible(false);
-                    }} />
+                    <TouchableHighlight onPress={() => {
+                      this.setState({
+                        modalVisible: false
+                      })
+                    }}>
+                      <Text style={{
+                        paddingTop: 9,
+                        paddingLeft: 14,
+                      }}>取消</Text>
+                    </TouchableHighlight>
                 </View>
 
                 { this.state.showSearchRecommend ?
 
                     <ScrollView>
-                        <View>
+                        <View style={{
+                          paddingLeft: 15,
+                          paddingRight: 15,
+                        }}>
                             { this.state.searchRecommend.map((word) => {
-                                return <Text key={word.id}>{ word.title }</Text>
+                                return <TouchableHighlight key={word.id}>
+                                  <View
+                                    style={{
+                                      paddingTop: 10,
+                                      paddingBottom: 10,
+                                      borderBottomWidth: 1,
+                                      borderBottomColor: '#eee',
+                                    }}
+                                  >
+                                  <Text>{ word.title }</Text>
+                                  </View>
+                                </TouchableHighlight>
                             }) }
                         </View>
                     </ScrollView>
@@ -117,19 +137,21 @@ class SearchModal extends Component {
 
                     <ScrollView>
                         <View>
-                            <Text>大家都在搜</Text>
+                            <Text style={styles.blockTitle}>大家都在搜</Text>
                             <View style={styles.wordsWrap}>
-                                { HotWords.map((word) => {
-                                    return <Words title={word.title} key={word.id} />
+                                { this.state.hotWords.map((word, index) => {
+                                    return <Words title={word.name} key={index} />
                                 }) }
                             </View>
                         </View>
                         <View>
-                            <Text>搜索历史</Text>
-                            <Button title="清空" onPress={() => { }} />
+                            <Text style={styles.blockTitle}>搜索历史</Text>
+                            <TouchableHighlight>
+                              <Text>清空</Text>
+                            </TouchableHighlight>
                             <View style={styles.wordsWrap}>
-                                { HistoryWords.map((word) => {
-                                    return <Words title={word.title} key={word.id} />
+                                { this.state.historyWords.map((word, index) => {
+                                    return <Words title={word.name} key={index} />
                                 }) }
                             </View>
                         </View>
@@ -137,6 +159,7 @@ class SearchModal extends Component {
                  }
 
             </Modal>
+          </View>
         )
     }
 }
@@ -152,7 +175,9 @@ class Words extends Component {
             <TouchableHighlight style={styles.word} onPress={() => {
 
             }}>
-                <Text> { this.props.title } </Text>
+                <Text style={{
+                  color: '#999',
+                }}> { this.props.title } </Text>
             </TouchableHighlight>
         )
     }
@@ -167,20 +192,31 @@ const styles = StyleSheet.create({
     webview: {
         flex: 1
     },
+    blockTitle: {
+      backgroundColor: '#f0f0f0',
+      paddingTop: 20,
+      paddingLeft: 15,
+      paddingBottom: 7,
+      color: '#777',
+    },
     wordsWrap: {
         flexWrap: 'wrap',
         alignItems: 'flex-start',
         flexDirection: 'row',
+        paddingTop: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 10,
     },
     word: {
-
-        marginLeft: 5,
+        marginLeft: 0,
         marginRight: 5,
+        marginBottom: 10,
         paddingTop: 3,
         paddingBottom: 3,
         paddingLeft: 3,
         paddingRight: 3,
-        borderRadius: 8,
+        borderRadius: 30,
         borderWidth: 1,
         borderColor: '#ccc'
     }

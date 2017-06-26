@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import NavigationBar from 'react-native-navigationbar';
 import theme from '../utils/themeUtil';
-// import SvgUri from 'react-native-svg-uri';
 
+import RankDetailPage from './rank-detail.js';
 import WebViewPage from './webview';
 
 class RankPage extends Component {
@@ -23,15 +23,15 @@ class RankPage extends Component {
         super(props);
 
         const ranks = [
-            { name: '热销榜', books: [{}, {}, {}, {}, {}], dataKey: 'hotRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-hotsales.0.1.jpg' },
-            { name: '风云榜', books: [{}, {}, {}, {}, {}], dataKey: 'forbesRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-forbes.0.1.jpg' },
-            { name: '新书榜', books: [{}, {}, {}, {}, {}], dataKey: 'newRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-newbook.0.1.jpg' },
-            { name: '推荐榜', books: [{}, {}, {}, {}, {}], dataKey: 'weekRecomRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-recom.0.1.jpg' },
-            { name: '完本榜', books: [{}, {}, {}, {}, {}], dataKey: 'finishRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-finish.0.1.jpg' },
-            { name: '打赏榜', books: [{}, {}, {}, {}, {}], dataKey: 'ticketRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-donate.0.1.jpg' },
-            { name: '更新榜', books: [{}, {}, {}, {}, {}], dataKey: 'updateRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-update.0.1.jpg' },
-            { name: '点击榜', books: [{}, {}, {}, {}, {}], dataKey: 'clickRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-click.0.1.jpg' },
-            { name: '收藏榜', books: [{}, {}, {}, {}, {}], dataKey: 'collectRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-collect.0.1.jpg' },
+            { name: '热销榜', books: [{}, {}, {}, {}, {}], type: 0, dataKey: 'hotRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-hotsales.0.1.jpg' },
+            { name: '风云榜', books: [{}, {}, {}, {}, {}], type: 7, dataKey: 'forbesRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-forbes.0.1.jpg' },
+            { name: '新书榜', books: [{}, {}, {}, {}, {}], type: 1, dataKey: 'newRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-newbook.0.1.jpg' },
+            { name: '推荐榜', books: [{}, {}, {}, {}, {}], type: 5, dataKey: 'weekRecomRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-recom.0.1.jpg' },
+            { name: '完本榜', books: [{}, {}, {}, {}, {}], type: 2, dataKey: 'finishRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-finish.0.1.jpg' },
+            { name: '打赏榜', books: [{}, {}, {}, {}, {}], type: 8, dataKey: 'ticketRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-donate.0.1.jpg' },
+            { name: '更新榜', books: [{}, {}, {}, {}, {}], type: 6, dataKey: 'updateRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-update.0.1.jpg' },
+            { name: '点击榜', books: [{}, {}, {}, {}, {}], type: 3, dataKey: 'clickRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-click.0.1.jpg' },
+            { name: '收藏榜', books: [{}, {}, {}, {}, {}], type: 9, dataKey: 'collectRank', cover: 'https://qidian.gtimg.com/readnovelm/img/rank/rank-bg-collect.0.1.jpg' },
         ];
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -76,10 +76,10 @@ class RankPage extends Component {
         return(
             <View style={styles.view}>
                 <NavigationBar title="排行榜"
-                    barTintColor = {theme.barTintColor}
-                    titleColor = {theme.barTitleColor}
-                    backColor = {theme.barTitleColor}
-                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
+                    barTintColor={theme.barTintColor}
+                    titleColor={theme.barTitleColor}
+                    backColor={theme.barTitleColor}
+                    statusbarPadding={(Platform.OS === 'android' ? false : true)}
                     backFunc={() => this.props.navigator.pop()}
                 />
                 {this.state.didMount ?
@@ -107,15 +107,20 @@ class RankPage extends Component {
     _renderRank(rank, rankIndex) {
         return (
             <View style={styles.item} key={rankIndex}>
-                <View style={styles.rank}>
-                    <Image style={styles.cover} source={{uri: rank.cover}} />
-                    <Text style={styles.name}>{rank.name}</Text>
-                </View>
+                <TouchableHighlight onPress={() => this.goRankDetailPage(rank)} underlayColor="rgba(0,0,0,.05)">
+                    <View style={styles.rankCover}>
+                        <Image style={styles.rankCoverBg} source={{uri: rank.cover}} />
+                        <Text style={styles.rankCoverName}>{rank.name}</Text>
+                        <View>
+                            <Image style={styles.rankCoverArrow} source={require('../res/rank-arrow.png')} />
+                        </View>
+                    </View>
+                </TouchableHighlight>
                 <View style={styles.books}>
                     {
                         rank.books.map((book, bookIndex) => {
                             return(
-                                <TouchableHighlight onPress={() => this.goDetailPage(book)} key={bookIndex}>
+                                <TouchableHighlight onPress={() => this.goBookDetailPage(book)} key={bookIndex} underlayColor="rgba(0,0,0,.05)">
                                     <View style={styles.book}>
                                         <Text style={[styles.bindex, styles['bindex-' + (bookIndex + 1)]]}>{bookIndex + 1}.</Text>
                                         { bookIndex > 0 ? (<View style={styles.bline}></View>) : null }
@@ -130,11 +135,20 @@ class RankPage extends Component {
         );
     }
 
-    goDetailPage(book) {
+    goRankDetailPage(rank) {
+        this.props.navigator.push({
+            component: RankDetailPage,
+            args: {
+                rankName: rank.name,
+                rankType: rank.type,
+            },
+        });
+    }
+
+    goBookDetailPage(book) {
         this.props.navigator.push({
             component: WebViewPage,
             args: {
-                anim: "customPushFromRight",
                 title: book.bName,
                 url: `https://m.readnovel.com/book/${book.bid}`,
             },
@@ -156,24 +170,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 20,
     },
-    rank: {
+    rankCover: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 180,
         width: 120,
     },
-    cover: {
-        height: 180,
-        flex: 1,
+    rankCoverBg: {
+        bottom: 0,
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
     },
-    name: {
-        bottom: 76,
+    rankCoverName: {
         color: '#fff',
         fontSize: 22,
-        left: 0,
         lineHeight: 28,
-        position: 'absolute',
-        right: 1,
-        textAlign: 'center',
-        flex: 1,
-        backgroundColor:'rgba(0,0,0,0)'
+        marginTop: 20,
+    },
+    rankCoverArrow: {
+        height: 24,
+        marginTop: 40,
+        width: 24,
     },
     books: {
         flex: 1,

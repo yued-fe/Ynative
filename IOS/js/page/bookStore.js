@@ -16,7 +16,7 @@ import SearchModal from '../components/SearchModal';
 import Toast from 'react-native-root-toast';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import theme from '../utils/themeUtil';
-
+import SingleDataComponent from '../components/singleDataComponent';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -29,7 +29,7 @@ class BookStorePage extends Component{
         }
     }
     componentWillMount() {
-        fetch('https://app.readnovel.com/ajax/book/getBookStoreInfo')
+        fetch('https://m.readnovel.com/majax/index/index')
             .then(response => response.json())
             .then((result) => {
                 this.setState({
@@ -46,9 +46,9 @@ class BookStorePage extends Component{
     render(){
         let swiperimgs = [];
         if(!this.state.loading) {
-            let adTop = this.state.data.adInfo.adTop;
+            let adTop = this.state.data.topAd;
             for (var i in adTop) {
-                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: adTop[i].adImgUrl}} />)
+                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: 'https:'+adTop[i].picUrl}} />)
                 swiperimgs.push(img);
             }
         }
@@ -60,6 +60,7 @@ class BookStorePage extends Component{
                     backIconHidden={true}
                     barTintColor={theme.barTintColor}
                     />
+                <ScrollView>
                 <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
                     {swiperimgs}
                 </Swiper>
@@ -138,11 +139,11 @@ class BookStorePage extends Component{
                   />
                   {
                       !this.state.loading ?
-                      <BookListH books={this.state.data.hotBookInfo}>
+                      <BookListH books={this.state.data.hotTop}>
 
                       </BookListH>
                       :
-                      <Text>464556</Text>
+                      null
                   }
                 </View>
 
@@ -156,13 +157,58 @@ class BookStorePage extends Component{
                   />
                   {
                       !this.state.loading ?
-                      <BookListH books={this.state.data.hotBookInfo}>
+                      <BookListH books={this.state.data.hotRank}>
 
                       </BookListH>
                       :
-                      <Text>464556</Text>
+                      null
                   }
                 </View>
+                <View style={[styles.module]}>
+                    <MultiTitleComponent
+                        categoryName = '新书抢鲜'
+                        borderColor= "red"
+                        hasMoreBtn= { true }
+                        moreType={"new"}
+                        navigator = {this.props.navigator}
+                    />
+                    {
+                        !this.state.loading ?
+                            this.state.data.newSell.map((item, index) => {
+                                return <SingleDataComponent
+                                    item = {item}
+                                    index = {index}
+                                    key = {index}
+                                    navigator = {this.props.navigator}
+                                />
+                            })
+                        :
+                        null
+                    }
+                </View>
+                <View style={[styles.module]}>
+                    <MultiTitleComponent
+                        categoryName = '人气完本'
+                        borderColor= "red"
+                        hasMoreBtn= { true }
+                        moreType={"finish"}
+                        navigator = {this.props.navigator}
+                    />
+                    {
+                        !this.state.loading ?
+                            this.state.data.finishRank.map((item, index) => {
+                                return <SingleDataComponent
+                                    item = {item}
+                                    index = {index}
+                                    key = {index}
+                                    navigator = {this.props.navigator}
+                                />
+                            })
+                            :
+                            null
+                    }
+                </View>
+                </ScrollView>
             </View>
         );
     }
@@ -206,7 +252,7 @@ const styles = StyleSheet.create({
         marginBottom: px2dp(12)
     },
     hotModule: {
-        height: px2dp(216)
+        height: px2dp(216),
     },
     slide: {
         width: '100%',

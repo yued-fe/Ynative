@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import SearchTopNav from './SearchTopNav';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import SearchResult from '../page/searchResult';
+import WebViewPage from '../page/webview';
 import {
     AsyncStorage,
     StyleSheet,
@@ -20,6 +21,7 @@ class SearchModal extends Component {
     state = {
         modalVisible: false,
         showSearchRecommend: false,
+        searchRecommend: [ ],
         historyWords: [ ],
         hotWords: [ ]
     }
@@ -70,7 +72,12 @@ class SearchModal extends Component {
         this.setState({
             modalVisible: props.visible
         });
-        this.reset()
+        if (props.visible) {
+            this.reset()
+            this.setState({
+                showSearchRecommend: false,
+            })
+        }
     }
 
     getSearchRecommend(text) {
@@ -101,13 +108,14 @@ class SearchModal extends Component {
         this.props.onClose();
     }
 
-    goDetailPage(id) {
+    goDetailPage(book) {
         this.closeModal();
         this.props.navigator.push({
-            component: SearchResult,
+            component: WebViewPage,
             args: {
-                keyword: text
-            }
+                title: book.name,
+                url: `https://m.readnovel.com/book/${book.id}`,
+            },
         });
     }
 
@@ -150,29 +158,34 @@ class SearchModal extends Component {
                           paddingLeft: 15,
                           paddingRight: 15,
                         }}>
-                            { this.state.searchRecommend.map((word) => {
-                                return <TouchableHighlight key={word.id}
+                            { this.state.searchRecommend.map((book) => {
+                                return <TouchableHighlight key={book.id}
                                     onPress={() => {
-                                        this.goDetailPage(word.id);
+                                        this.goDetailPage(book);
                                     }}
                                 >
                                   <View
                                     style={{
-                                      paddingTop: 10,
-                                      paddingBottom: 10,
+                                      paddingTop: 5,
+                                      paddingBottom: 5,
                                       borderBottomWidth: 1,
                                       borderBottomColor: '#eee',
                                     }}
                                   >
-                                  <Text>
-                                        <Icon style={{
-                                            backgroundColor: '#fff',
-                                        }} 
-                                        size={22}
-                                        color="#999"
-                                        name="search" />
-                                      { word.name }
-                                  </Text>
+                                    <Icon.Button
+                                        size={19}
+                                        color="#000"
+                                        backgroundColor="#fff"
+                                        name="search" 
+                                        iconStyle={{
+                                            marginRight: 5 
+                                        }}
+                                        onPress={() => {
+                                            this.goDetailPage(book);
+                                        }}
+                                        >
+                                        { book.name }
+                                    </Icon.Button>
                                   </View>
                                 </TouchableHighlight>
                             }) }
@@ -195,26 +208,28 @@ class SearchModal extends Component {
                         <View>
                             <View>
                                 <Text style={styles.blockTitle}>搜索历史</Text>
-                                <TouchableHighlight 
+
+                                <View
                                     style={{
                                         position: 'absolute',
                                         right: 0,
-                                        top: 15,
-                                        zIndex: 2,
+                                        bottom: 0,
+                                        zIndex: 10,
                                     }}
-                                    onPress={() => { this.clearHistory() }}
-                                    >
-                                <Text style={{
-                                }}>
-                                    <Icon style={{
-                                        backgroundColor: '#f0f0f0',
-                                    }} 
-                                    size={22}
-                                    color="#000"
-                                    name="trash" />
-                                    清空
-                                </Text>
-                                </TouchableHighlight>
+                                >
+                                    <Icon.Button
+                                        color="#000"
+                                        backgroundColor="#f0f0f0"
+                                        name="trash" 
+                                        iconStyle={{
+                                            marginRight: 0
+                                        }}
+                                        onPress={() => { this.clearHistory() }}
+                                        >
+                                        <Text style={{fontSize: 12}}> 清空 </Text>
+                                    </Icon.Button>
+                                </View>
+
 
                             </View>
                             <View style={styles.wordsWrap}>

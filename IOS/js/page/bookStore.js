@@ -65,22 +65,26 @@ class BookStorePage extends Component{
                 </Swiper>
 
                 <View style={styles.searchButtonWrap} >
-                  <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => {
-                      this.setState({
-                        searchModalVisible: true
-                      });
-                    }} >
-                    <Text style={styles.searchButton}> 
-
-                        <Icon
+                    <Icon.Button
                         size={19}
                         color="#999"
-                        name="search" />
-                        
+                        backgroundColor="#fff"
+                        name="search" 
+                        iconStyle={{
+                            marginRight: 5 
+                        }}
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        onPress={() => {
+                            this.setState({
+                                searchModalVisible: true
+                            });
+                        }}
+                        >
                         { this.state.defaultSearchValue }
-
-                    </Text>
-                  </TouchableHighlight>
+                    </Icon.Button>
                 </View>
                 <SearchModal 
                     defaultSearchValue={this.state.defaultSearchValue}
@@ -262,14 +266,6 @@ const styles = StyleSheet.create({
     },
     searchButtonWrap: {
         backgroundColor: '#fff',
-        paddingTop: 5,
-        paddingBottom: 5,
-        justifyContent:"center"
-    },
-    searchButton: {
-        color: "#999",
-        fontSize: 14,
-        textAlign: 'center',
         paddingTop: 5,
         paddingBottom: 5,
     },

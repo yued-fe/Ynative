@@ -76,9 +76,6 @@ class SearchResult extends Component{
         this.props.navigator.pop();
     }
 
-    goDetailPage () {
-        
-    }
     render(){
         return(
             <View style={styles.container}>

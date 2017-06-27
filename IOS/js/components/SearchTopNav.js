@@ -73,11 +73,12 @@ class SearchTopNav extends Component {
                         width: 300,
                         paddingLeft: 32,
                         paddingRight: 20,
-                        fontSize: 16,
+                        fontSize: 14,
                         backgroundColor: '#f0f0f0',
                         color: '#333'
                     }}
-                    defaultValue={this.props.value || this.props.defaultSearchValue}
+                    defaultValue={this.props.value}
+                    placeholder={this.props.defaultSearchValue}
                     clearButtonMode='while-editing'
                     onChangeText={(text) => {
                         this.props.onChangeText(text);
@@ -88,6 +89,9 @@ class SearchTopNav extends Component {
                     }}
                 />
                 <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => {
+                    this.setState({
+                        keyword: ''
+                    })
                     this.props.onCancelButtonPress();
                 }}>
                     <Text style={{

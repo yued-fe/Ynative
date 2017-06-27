@@ -14,7 +14,7 @@ class BookListH extends Component {
         var books = this.props.books;
         var bookListItems = []
         for (var i = 0;i < books.length;i++) {
-            var bookListItem = (<BookListItem key={i} bookCover={'https://qidian.qpic.cn/qdbimg/349573/c_' + books[i].bid + '/150'} bookName={books[i].bName} authorName={books[i].bAuth}></BookListItem>);
+            var bookListItem = (<BookListItem key={i} bookCover={'https://qidian.qpic.cn/qdbimg/349573/c_' + books[i].bid + '/150'} bookId={books[i].bid} bookName={books[i].bName} authorName={books[i].bAuth} navigator = {this.props.navigator}></BookListItem>);
             bookListItems.push(bookListItem);
         }
         return(

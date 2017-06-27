@@ -46,7 +46,7 @@ class CatDetailPage extends Component{
             <Text>综合</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem,styles.tabItemActive }  onPress={() => this.onTabSelect('item2')}>
+        <TouchableOpacity style={[styles.tabItem,styles.tabItemActive] }  onPress={() => this.onTabSelect('item2')}>
           <View>
             <Text style={styles.tabTextActive}>字数</Text>
           </View>
@@ -181,8 +181,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginLeft:20,
         flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+        alignItems: 'flex-start'
       },
       scrollView: {
         backgroundColor: 'yellow'
@@ -208,12 +207,6 @@ const styles = StyleSheet.create({
       tabTextActive:{
         color:'#ff3955',
       },
-      container: {
-        flex: 1,
-        justifyContent: 'center',
-        padding:0,
-        alignItems: 'center',
-    },
     instructions: {
         textAlign: 'center',
         color: '#333333',

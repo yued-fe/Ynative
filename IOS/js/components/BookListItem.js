@@ -3,6 +3,8 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
+import theme from '../utils/themeUtil';
+import WebViewPage from '../page/webview';
 
 class BookListItem extends Component {
     constructor(props) {
@@ -10,12 +12,32 @@ class BookListItem extends Component {
     }
     render() {
         return(
-            <View style={styles.bookListItem}>
-                <Image style={styles.bookCover} source={{uri: this.props.bookCover}} />
-                <Text style={styles.bookName}  numberOfLines={2}>{this.props.bookName}</Text>
-                <Text style={styles.authorName}>{this.props.authorName}</Text>
-            </View>
+            <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goDetailPage(this.props)}>
+                <View style={styles.bookListItem}>
+                    <Image style={styles.bookCover} source={{uri: this.props.bookCover}} />
+                    <Text style={styles.bookName}  numberOfLines={2}>{this.props.bookName}</Text>
+                    <Text style={styles.authorName}>{this.props.authorName}</Text>
+                </View>
+            </TouchableHighlight>
         );
+    }
+
+    goDetailPage (book) {
+        //this.switchPage(DetailPage,{bId:book.bId});
+        this.props.navigator.push({
+            component: WebViewPage,
+            args: {
+                title: book.bookName,
+                url: `https://m.readnovel.com/book/${book.bookId}`,
+            },
+        });
+    }
+
+    switchPage(component,args){
+        this.props.navigator.push({
+            component: component,
+            args:args
+        });
     }
 }
 const styles = StyleSheet.create({

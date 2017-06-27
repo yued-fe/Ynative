@@ -1,4 +1,3 @@
-
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
@@ -140,8 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginLeft:20,
         flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+        alignItems: 'flex-start'
       },
       scrollView: {
         backgroundColor: 'yellow'
@@ -167,12 +165,6 @@ const styles = StyleSheet.create({
       tabTextActive:{
         color:'#ff3955',
       },
-      container: {
-        flex: 1,
-        justifyContent: 'center',
-        padding:0,
-        alignItems: 'center',
-    },
     instructions: {
         textAlign: 'center',
         color: '#333333',

@@ -60,7 +60,7 @@ class BookStorePage extends Component{
                     backIconHidden={true}
                     barTintColor={theme.barTintColor}
                     />
-                <ScrollView>
+                <ScrollView style={{marginBottom:50}}>
                 <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
                     {swiperimgs}
                 </Swiper>
@@ -139,7 +139,7 @@ class BookStorePage extends Component{
                   />
                   {
                       !this.state.loading ?
-                      <BookListH books={this.state.data.hotTop}>
+                      <BookListH books={this.state.data.hotTop} navigator = {this.props.navigator}>
 
                       </BookListH>
                       :
@@ -157,7 +157,7 @@ class BookStorePage extends Component{
                   />
                   {
                       !this.state.loading ?
-                      <BookListH books={this.state.data.hotRank}>
+                      <BookListH books={this.state.data.hotRank} navigator = {this.props.navigator}>
 
                       </BookListH>
                       :
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         // marginTop: 15,
-        // marginBottom: 15,
+        marginBottom: -10,
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 3,

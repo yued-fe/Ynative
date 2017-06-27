@@ -73,6 +73,7 @@ class SearchTopNav extends Component {
                         width: 300,
                         paddingLeft: 32,
                         paddingRight: 20,
+                        borderRadius: 3,
                         fontSize: 14,
                         backgroundColor: '#f0f0f0',
                         color: '#333'

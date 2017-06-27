@@ -268,6 +268,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingTop: 5,
         paddingBottom: 5,
+        // marginTop: 15,
+        // marginBottom: 15,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 3,
     },
 
 });

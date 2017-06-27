@@ -12,7 +12,7 @@ export default class SingleDataComponent extends Component{
 
     render() {
         const {item, index} = this.props;
-        let currentRoute = this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].component.displayName;
+        let currentRoute = this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].component.name;
         return(
             <View style={[styles.infowrapper,index!==0?styles.infowrapperborder:""]} key={this.props.index}>
                 <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goDetailPage(this.props.item)}>

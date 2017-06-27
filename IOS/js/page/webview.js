@@ -236,10 +236,10 @@ const styles = StyleSheet.create({
     },
     moreContentContainer: {
         position: 'absolute',
-        right: px2dp(5),
+        right: (Platform.OS === 'android' ? px2dp(5) : px2dp(0)),
         width: px2dp(150),
         height: px2dp(160),
-        top: px2dp(50),
+        top: (Platform.OS === 'android' ? px2dp(50) : px2dp(64)),
         borderRadius: 5,
         paddingLeft: px2dp(10),
         paddingRight: px2dp(10),

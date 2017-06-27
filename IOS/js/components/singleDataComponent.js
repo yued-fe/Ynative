@@ -11,14 +11,14 @@ export default class SingleDataComponent extends Component{
     }
 
     render() {
-        const {item, index} = this.props;
-        let currentRoute = this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].component.name;
+        const {item, index,frompage} = this.props;
+        //let currentRoute = this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].component.name;
         return(
             <View style={[styles.infowrapper,index!==0?styles.infowrapperborder:""]} key={this.props.index}>
                 <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goDetailPage(this.props.item)}>
                     <View style={styles.infoitem}>
                         <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.item.bid+"/150"}} />
-                        <View style={[styles.infoword,currentRoute === "RankDetailPage" ? styles.rankwidth : null]}>
+                        <View style={[styles.infoword,this.props.frompage === "RankDetailPage" ? styles.rankwidth : null]}>
                             <Text style={styles.infoname}>{this.props.item.bName}{this.props.navigator.getCurrentRoutes}</Text>
                             <Text numberOfLines={2} style={styles.infodesc}>{this.props.item.desc}</Text>
                             <View style={styles.infometa}>

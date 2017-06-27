@@ -211,6 +211,7 @@ class RankDetailPage extends Component {
                     <SingleDataComponent
                         item={book}
                         index={bookIndex}
+                        frompage="RankDetailPage"
                         navigator={this.props.navigator}
                     />
                 </View>

@@ -31,6 +31,8 @@
   
   jsCodeLocation = [NSURL URLWithString:strUrl];
   
+  //jsCodeLocation = [NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"index.ios.jsbundle" ofType:nil]];
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"RNReadnovel"
                                                initialProperties:nil

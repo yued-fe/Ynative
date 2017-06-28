@@ -1,15 +1,14 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text,Dimensions,ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
+import px2dp from '../utils/pxtodpUtil';
 import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
 import FreePage from './free';
 import NewPage from './new';
 import FinishPage from './finish';
 import RankPage from './rank';
-<<<<<<< HEAD
-=======
 import BookListH from '../components/BookListH';
 import NavigationBar from 'react-native-navigationbar';
 import MultiTitleComponent from '../components/multiTitleComponent';
@@ -18,7 +17,6 @@ import Toast from 'react-native-root-toast';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import theme from '../utils/themeUtil';
 import SingleDataComponent from '../components/singleDataComponent';
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
 
 class BookStorePage extends Component{
     constructor(props){
@@ -103,50 +101,35 @@ class BookStorePage extends Component{
                 <View style={[styles.nav, styles.module]}>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} />
+                            <Image style={styles.iconImg} width={px2dp(27)} height={px2dp(24)}  source={require('../res/rank.png')} />
                             <Text style={styles.navText} >排行榜</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFreePage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >免费</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goNewPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
+                            <Image style={styles.iconImg} width={px2dp(19)} height={px2dp(24)}  source={require('../res/newbook.png')} />
                             <Text style={styles.navText} >新书</Text>
 
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFinishPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} />
+                            <Image style={styles.iconImg} width={px2dp(18)} height={px2dp(26)}  source={require('../res/end.png')} />
                             <Text style={styles.navText} >完本</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goCategoryPage()}>
                         <View style={styles.iconBox}>
-                            <Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} />
+                            <Image style={styles.iconImg} width={px2dp(24)} height={px2dp(24)}  source={require('../res/sort.png')} />
                             <Text style={styles.navText} >分类</Text>
                         </View>
                     </TouchableHighlight>
-<<<<<<< HEAD
-                </View>  
-                <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>
-                <ScrollView horizontal={true} style={styles.bookList}>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-                    <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
-=======
                 </View>
                 <View style={[styles.module, styles.hotModule]}>
                   <MultiTitleComponent
@@ -225,7 +208,6 @@ class BookStorePage extends Component{
                             null
                     }
                 </View>
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
                 </ScrollView>
             </View>
         );
@@ -257,33 +239,13 @@ class BookStorePage extends Component{
         });
     }
 }
-class BookListItem extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return(
-            <View style={styles.bookListItem}>
-                <Image style={styles.bookCover} source={{uri: 'https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150'}} />
-                <Text>{this.props.bookName}</Text>
-                <Text>{this.props.authorName}</Text>                
-            </View>
-        );
-    }
-}
 
 const styles = StyleSheet.create({
     wrapper: {
-<<<<<<< HEAD
-    },
-    container: {
-        flex: 1,
-=======
         backgroundColor: 'red'
     },
     container: {
         backgroundColor: '#f6f7f9'
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
     },
     module: {
         backgroundColor: '#fff',
@@ -304,46 +266,26 @@ const styles = StyleSheet.create({
 
     },
     nav: {
-<<<<<<< HEAD
-        height: 60,        
-=======
         height: px2dp(82),
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
         flexDirection:'row',
         justifyContent: 'space-around',
         alignItems: 'center',
     },
     iconBox: {
-<<<<<<< HEAD
-        height: 60,
-        alignItems: 'center',        
-=======
         height: px2dp(58),
         alignItems: 'center',
         justifyContent: 'center'
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
     },
     iconImg: {
 
     },
-    bookCover: {
-        flex: 1,
-        width: 100,
-        height: 90
-    },
     navText: {
-        color: '#333',
-        fontSize: 14,        
+        color: 'rgb(51, 55, 61)',
+        fontSize: px2dp(12),
+        lineHeight: px2dp(18)
     },
-    bookListItem: { 
-        height: 200,
-        paddingTop: 15,
-        paddingLeft: 10,
-        paddingRight: 10, 
-        paddingBottom: 10
-    },
-    title: {    
-        flexDirection:'row',        
+    title: {
+        flexDirection:'row',
     },
     titleText: {
         fontSize: 16,

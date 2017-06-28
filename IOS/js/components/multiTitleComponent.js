@@ -4,14 +4,11 @@ import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 import CatDetailPage from '../page/catdetail';
 import RankPage from '../page/rank';
-<<<<<<< HEAD
-=======
 import FreePage from '../page/free';
 import FinishPage from '../page/finish';
 import NewPage from '../page/new';
 import CategoryPage from '../page/category';
 import theme from '../utils/themeUtil';
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
 
 export default class MultiTitleComponent extends Component{
 
@@ -61,7 +58,7 @@ export default class MultiTitleComponent extends Component{
                 </View>
                 {
                     hasMoreBtn ?
-                        <TouchableHighlight underlayColor='#fff' onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
+                        <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goMorePage(this.props.moreType,this.props.moreParams)}>
                             <View style={styles.titleRight}>
                                 <Text style={styles.titleRightText}>更多</Text>
                                 <Image style={styles.titleRightImg} source={require('../res/icon-arrow-r.png')} />
@@ -102,7 +99,6 @@ export default class MultiTitleComponent extends Component{
 
 const styles = StyleSheet.create({
     titleWrapper: {
-        flex:1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",

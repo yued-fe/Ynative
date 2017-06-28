@@ -5,6 +5,7 @@ import MultiTitleComponent from '../components/multiTitleComponent';
 import SingleDataComponent from '../components/singleDataComponent';
 import TestPage from './index';
 import px2dp from '../utils/pxtodpUtil';
+import theme from '../utils/themeUtil';
 
 class CategoryPage extends Component{
 
@@ -50,20 +51,14 @@ class CategoryPage extends Component{
         return (
             <View style={styles.container}>
                 <NavigationBar title="免费"
-<<<<<<< HEAD
-                    barStyle={styles.navBar}
-                    backHidden={false}
-                    barTintColor='white'
-=======
                     barTintColor = {theme.barTintColor}
                     titleColor = {theme.barTitleColor}
                     backColor = {theme.barTitleColor}
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     actionName = "测试"
                     actionTextColor = {theme.barTitleColor}
                     actionFunc = {this.goTestPage.bind(this)}
-                    backFunc={() => {
+                    backFunc = {() => {
                         this.props.navigator.pop()
                     }}/>
                 {this.state.didMount ?
@@ -127,12 +122,9 @@ class CategoryPage extends Component{
 }
 
 const styles = StyleSheet.create({
-    navBar: {
-        // height:20
-    },
     container: {
         flex: 1,
-        backgroundColor: "#fff"
+        backgroundColor: theme.containerBackgroundColor
     },
     content: {
         marginBottom: px2dp(16)

@@ -188,18 +188,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 22,
         lineHeight: 28,
-<<<<<<< HEAD
-        position: 'absolute',
-        right: 1,
-        textAlign: 'center',
-=======
         marginTop: 20,
     },
     rankCoverArrow: {
         height: 24,
         marginTop: 40,
         width: 24,
->>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
     },
     books: {
         flex: 1,

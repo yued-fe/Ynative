@@ -15,7 +15,7 @@ import SearchDemoPage from './searchDemo';
 import BookStorePage from './bookStore';
 import CatDetailPage from './catdetail';
 import AnimatedPage from './animated';
-import CircleTransition from '../utils/circleTransition';
+import CircleTransition from '../animation/circleTransition';
 
 class IndexPage extends Component{
 

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight,TouchableOpacity} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 import Swiper from 'react-native-swiper';
 import CategoryPage from './category';
@@ -17,6 +17,7 @@ import Toast from 'react-native-root-toast';
 import Icon from 'react-native-vector-icons/EvilIcons'
 import theme from '../utils/themeUtil';
 import SingleDataComponent from '../components/singleDataComponent';
+import WebViewPage from '../page/webview';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -48,7 +49,7 @@ class BookStorePage extends Component{
         if(!this.state.loading) {
             let adTop = this.state.data.topAd;
             for (var i in adTop) {
-                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: 'https:'+adTop[i].picUrl}} />)
+                var img = (<TouchableHighlight key={i} underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goDetailPage(adTop[i])}><Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: 'https:'+adTop[i].picUrl}} /></TouchableHighlight>)
                 swiperimgs.push(img);
             }
         }
@@ -211,6 +212,16 @@ class BookStorePage extends Component{
                 </ScrollView>
             </View>
         );
+    }
+    goDetailPage (book) {
+        //this.switchPage(DetailPage,{bId:book.bId});
+        this.props.navigator.push({
+            component: WebViewPage,
+            args: {
+                title: book.bName,
+                url: 'https://'+book.url,
+            },
+        });
     }
 
     goCategoryPage () {

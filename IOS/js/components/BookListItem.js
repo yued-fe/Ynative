@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
         fontSize: px2dp(13),
         lineHeight: px2dp(18),
         color: 'rgb(51, 55, 61)',
+        marginTop: px2dp(8)
     },
     authorName: {
         fontSize: px2dp(12),

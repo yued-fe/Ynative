@@ -15,6 +15,9 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* RNReadnovelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RNReadnovelTests.m */; };
 		08201A511EF910D40092F8F7 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 08201A501EF910D40092F8F7 /* Fonts */; };
+		0836F3171F038C760041BAE0 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0836F3161F038C760041BAE0 /* TestController.m */; };
+		0836F31A1F038CDF0041BAE0 /* PushNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 0836F3191F038CDF0041BAE0 /* PushNative.m */; };
+		0836F31D1F0398E40041BAE0 /* RNView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0836F31C1F0398E40041BAE0 /* RNView.m */; };
 		0861F58F1EF927A20022A3C5 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 0861F58D1EF927A20022A3C5 /* assets */; };
 		0861F5901EF927A20022A3C5 /* index.ios.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0861F58E1EF927A20022A3C5 /* index.ios.jsbundle */; };
 		08A0A2E71EFBB47A0061C3D6 /* LaunchImage in Resources */ = {isa = PBXBuildFile; fileRef = 08A0A2E61EFBB47A0061C3D6 /* LaunchImage */; };
@@ -298,6 +301,12 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* RNReadnovelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNReadnovelTests.m; sourceTree = "<group>"; };
 		08201A501EF910D40092F8F7 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
+		0836F2F81F038C270041BAE0 /* TestController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestController.h; path = RNReadnovel/TestController.h; sourceTree = "<group>"; };
+		0836F3161F038C760041BAE0 /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestController.m; path = RNReadnovel/TestController.m; sourceTree = "<group>"; };
+		0836F3181F038CC10041BAE0 /* PushNative.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PushNative.h; path = RNReadnovel/PushNative.h; sourceTree = "<group>"; };
+		0836F3191F038CDF0041BAE0 /* PushNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNative.m; path = RNReadnovel/PushNative.m; sourceTree = "<group>"; };
+		0836F31B1F0398870041BAE0 /* RNView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNView.h; path = RNReadnovel/RNView.h; sourceTree = "<group>"; };
+		0836F31C1F0398E40041BAE0 /* RNView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNView.m; path = RNReadnovel/RNView.m; sourceTree = "<group>"; };
 		0861F58D1EF927A20022A3C5 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
 		0861F58E1EF927A20022A3C5 /* index.ios.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.ios.jsbundle; path = bundle/index.ios.jsbundle; sourceTree = "<group>"; };
 		08A0A2E61EFBB47A0061C3D6 /* LaunchImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LaunchImage; sourceTree = "<group>"; };
@@ -493,6 +502,12 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				0836F2F81F038C270041BAE0 /* TestController.h */,
+				0836F3161F038C760041BAE0 /* TestController.m */,
+				0836F3181F038CC10041BAE0 /* PushNative.h */,
+				0836F3191F038CDF0041BAE0 /* PushNative.m */,
+				0836F31B1F0398870041BAE0 /* RNView.h */,
+				0836F31C1F0398E40041BAE0 /* RNView.m */,
 			);
 			name = RNReadnovel;
 			sourceTree = "<group>";
@@ -1142,7 +1157,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				0836F3171F038C760041BAE0 /* TestController.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				0836F31A1F038CDF0041BAE0 /* PushNative.m in Sources */,
+				0836F31D1F0398E40041BAE0 /* RNView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

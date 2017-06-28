@@ -46,10 +46,17 @@ class CategoryPage extends Component{
     render() {
         return (
             <View style={styles.container}>
+<<<<<<< HEAD
                 <NavigationBar title="分类"
                     barStyle={styles.navBar}
                     backHidden={false}
                     barTintColor='white'
+=======
+                <NavigationBar title = "分类"
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
                     statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()

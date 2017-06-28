@@ -4,6 +4,14 @@ import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 import CatDetailPage from '../page/catdetail';
 import RankPage from '../page/rank';
+<<<<<<< HEAD
+=======
+import FreePage from '../page/free';
+import FinishPage from '../page/finish';
+import NewPage from '../page/new';
+import CategoryPage from '../page/category';
+import theme from '../utils/themeUtil';
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
 
 export default class MultiTitleComponent extends Component{
 
@@ -67,10 +75,18 @@ export default class MultiTitleComponent extends Component{
     }
 
     goMorePage (type,params) {
-        if(type === "category"){
+        if(type === "catdetail"){
             this.switchPage(CatDetailPage,{params:params});
         } else if(type === "rank"){
             this.switchPage(RankPage,{});
+        } else if(type === "new"){
+           this.switchPage(NewPage,{});
+        } else if(type === "free"){
+           this.switchPage(FreePage,{});
+        } else if(type === "finish"){
+           this.switchPage(FinishPage,{});
+        }  else if(type === "category"){
+           this.switchPage(CategoryPage,{});
         } else {
 
         }

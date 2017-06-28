@@ -10,14 +10,15 @@ export default class SingleDataComponent extends Component{
     }
 
     render() {
-        const {item, index} = this.props;
+        const {item, index,frompage} = this.props;
+        //let currentRoute = this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].component.name;
         return(
             <View style={[styles.infowrapper,index!==0?styles.infowrapperborder:""]} key={this.props.index}>
                 <TouchableHighlight underlayColor='#fff' onPress={() => this.goDetailPage(this.props.item)}>
                     <View style={styles.infoitem}>
                         <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.item.bid+"/150"}} />
-                        <View style={styles.infoword}>
-                            <Text style={styles.infoname}>{this.props.item.bName}</Text>
+                        <View style={[styles.infoword,this.props.frompage === "RankDetailPage" ? styles.rankwidth : null]}>
+                            <Text style={styles.infoname}>{this.props.item.bName}{this.props.navigator.getCurrentRoutes}</Text>
                             <Text numberOfLines={2} style={styles.infodesc}>{this.props.item.desc}</Text>
                             <View style={styles.infometa}>
                                 <View style={styles.infometaleft}>
@@ -48,7 +49,6 @@ export default class SingleDataComponent extends Component{
         this.props.navigator.push({
             component: WebViewPage,
             args: {
-                anim: "customPushFromRight",
                 title: book.bName,
                 url: `https://m.readnovel.com/book/${book.bid}`,
             },
@@ -66,7 +66,6 @@ export default class SingleDataComponent extends Component{
 const styles = StyleSheet.create({
     infowrapper: {
         height:px2dp(120),
-        flex:1,
         flexDirection: "row",
         marginLeft: px2dp(16)
     },
@@ -77,8 +76,7 @@ const styles = StyleSheet.create({
     infoitem: {
         marginTop:px2dp(16),
         marginBottom:px2dp(16),
-        flexDirection: "row",
-        width: Dimensions.get('window').width - px2dp(32)
+        flexDirection: "row"
     },
     infoimg: {
         width:px2dp(66),
@@ -86,7 +84,11 @@ const styles = StyleSheet.create({
         marginRight:px2dp(8)
     },
     infoword: {
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        width: Dimensions.get('window').width - px2dp(106)
+    },
+    rankwidth: {
+        width: Dimensions.get('window').width - px2dp(138)
     },
     infoname: {
         fontWeight:"bold",
@@ -95,8 +97,7 @@ const styles = StyleSheet.create({
     },
     infodesc: {
         color:'#969ba3',
-        fontSize:px2dp(14),
-        width: Dimensions.get('window').width - px2dp(106)
+        fontSize:px2dp(14)
     },
     infometa: {
         flexDirection: "row",

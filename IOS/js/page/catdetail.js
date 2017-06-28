@@ -1,9 +1,11 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback} from 'react-native';
+import {Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import Tabbar from 'react-native-tabbar'
+import theme from '../utils/themeUtil';
+import SingleDataComponent from '../components/singleDataComponent';
 
 class CatDetailPage extends Component{
 
@@ -31,10 +33,10 @@ class CatDetailPage extends Component{
         return(
             <View style={styles.container}>
                 <NavigationBar title="现代言情"
-                    barStyle={styles.navBar}
-                    backHidden={false}
-                    barTintColor='white'
-                    statusbarPadding = {true}
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
                     backFunc={() => {
                         this.props.navigator.pop()
                     }}/>
@@ -44,7 +46,7 @@ class CatDetailPage extends Component{
             <Text>综合</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem,styles.tabItemActive }  onPress={() => this.onTabSelect('item2')}>
+        <TouchableOpacity style={[styles.tabItem,styles.tabItemActive] }  onPress={() => this.onTabSelect('item2')}>
           <View>
             <Text style={styles.tabTextActive}>字数</Text>
           </View>
@@ -71,35 +73,17 @@ class CatDetailPage extends Component{
     }
     _renderRow(rowData,rowId) {
         return (
-            <View style={styles.listContainer}>
-                <View style={styles.info}>
-                    {rowData.records.map((item, index) => {
-                        return(
-
-                            <View key={index}>
-                                <View onPress={this.goDetailPage()} style={styles.infoitem}>
-                                    <Image style={styles.infoimg} source={{uri:'https://qidian.qpic.cn/qdbimg/349573/c_' + item.bid + '/150'}} />
-                                    <View style={styles.infoword}>
-                                        <Text style={styles.infoname}>{item.bName}</Text>
-                                        <Text numberOfLines={2} style={styles.desc}>{item.desc}</Text>
-                                        <View style={styles.infometa}>
-                                            <Text style={styles.infoauth}>{item.bAuth}</Text>
-                                                <View style={styles.infocategory}>
-                                                    <Text style={styles.infocategorytxt}>{item.cat}</Text>
-                                                </View>
-                                                <View style={styles.infostatus}>
-                                                    <Text style={styles.infostatustxt}>{item.state}</Text>
-                                                </View>
-                                                <View style={styles.infowordscnt}>
-                                                    <Text style={styles.infowordscnttxt}>{item.cnt}</Text>
-                                                </View>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        )})
+            <View >
+                    {
+                        rowData.records.map((item, index) => {
+                            return <SingleDataComponent
+                                item = {item}
+                                index = {index}
+                                key = {index}
+                                navigator = {this.props.navigator}
+                            />
+                        })
                     }
-                </View>
 
             </View>
         );
@@ -197,8 +181,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         marginLeft:20,
         flexWrap: 'wrap', 
-        alignItems: 'flex-start',
-        flexDirection:'row',
+        alignItems: 'flex-start'
       },
       scrollView: {
         backgroundColor: 'yellow'
@@ -224,12 +207,6 @@ const styles = StyleSheet.create({
       tabTextActive:{
         color:'#ff3955',
       },
-      container: {
-        flex: 1,
-        justifyContent: 'center',
-        padding:0,
-        alignItems: 'center',
-    },
     instructions: {
         textAlign: 'center',
         color: '#333333',
@@ -244,9 +221,6 @@ const styles = StyleSheet.create({
     headertext: {
         marginLeft:10,
         color: "#33373d"
-    },
-    navBar: {
-        // height:20
     },
     container: {
         flex: 1,

@@ -8,51 +8,131 @@ import FreePage from './free';
 import NewPage from './new';
 import FinishPage from './finish';
 import RankPage from './rank';
+<<<<<<< HEAD
+=======
+import BookListH from '../components/BookListH';
+import NavigationBar from 'react-native-navigationbar';
+import MultiTitleComponent from '../components/multiTitleComponent';
+import SearchModal from '../components/SearchModal';
+import Toast from 'react-native-root-toast';
+import Icon from 'react-native-vector-icons/EvilIcons'
+import theme from '../utils/themeUtil';
+import SingleDataComponent from '../components/singleDataComponent';
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
 
 class BookStorePage extends Component{
     constructor(props){
         super(props);
+
+        this.state = {
+            loading: true,
+            defaultSearchValue: '新婚无爱，替罪前妻',
+            searchModalVisible: false,
+        }
+    }
+    componentWillMount() {
+        fetch('https://m.readnovel.com/majax/index/index')
+            .then(response => response.json())
+            .then((result) => {
+                this.setState({
+                    data:  result.data,
+                    loading: false
+                });
+            })
+            .catch((error) => {
+                this.setState({
+
+                });
+            })
     }
     render(){
+        let swiperimgs = [];
+        if(!this.state.loading) {
+            let adTop = this.state.data.topAd;
+            for (var i in adTop) {
+                var img = (<Image style={styles.image} height={px2dp(110)} resizeMode={'stretch'} key={i} source={{uri: 'https:'+adTop[i].picUrl}} />)
+                swiperimgs.push(img);
+            }
+        }
         return(
             <View style={styles.container}>
-                <Swiper style={styles.wrapper} width={Dimensions.get('window').width} height={250} loop={true} autoplay={true}>
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ca9c6ea4e5d70f2542e4a0791e82b3cb/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/cab2778493c43e33237adff16b62308e/0'}} />
-                    <Image  style={styles.image} source={{uri: 'https://qidian.qpic.cn/qidian_common/349573/ad932201175a77c7f96ed28d0c3f1acf/0'}} />
+                <NavigationBar
+                    title="书城"
+                    titleColor={theme.barTitleColor}
+                    backIconHidden={true}
+                    barTintColor={theme.barTintColor}
+                    />
+                <ScrollView style={{marginBottom:50}}>
+                <Swiper style={[styles.wrapper, styles.module]} width={Dimensions.get('window').width} height={px2dp(110)} loop={true} autoplay={true}>
+                    {swiperimgs}
                 </Swiper>
-                <View style={styles.nav}>
-                    <TouchableHighlight onPress={() => this.goRankPage()}>
+
+                <View style={styles.searchButtonWrap} >
+                    <Icon.Button
+                        size={19}
+                        color="#999"
+                        backgroundColor="#fff"
+                        name="search" 
+                        iconStyle={{
+                            marginRight: 5 
+                        }}
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        onPress={() => {
+                            this.setState({
+                                searchModalVisible: true
+                            });
+                        }}
+                        >
+                        { this.state.defaultSearchValue }
+                    </Icon.Button>
+                </View>
+                <SearchModal 
+                    defaultSearchValue={this.state.defaultSearchValue}
+                    navigator={this.props.navigator}
+                    visible={this.state.searchModalVisible}
+                    onClose={() => {
+                        this.setState({
+                            searchModalVisible: false
+                        })
+                    }}
+                     />
+
+                <View style={[styles.nav, styles.module]}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goRankPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={38} height={38}  source={require('../res/rank.png')} />
                             <Text style={styles.navText} >排行榜</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFreePage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFreePage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >免费</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goNewPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goNewPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={38} height={38}  source={require('../res/free.png')} />
                             <Text style={styles.navText} >新书</Text>
+
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goFinishPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goFinishPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={32} height={40}  source={require('../res/sort.png')} />
                             <Text style={styles.navText} >完本</Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.goCategoryPage()}>
+                    <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goCategoryPage()}>
                         <View style={styles.iconBox}>
                             <Image style={styles.iconImg} width={32} height={40}  source={require('../res/end.png')} />
                             <Text style={styles.navText} >分类</Text>
                         </View>
                     </TouchableHighlight>
+<<<<<<< HEAD
                 </View>  
                 <View style={styles.title}><Text style={styles.titleText}>热门小说</Text></View>
                 <ScrollView horizontal={true} style={styles.bookList}>
@@ -66,6 +146,86 @@ class BookStorePage extends Component{
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
                     <BookListItem bookCover='https://qidian.qpic.cn/qdbimg/349573/c_5282978903343101/150' bookName='婚途有坑' authorName='豆丁丁'></BookListItem>
+=======
+                </View>
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '热门小说'
+                      borderColor= "red"
+                      hasMoreBtn= { false }
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotTop} navigator = {this.props.navigator}>
+
+                      </BookListH>
+                      :
+                      null
+                  }
+                </View>
+
+                <View style={[styles.module, styles.hotModule]}>
+                  <MultiTitleComponent
+                      categoryName = '排行榜'
+                      borderColor= "red"
+                      hasMoreBtn= { true }
+                      moreType={"rank"}
+                      navigator = {this.props.navigator}
+                  />
+                  {
+                      !this.state.loading ?
+                      <BookListH books={this.state.data.hotRank} navigator = {this.props.navigator}>
+
+                      </BookListH>
+                      :
+                      null
+                  }
+                </View>
+                <View style={[styles.module]}>
+                    <MultiTitleComponent
+                        categoryName = '新书抢鲜'
+                        borderColor= "red"
+                        hasMoreBtn= { true }
+                        moreType={"new"}
+                        navigator = {this.props.navigator}
+                    />
+                    {
+                        !this.state.loading ?
+                            this.state.data.newSell.map((item, index) => {
+                                return <SingleDataComponent
+                                    item = {item}
+                                    index = {index}
+                                    key = {index}
+                                    navigator = {this.props.navigator}
+                                />
+                            })
+                        :
+                        null
+                    }
+                </View>
+                <View style={[styles.module]}>
+                    <MultiTitleComponent
+                        categoryName = '人气完本'
+                        borderColor= "red"
+                        hasMoreBtn= { true }
+                        moreType={"finish"}
+                        navigator = {this.props.navigator}
+                    />
+                    {
+                        !this.state.loading ?
+                            this.state.data.finishRank.map((item, index) => {
+                                return <SingleDataComponent
+                                    item = {item}
+                                    index = {index}
+                                    key = {index}
+                                    navigator = {this.props.navigator}
+                                />
+                            })
+                            :
+                            null
+                    }
+                </View>
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
                 </ScrollView>
             </View>
         );
@@ -114,11 +274,24 @@ class BookListItem extends Component {
 
 const styles = StyleSheet.create({
     wrapper: {
+<<<<<<< HEAD
     },
     container: {
         flex: 1,
+=======
+        backgroundColor: 'red'
     },
-
+    container: {
+        backgroundColor: '#f6f7f9'
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
+    },
+    module: {
+        backgroundColor: '#fff',
+        marginBottom: px2dp(12)
+    },
+    hotModule: {
+        height: px2dp(216),
+    },
     slide: {
         width: '100%',
         flex: 1,
@@ -126,19 +299,29 @@ const styles = StyleSheet.create({
     },
     image: {
         backgroundColor: 'transparent',
-        width: '100%',
-        height: 250
+    },
+    navBar: {
+
     },
     nav: {
+<<<<<<< HEAD
         height: 60,        
+=======
+        height: px2dp(82),
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
         flexDirection:'row',
         justifyContent: 'space-around',
-        marginTop: 10,
-        marginBottom: 10,
+        alignItems: 'center',
     },
     iconBox: {
+<<<<<<< HEAD
         height: 60,
         alignItems: 'center',        
+=======
+        height: px2dp(58),
+        alignItems: 'center',
+        justifyContent: 'center'
+>>>>>>> de4ab646571a984e374900c377e5e8ccedef2372
     },
     iconImg: {
 
@@ -170,9 +353,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         marginLeft: 10
     },
-    bookList: {
-        height: 50,
-    },
     loadingView: {
         position: 'absolute',
         justifyContent: 'center',
@@ -187,7 +367,18 @@ const styles = StyleSheet.create({
     loadingImage: {
         width: 60,
         height: 60
-    }
+    },
+    searchButtonWrap: {
+        backgroundColor: '#fff',
+        paddingTop: 5,
+        paddingBottom: 5,
+        // marginTop: 15,
+        marginBottom: -10,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 3,
+    },
+
 });
 const { width } = Dimensions.get('window');
 

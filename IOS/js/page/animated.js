@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Dimensions,ScrollView,Animated,Platform,Image} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
+import theme from '../utils/themeUtil';
 
 class AnimatedPage extends Component{
 
@@ -16,14 +17,15 @@ class AnimatedPage extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <NavigationBar title="动画"
-                       barStyle={styles.navBar}
-                       backHidden={false}
-                       barTintColor='white'
-                       statusbarPadding = {(Platform.OS === 'android' ? false : true)}
-                       backFunc={() => {
-                           this.props.navigator.pop()
-                       }}/>
+                <NavigationBar 
+                    title="动画"
+                    barTintColor = {theme.barTintColor}
+                    titleColor = {theme.barTitleColor}
+                    backColor = {theme.barTitleColor}
+                    statusbarPadding = {(Platform.OS === 'android' ? false : true)}
+                    backFunc={() => {
+                        this.props.navigator.pop()
+                    }}/>
                 <ScrollView
                     showsVerticalScrollIndicator = {true}
                     onScroll={this._onScroll.bind(this)}>

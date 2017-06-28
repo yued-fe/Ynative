@@ -3,7 +3,7 @@
 import React, {Component, PropTypes} from 'react';
 import {
     AsyncStorage,
-    Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform} from 'react-native';
+    Image,ListView,TouchableHighlight,TouchableOpacity,StyleSheet,View,Text,ScrollView,Dimensions,TouchableNativeFeedback,Platform,InteractionManager,ActivityIndicator} from 'react-native';
 import NavigationBar from 'react-native-navigationbar'
 import SearchTopNav from '../components/SearchTopNav';
 import theme from '../utils/themeUtil';
@@ -23,10 +23,12 @@ class SearchResult extends Component{
                 { code: 9, name: '字数', selected: false },
                 { code: 17, name: '点击', selected: false },
                 { code: 3, name: '时间', selected: false },
-            ]
+            ],
+            didMount: false,
+            hasError: false
         };
 
-        this.getResults(this.state.sortType[0]);
+        //this.getResults(this.state.sortType[0]);
         this.pushHistoryKeyword();
     }
 
@@ -44,6 +46,12 @@ class SearchResult extends Component{
         })
     }
 
+    componentDidMount(){
+        InteractionManager.runAfterInteractions(() => {
+            this.getResults(this.state.sortType[0]);
+        });
+    }
+
     getResults(type) {
         fetch('https://m.readnovel.com/majax/search/list?kw='+this.state.keyword+'&orderBy='+type.code)
             .then(response => response.json())
@@ -58,11 +66,13 @@ class SearchResult extends Component{
                         }
                     }),
                     results: this.state.results.cloneWithRows(result.data.bookInfo.records),
+                    didMount: true
                 });
             })
             .catch((error) => {
                 this.setState({
-
+                    didMount: true,
+                    hasError: true
                 });
             })
     }
@@ -105,13 +115,26 @@ class SearchResult extends Component{
                         );
                     }) }
                 </View>
-                <ListView
+                {
+                    this.state.didMount ?
+                    <ListView
                         style={styles.content}
                         dataSource={this.state.results}
                         renderRow={(rowData) => this._renderRow(rowData)}
                         enableEmptySections={true}
                         automaticallyAdjustContentInsets={false}
                     />
+                    :
+                    this.state.hasError ?
+                    <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                        <Text style={{marginTop: 10}}>页面错误</Text>
+                    </View>
+                    :
+                    <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                        <ActivityIndicator size="large"/>
+                        <Text style={{marginTop: 10}}>拼命加载中</Text>
+                    </View>
+                }
             </View>
         );
     }

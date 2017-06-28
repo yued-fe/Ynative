@@ -58,9 +58,11 @@ react-native unbundle --platform android --dev false --entry-file index.android.
 ## RN目标能力
 - [x] React-Native开发环境搭建
 - [x] RN嵌入到现有Android原生应用
-- [ ] RN嵌入到现有IOS原生应用
+- [x] RN嵌入到现有IOS原生应用
 - [x] RN调用Android原生应用方法
-- [ ] RN调用IOS原生应用方法
+- [x] RN调用IOS原生应用方法
+- [x] RN页面与Android原生页面互相跳转
+- [x] RN页面与IOS原生页面互相跳转
 - [x] RN热更新的实现(Android)
 - [ ] RN热更新的实现(IOS)
 - [x] RN bundle优化(Android使用Unbundle)
@@ -68,6 +70,7 @@ react-native unbundle --platform android --dev false --entry-file index.android.
 - [ ] RN打包工具制作
 - [x] RN差量更新
 - [x] RN白屏优化(Android)
+- [x] RN白屏优化()
 - [ ] RN组件的扩展（UI、API）
 - [x] RN状态管理的优化（Redux）
 - [ ] RN布局的优化（ListView的优化）

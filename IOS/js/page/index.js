@@ -16,6 +16,7 @@ import BookStorePage from './bookStore';
 import CatDetailPage from './catdetail';
 import AnimatedPage from './animated';
 import CircleTransition from '../animation/circleTransition';
+import PushNative from '../native_modules/pushNative';
 
 class IndexPage extends Component{
 
@@ -31,10 +32,10 @@ class IndexPage extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <Text style={styles.instructions}>
-                    首页
+                <Text style={[styles.instructions,{fontSize:18,color:'red'}]}>
+                    测试页面
                 </Text>
-                <Text style={styles.instructions} onPress={() => this.goBack()}>
+                <Text style={[styles.instructions,{fontSize:16,color:'blue'}]} onPress={() => this.goBack()}>
                     回退
                 </Text>
                 <Text style={styles.instructions} onPress={() => this.switchPage(RankPage,{anim:"floatFromBottom"})}>
@@ -99,6 +100,9 @@ class IndexPage extends Component{
                     duration={1200}
                     easing={Easing.linear}
                 />
+                <Text style={styles.instructions} onPress={() => this.goNative()}>
+                    跳转到原生页面
+                </Text>
                 <Text style={styles.instructions} onPress={() => this.loadData()}>
                     点我开始请求数据
                 </Text>
@@ -138,8 +142,13 @@ class IndexPage extends Component{
         })
         this.circleTransition.start(()=>this.switchPage(component,args));
     }
+
     goBack () {
         this.props.navigator.pop();
+    }
+
+    goNative () {
+        PushNative.RNOpenOneVC("测试");
     }
 
     switchPage(component,args){
@@ -161,7 +170,8 @@ const styles = StyleSheet.create({
     instructions: {
         textAlign: 'center',
         color: '#333333',
-        marginBottom: 5,
+        fontSize:14,
+        marginBottom: 8,
     },
     centering: {
         alignItems: 'center',

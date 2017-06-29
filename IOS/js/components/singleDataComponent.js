@@ -48,13 +48,6 @@ export default class SingleDataComponent extends Component{
 
     goDetailPage (book) {
         this.switchPage(BookDetailPage,{bookId:book.bid});
-        // this.props.navigator.push({
-        //     component: WebViewPage,
-        //     args: {
-        //         title: book.bName,
-        //         url: `https://m.readnovel.com/book/${book.bid}`,
-        //     },
-        // });
     }
 
     switchPage(component,args){

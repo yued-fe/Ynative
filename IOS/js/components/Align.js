@@ -4,10 +4,6 @@ import {
 } from 'react-native';
 
 class Align extends Component {
-    propTypes: {
-        h: PropTypes.String,
-        v: PropTypes.String,
-    }
 
     static defaultProps = {
         h: 'center',

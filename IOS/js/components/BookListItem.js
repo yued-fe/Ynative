@@ -25,13 +25,6 @@ class BookListItem extends Component {
 
     goDetailPage (book) {
         this.switchPage(BookDetailPage,{bookId:book.bookId});
-        // this.props.navigator.push({
-        //     component: WebViewPage,
-        //     args: {
-        //         title: book.bookName,
-        //         url: `https://m.readnovel.com/book/${book.bookId}`,
-        //     },
-        // });
     }
 
     switchPage(component,args){

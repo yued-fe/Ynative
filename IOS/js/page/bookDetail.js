@@ -64,7 +64,6 @@ class BookDetailPage extends Component {
                     lastupdateChapterId:this.data.bookInfo.lastUpdateChapterId,
                     firstChapterId:this.data.bookInfo.firstChapterId,
                     desc:this.data.bookInfo.desc,
-                    loading: false,
                     hashAuthroRelated:this.data.authorOtherBooks.length>0 ? true : false
                 });
             })
@@ -121,8 +120,8 @@ class BookDetailPage extends Component {
                         <View >
                             <Text style={styles.infoname}>{this.state.bookName}</Text>
                             <Text style={[styles.authorname,styles.headermeta]}>{this.state.author}</Text>
-                            <Text style={styles.infocat,styles.headermeta}>{this.state.chanName}/{this.state.subCateName}</Text>
-                            <Text style={styles.infocat,styles.headermeta}>{this.state.wordsCnt} | {this.state.bookStatus}</Text>
+                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.chanName}/{this.state.subCateName}</Text>
+                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.wordsCnt} | {this.state.bookStatus}</Text>
                             
                             <View style={styles.infometa}>
                                 <View style={styles.infometaleft}>
@@ -134,13 +133,13 @@ class BookDetailPage extends Component {
                 </TouchableHighlight>
 
                 <View style={styles.headerButtonWrapper} >
-                    <TouchableHighlight onPress={() => this.goChapterPage(this.state.firstChapterId)} style={[styles.headerButton,styles.activeButton]} underlayColor="rgba(0,0,0,.05)">
+                    <TouchableHighlight onPress={() => this.goChapterPage(this.state.firstChapterId)} style={[styles.headerButton,styles.activeButton]} underlayColor="rgba(0,0,0,.5)">
                         <Text style={[styles.buttonText,styles.activeButtonText]}>免费阅读</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.05)">
+                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
                         <Text style={styles.buttonText}>加入书架</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.05)">
+                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
                         <Text style={styles.buttonText}>VIP订阅</Text>
                     </TouchableHighlight>
                 </View>
@@ -148,7 +147,7 @@ class BookDetailPage extends Component {
                     <View style={styles.infodescwrapper}  >
                         <Text numberOfLines={4} style={styles.infodesc}>{this.state.desc}</Text>
                     </View>
-                    <TouchableHighlight onPress={() => this.goCategoryPage(this.state.lastupdateChapterId)}>
+                    <TouchableHighlight onPress={() => this.goCategoryPage(this.state.lastupdateChapterId)} underlayColor={theme.touchableHighlightUnderlayColor}>
                     <View style={styles.entryCatWrapper}  >
                         <Text style={[styles.entryCatText,styles.entryCatTitle]} >目录:</Text>
                         <Text numberOfLines={1} style={[styles.entrycat,styles.entryCatText]}>{this.state.updTime}·连载至{this.state.updChapterName}</Text>

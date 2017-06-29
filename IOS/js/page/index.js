@@ -11,7 +11,6 @@ import FreePage from './free';
 import NewPage from './new';
 import FinishPage from './finish';
 import WebViewPage from './webview';
-import SearchDemoPage from './searchDemo';
 import BookStorePage from './bookStore';
 import CatDetailPage from './catdetail';
 import AnimatedPage from './animated';

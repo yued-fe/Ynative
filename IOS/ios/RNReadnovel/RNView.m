@@ -27,11 +27,11 @@
   NSURL *jsCodeLocation;
   
   
-  NSString * strUrl = @"http://localhost:8081/index.ios.bundle?platform=ios&dev=true";
+  //NSString * strUrl = @"http://localhost:8081/index.ios.bundle?platform=ios&dev=true";
   
-  jsCodeLocation = [NSURL URLWithString:strUrl];
+  //jsCodeLocation = [NSURL URLWithString:strUrl];
   
-  //jsCodeLocation = [NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"index.ios.jsbundle" ofType:nil]];
+  jsCodeLocation = [NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"index.ios.jsbundle" ofType:nil]];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"RNReadnovel"

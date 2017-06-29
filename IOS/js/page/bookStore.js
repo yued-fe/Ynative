@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import theme from '../utils/themeUtil';
 import SingleDataComponent from '../components/singleDataComponent';
 import WebViewPage from '../page/webview';
+import BookStoreLocalData from '../persistence/bookStoreLocalData';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -30,19 +31,31 @@ class BookStorePage extends Component{
         }
     }
     componentWillMount() {
-        fetch('https://m.readnovel.com/majax/index/index')
-            .then(response => response.json())
-            .then((result) => {
-                this.setState({
-                    data:  result.data,
-                    loading: false
-                });
-            })
-            .catch((error) => {
-                this.setState({
+        let localDataAction = new BookStoreLocalData();
+        //localDataAction.remove();
+        localDataAction.fetchLocalData().then((localData) => {
+            this.setState({
+                data:  localData,
+                loading: false
+            });
+        }, ()=>{
+            fetch('https://m.readnovel.com/majax/index/index')
+                .then(response => response.json())
+                .then((result) => {
+                    this.setState({
+                        data:  result.data,
+                        loading: false
+                    });
+                    localDataAction.save(result.data);
+                })
+                .catch((error) => {
+                    this.setState({
 
-                });
-            })
+                    });
+                })
+        });
+
+
     }
     render(){
         let swiperimgs = [];

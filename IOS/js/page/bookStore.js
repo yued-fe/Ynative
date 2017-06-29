@@ -19,6 +19,7 @@ import theme from '../utils/themeUtil';
 import SingleDataComponent from '../components/singleDataComponent';
 import WebViewPage from '../page/webview';
 import BookStoreLocalData from '../persistence/bookStoreLocalData';
+import BookDetailPage from './bookDetail';
 
 class BookStorePage extends Component{
     constructor(props){
@@ -227,39 +228,40 @@ class BookStorePage extends Component{
         );
     }
     goDetailPage (book) {
-        //this.switchPage(DetailPage,{bId:book.bId});
-        this.props.navigator.push({
-            component: WebViewPage,
-            args: {
-                title: book.bName,
-                url: 'https://'+book.url,
-            },
-        });
+        this.switchPage(BookDetailPage,{bookId:book.bid});
+        // this.props.navigator.push({
+        //     component: WebViewPage,
+        //     args: {
+        //         title: book.bName,
+        //         url: 'https://'+book.url,
+        //     },
+        // });
     }
 
     goCategoryPage () {
-        this.switchPage(CategoryPage);
+        this.switchPage(CategoryPage,{});
     }
 
     goRankPage () {
-        this.switchPage(RankPage);
+        this.switchPage(RankPage,{});
     }
 
     goFreePage () {
-        this.switchPage(FreePage);
+        this.switchPage(FreePage,{});
     }
 
     goNewPage () {
-        this.switchPage(NewPage);
+        this.switchPage(NewPage,{});
     }
 
     goFinishPage () {
-        this.switchPage(FinishPage);
+        this.switchPage(FinishPage,{});
     }
 
-    switchPage(component){
+    switchPage(component,args){
         this.props.navigator.push({
-            component: component
+            component: component,
+            args:args
         });
     }
 }

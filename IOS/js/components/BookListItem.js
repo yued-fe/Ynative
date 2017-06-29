@@ -5,6 +5,7 @@ import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView
 import px2dp from '../utils/pxtodpUtil';
 import theme from '../utils/themeUtil';
 import WebViewPage from '../page/webview';
+import BookDetailPage from '../page/bookDetail';
 
 class BookListItem extends Component {
     constructor(props) {
@@ -23,14 +24,14 @@ class BookListItem extends Component {
     }
 
     goDetailPage (book) {
-        //this.switchPage(DetailPage,{bId:book.bId});
-        this.props.navigator.push({
-            component: WebViewPage,
-            args: {
-                title: book.bookName,
-                url: `https://m.readnovel.com/book/${book.bookId}`,
-            },
-        });
+        this.switchPage(BookDetailPage,{bookId:book.bookId});
+        // this.props.navigator.push({
+        //     component: WebViewPage,
+        //     args: {
+        //         title: book.bookName,
+        //         url: `https://m.readnovel.com/book/${book.bookId}`,
+        //     },
+        // });
     }
 
     switchPage(component,args){

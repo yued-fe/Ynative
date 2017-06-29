@@ -5,7 +5,6 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 import BookListItem from '../components/BookListItem';
 
-
 class BookListH extends Component {
     constructor(props) {
         super(props);

@@ -3,6 +3,7 @@ import {StyleSheet,View,Text,Image,TouchableHighlight,Dimensions,Platform,PixelR
 import px2dp from '../utils/pxtodpUtil';
 import WebViewPage from '../page/webview';
 import theme from '../utils/themeUtil';
+import BookDetailPage from '../page/bookDetail';
 
 export default class SingleDataComponent extends Component{
 
@@ -46,14 +47,14 @@ export default class SingleDataComponent extends Component{
     }
 
     goDetailPage (book) {
-        //this.switchPage(DetailPage,{bId:book.bId});
-        this.props.navigator.push({
-            component: WebViewPage,
-            args: {
-                title: book.bName,
-                url: `https://m.readnovel.com/book/${book.bid}`,
-            },
-        });
+        this.switchPage(BookDetailPage,{bookId:book.bid});
+        // this.props.navigator.push({
+        //     component: WebViewPage,
+        //     args: {
+        //         title: book.bName,
+        //         url: `https://m.readnovel.com/book/${book.bid}`,
+        //     },
+        // });
     }
 
     switchPage(component,args){

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, Dimensions, ActivityIndicator, Image, ScrollView,TouchableHighlight,TouchableOpacity} from 'react-native';
 import px2dp from '../utils/pxtodpUtil';
 import Swiper from 'react-native-swiper';
@@ -30,34 +30,108 @@ class BookStorePage extends Component{
             defaultSearchValue: '新婚无爱，替罪前妻',
             searchModalVisible: false,
         }
+
+        this.KEY = 'YWQDBOOKSTORE';
     }
     componentWillMount() {
-        let localDataAction = new BookStoreLocalData();
-        //localDataAction.remove();
-        localDataAction.fetchLocalData().then((localData) => {
+        //删除
+        //storage.remove({key: this.KEY});
+        //设置sync方法
+        storage.sync = this.fetchData;
+        //读取
+        storage.load({
+            key: this.KEY,
+
+            // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
+            autoSync: true,
+
+            // syncInBackground(默认为true)意味着如果数据过期，
+            // 在调用sync方法的同时先返回已经过期的数据。
+            // 设置为false的话，则等待sync方法提供的最新数据(当然会需要更多时间)。
+            syncInBackground: false,
+
+            // 你还可以给sync方法传递额外的参数
+            syncParams: {
+                extraFetchOptions: {
+                    // 各种参数
+                },
+                someFlag: true,
+            },
+        }).then(ret => {
+            // 如果找到数据，则在then方法中返回
+            // 注意：这是异步返回的结果（不了解异步请自行搜索学习）
+            // 你只能在then这个方法内继续处理ret数据
+            // 而不能在then以外处理
+            // 也没有办法“变成”同步返回
+            // 你也可以使用“看似”同步的async/await语法
             this.setState({
-                data:  localData,
+                data:  ret,
                 loading: false
             });
-        }, ()=>{
-            fetch('https://m.readnovel.com/majax/index/index')
-                .then(response => response.json())
-                .then((result) => {
-                    this.setState({
-                        data:  result.data,
-                        loading: false
-                    });
-                    localDataAction.save(result.data);
-                })
-                .catch((error) => {
-                    this.setState({
-
-                    });
-                })
-        });
-
-
+        }).catch(err => {
+            //如果没有找到数据且没有sync方法，
+            //或者有其他异常，则在catch中返回
+            console.warn(err.message);
+            switch (err.name) {
+                case 'NotFoundError':
+                    // TODO;
+                    break;
+                case 'ExpiredError':
+                    // TODO
+                    break;
+            }
+            this.fetchData();
+        })
+        // let localDataAction = new BookStoreLocalData();
+        // //localDataAction.remove();
+        // localDataAction.fetchLocalData().then((localData) => {
+        //     this.setState({
+        //         data:  localData,
+        //         loading: false
+        //     });
+        // }, ()=>{
+        //     fetch('https://m.readnovel.com/majax/index/index')
+        //         .then(response => response.json())
+        //         .then((result) => {
+        //             this.setState({
+        //                 data:  result.data,
+        //                 loading: false
+        //             });
+        //             localDataAction.save(result.data);
+        //         })
+        //         .catch((error) => {
+        //             this.setState({
+        //
+        //             });
+        //         })
+        // });
     }
+
+    fetchData() {
+        fetch('https://m.readnovel.com/majax/index/index')
+        .then(response => response.json())
+        .then((result) => {
+            this.setState({
+                data:  result.data,
+                loading: false
+            });
+            //保存
+            storage.save({
+                key: this.KEY,  // 注意:请不要在key中使用_下划线符号!
+                data: result.data,
+                // 如果不指定过期时间，则会使用defaultExpires参数
+                // 如果设为null，则永不过期
+                expires: 1000 * 3600
+            });
+        })
+        .catch((error) => {
+            this.setState({
+                hasError: true,
+                loading: false
+            });
+        })
+    }
+
     render(){
         let swiperimgs = [];
         if(!this.state.loading) {

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
 import {
     ListView,
     StyleSheet,
@@ -23,7 +23,8 @@ import WebViewPage from './webview';
 import MultiTitleComponent from '../components/multiTitleComponent';
 import BookListH from '../components/BookListH';
 import BookStorePage from './bookStore';
-
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 import Align from '../components/Align';
 import SingleDataComponent from '../components/singleDataComponent';
 
@@ -34,24 +35,29 @@ class BookDetailPage extends Component {
 
         this.state = {
             loading: true,
+            didMount: false,
             searchModalVisible: false,
         }
+
+        this.KEY = 'YWQDBOOKDETAIL';
     }
     componentWillMount() {
         InteractionManager.runAfterInteractions(() => {
-             this.getBookInfo(this.props.bookId)
-        });
-       
-    }
-
-    getBookInfo(bookId) {
-        fetch('https://m.readnovel.com/majax/book/getBookInfo?bookId=' + bookId)
-            .then(response => response.json())
-            .then((result) => {
+            //storage.remove({key: this.KEY,id: this.props.bookId});
+            storage.sync = this.getBookInfo;
+            //读取
+            storage.load({
+                key: this.KEY,
+                id: this.props.bookId,
+                syncInBackground: false,
+                syncParams: {
+                    bookId: this.props.bookId,
+                },
+            }).then(result => {
                 let ds = result.data;
                 this.data = result.data;
                 this.setState({
-                    loading:false,
+                    didMount:true,
                     data: result.data,
                     bookName:this.data.bookInfo.bookName,
                     updTime:this.data.bookInfo.updTime,
@@ -66,10 +72,47 @@ class BookDetailPage extends Component {
                     desc:this.data.bookInfo.desc,
                     hashAuthroRelated:this.data.authorOtherBooks.length>0 ? true : false
                 });
+            }).catch(err => {
+                this.getBookInfo(this.props.bookId);
+            })
+        });
+       
+    }
+
+    getBookInfo(bookId) {
+        fetch('https://m.readnovel.com/majax/book/getBookInfo?bookId=' + bookId)
+            .then(response => response.json())
+            .then((result) => {
+                let ds = result.data;
+                this.data = result.data;
+                this.setState({
+                    didMount:true,
+                    data: result.data,
+                    bookName:this.data.bookInfo.bookName,
+                    updTime:this.data.bookInfo.updTime,
+                    updChapterName:this.data.bookInfo.updChapterName,
+                    author:this.data.bookInfo.author,
+                    chanName:this.data.bookInfo.chanName,
+                    subCateName:this.data.bookInfo.subCateName,
+                    wordsCnt:this.data.bookInfo.wordsCnt,
+                    bookStatus:this.data.bookInfo.bookStatus,
+                    lastupdateChapterId:this.data.bookInfo.lastUpdateChapterId,
+                    firstChapterId:this.data.bookInfo.firstChapterId,
+                    desc:this.data.bookInfo.desc,
+                    hashAuthroRelated:this.data.authorOtherBooks.length>0 ? true : false
+                });
+                //保存
+                storage.save({
+                    key: this.KEY,
+                    id: bookId,
+                    data: result,
+                    expires: 1000 * 3600
+                });
             })
             .catch((error) => {
                 this.setState({
-
+                    didMount:false,
+                    hasError:true
                 });
             })
     }
@@ -110,104 +153,98 @@ class BookDetailPage extends Component {
                     backFunc={() => this.props.navigator.pop()}
                 />
             
-            {!this.state.loading ?
-        <ScrollView>
-        <View style={styles.infowrapper}>
-            <View>
-                <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor}>
-                    <View style={styles.infoitem}>
-                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.bookId+"/150"}} />
-                        <View >
-                            <Text style={styles.infoname}>{this.state.bookName}</Text>
-                            <Text style={[styles.authorname,styles.headermeta]}>{this.state.author}</Text>
-                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.chanName}/{this.state.subCateName}</Text>
-                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.wordsCnt} | {this.state.bookStatus}</Text>
-                            
-                            <View style={styles.infometa}>
-                                <View style={styles.infometaleft}>
+                {this.state.didMount ?
+                    <ScrollView>
+                        <View style={styles.infowrapper}>
+                            <View>
+                                <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor}>
+                                    <View style={styles.infoitem}>
+                                        <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.bookId+"/150"}} />
+                                        <View >
+                                            <Text style={styles.infoname}>{this.state.bookName}</Text>
+                                            <Text style={[styles.authorname,styles.headermeta]}>{this.state.author}</Text>
+                                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.chanName}/{this.state.subCateName}</Text>
+                                            <Text style={[styles.infocat,styles.headermeta]}>{this.state.wordsCnt} | {this.state.bookStatus}</Text>
+
+                                            <View style={styles.infometa}>
+                                                <View style={styles.infometaleft}>
+                                                </View>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </TouchableHighlight>
+
+                                <View style={styles.headerButtonWrapper} >
+                                    <TouchableHighlight onPress={() => this.goChapterPage(this.state.firstChapterId)} style={[styles.headerButton,styles.activeButton]} underlayColor="rgba(0,0,0,.5)">
+                                        <Text style={[styles.buttonText,styles.activeButtonText]}>免费阅读</Text>
+                                    </TouchableHighlight>
+                                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
+                                        <Text style={styles.buttonText}>加入书架</Text>
+                                    </TouchableHighlight>
+                                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
+                                        <Text style={styles.buttonText}>VIP订阅</Text>
+                                    </TouchableHighlight>
                                 </View>
+
+                                <View style={styles.infodescwrapper}  >
+                                    <Text numberOfLines={4} style={styles.infodesc}>{this.state.desc}</Text>
+                                </View>
+                                <TouchableHighlight onPress={() => this.goCategoryPage(this.state.lastupdateChapterId)} underlayColor={theme.touchableHighlightUnderlayColor}>
+                                    <View style={styles.entryCatWrapper}  >
+                                        <Text style={[styles.entryCatText,styles.entryCatTitle]} >目录:</Text>
+                                        <Text numberOfLines={1} style={[styles.entrycat,styles.entryCatText]}>{this.state.updTime}·连载至{this.state.updChapterName}</Text>
+                                    </View>
+                                </TouchableHighlight>
                             </View>
                         </View>
+                        {
+                            this.state.hashAuthroRelated ?
+                                <View style={[styles.module, styles.addedModule]}>
+                                      <MultiTitleComponent
+                                          categoryName = '作者的其他作品'
+                                          borderColor= "black"
+                                          hasMoreBtn= { false }
+                                          moreType={"rank"}
+                                          navigator = {this.props.navigator}
+                                      />
+                                      {
+                                          this.state.didMount ?
+                                          <BookListH books={this.state.data.authorOtherBooks} navigator = {this.props.navigator}>
 
-                    </View>
-                </TouchableHighlight>
+                                          </BookListH>
+                                          :
+                                          null
+                                      }
+                                </View>
+                                :
+                                null
+                        }
 
-                <View style={styles.headerButtonWrapper} >
-                    <TouchableHighlight onPress={() => this.goChapterPage(this.state.firstChapterId)} style={[styles.headerButton,styles.activeButton]} underlayColor="rgba(0,0,0,.5)">
-                        <Text style={[styles.buttonText,styles.activeButtonText]}>免费阅读</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
-                        <Text style={styles.buttonText}>加入书架</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.headerButton} underlayColor="rgba(0,0,0,.5)">
-                        <Text style={styles.buttonText}>VIP订阅</Text>
-                    </TouchableHighlight>
-                </View>
+                        <View style={[styles.module, styles.addedModule]}>
+                              <MultiTitleComponent
+                                  categoryName = '同类推荐'
+                                  borderColor= "black"
+                                  hasMoreBtn= { false }
+                                  moreType={"rank"}
+                                  navigator = {this.props.navigator}
+                              />
+                              {
+                                  this.state.didMount ?
+                                  <BookListH books={this.state.data.catRec} navigator = {this.props.navigator}>
 
-                    <View style={styles.infodescwrapper}  >
-                        <Text numberOfLines={4} style={styles.infodesc}>{this.state.desc}</Text>
-                    </View>
-                    <TouchableHighlight onPress={() => this.goCategoryPage(this.state.lastupdateChapterId)} underlayColor={theme.touchableHighlightUnderlayColor}>
-                    <View style={styles.entryCatWrapper}  >
-                        <Text style={[styles.entryCatText,styles.entryCatTitle]} >目录:</Text>
-                        <Text numberOfLines={1} style={[styles.entrycat,styles.entryCatText]}>{this.state.updTime}·连载至{this.state.updChapterName}</Text>
-                    </View>
-                    </TouchableHighlight>
-                </View>
-            </View>
-                {
-                this.state.hashAuthroRelated ?
-                <View style={[styles.module, styles.addedModule]}>
-                      <MultiTitleComponent
-                          categoryName = '作者的其他作品'
-                          borderColor= "black"
-                          hasMoreBtn= { false }
-                          moreType={"rank"}
-                          navigator = {this.props.navigator}
-                      />
-                      {
-                          !this.state.loading ?
-                          <BookListH books={this.state.data.authorOtherBooks} navigator = {this.props.navigator}>
-
-                          </BookListH>
-                          :
-                          null
-                      }
-                </View>
-                :
-                null
-                }
-
-                <View style={[styles.module, styles.addedModule]}>
-                  <MultiTitleComponent
-                      categoryName = '同类推荐'
-                      borderColor= "black"
-                      hasMoreBtn= { false }
-                      moreType={"rank"}
-                      navigator = {this.props.navigator}
-                  />
-                  {
-                      !this.state.loading ?
-                      <BookListH books={this.state.data.catRec} navigator = {this.props.navigator}>
-
-                      </BookListH>
-                      :
-                      null
-                  }
-                </View>
-                </ScrollView>
+                                  </BookListH>
+                                  :
+                                  null
+                              }
+                        </View>
+                    </ScrollView>
                     :
                     this.state.hasError ?
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{marginTop: 10}}>页面错误</Text>
-                        </View>
+                        <LoadFailTemplate/>
                         :
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <ActivityIndicator size="large"/>
-                            <Text style={{marginTop: 10}}>拼命加载中</Text>
-                        </View>
+                        <LoadingTemplate/>
                 }
-    
             </View>
         );
     }

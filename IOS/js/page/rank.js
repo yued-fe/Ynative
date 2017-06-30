@@ -14,9 +14,10 @@ import {
 } from 'react-native';
 import NavigationBar from 'react-native-navigationbar';
 import theme from '../utils/themeUtil';
-
 import RankDetailPage from './rank-detail.js';
 import WebViewPage from './webview';
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 
 class RankPage extends Component {
     constructor(props) {
@@ -42,34 +43,64 @@ class RankPage extends Component {
             didMount: false,
             hasError: false
         };
+        this.KEY = 'YWQDRANK';
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            fetch('https://m.readnovel.com/majax/rank')
-                .then(response => response.json())
-                .then((result) => {
-                    const state = this.state;
+            storage.sync = this.fetchData;
+            storage.load({
+                key: this.KEY,
+                syncInBackground: false
+            }).then(result => {
+                const state = this.state;
 
-                    const ranks = this.ranks.map((rank) => {
-                        rank.books = result.data[rank.dataKey] || [];
-                        return Object.assign({}, rank);
-                    });
-
-                    state.ds = state.ds.cloneWithRows(ranks);
-
-                    this.setState(state);
-                    this.setState({
-                        didMount: true
-                    });
-                })
-                .catch((error)=>{
-                    this.setState({
-                        didMount: true,
-                        hasError: true
-                    });
+                const ranks = this.ranks.map((rank) => {
+                    rank.books = result.data[rank.dataKey] || [];
+                    return Object.assign({}, rank);
                 });
+
+                state.ds = state.ds.cloneWithRows(ranks);
+
+                this.setState(state);
+                this.setState({
+                    didMount: true
+                });
+            }).catch(err => {
+                this.fetchData();
+            })
         });
+    }
+
+    fetchData() {
+        fetch('https://m.readnovel.com/majax/rank')
+            .then(response => response.json())
+            .then((result) => {
+                const state = this.state;
+
+                const ranks = this.ranks.map((rank) => {
+                    rank.books = result.data[rank.dataKey] || [];
+                    return Object.assign({}, rank);
+                });
+
+                state.ds = state.ds.cloneWithRows(ranks);
+
+                this.setState(state);
+                this.setState({
+                    didMount: true
+                });
+                storage.save({
+                    key: this.KEY,
+                    data: result,
+                    expires: 1000 * 3600
+                });
+            })
+            .catch((error)=>{
+                this.setState({
+                    didMount: true,
+                    hasError: true
+                });
+            });
     }
 
     render() {
@@ -91,14 +122,9 @@ class RankPage extends Component {
                     />
                     :
                     this.state.hasError ?
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{marginTop: 10}}>页面错误</Text>
-                        </View>
+                        <LoadFailTemplate/>
                         :
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <ActivityIndicator size="large"/>
-                            <Text style={{marginTop: 10}}>拼命加载中</Text>
-                        </View>
+                        <LoadingTemplate/>
                 }
             </View>
         );

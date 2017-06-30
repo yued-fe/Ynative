@@ -5,6 +5,8 @@ import CatDetailPage from './catdetail';
 import MultiTitleComponent from '../components/multiTitleComponent';
 import px2dp from '../utils/pxtodpUtil';
 import theme from '../utils/themeUtil';
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 
 class CategoryPage extends Component{
 
@@ -16,11 +18,26 @@ class CategoryPage extends Component{
             didMount: false,
             hasError: false
         };
+        this.KEY = 'YWQDCATEGORY';
     }
 
     componentDidMount(){
         InteractionManager.runAfterInteractions(() => {
-            this.fetchData();
+            storage.sync = this.fetchData;
+            storage.load({
+                key: this.KEY,
+                syncInBackground: false
+            }).then(result => {
+                let resData = [{categoryName:"女生频道",subList:[]},{categoryName:"男生频道",subList:[]}];
+                resData[0].subList = result.data.info.female;
+                resData[1].subList = result.data.info.male;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(resData),
+                    didMount: true
+                });
+            }).catch(err => {
+                this.fetchData();
+            })
         });
     }
 
@@ -34,6 +51,12 @@ class CategoryPage extends Component{
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(resData),
                     didMount: true
+                });
+                //保存
+                storage.save({
+                    key: this.KEY,
+                    data: result,
+                    expires: 1000 * 3600
                 });
             })
             .catch((error)=>{
@@ -67,14 +90,9 @@ class CategoryPage extends Component{
                     />
                     :
                     this.state.hasError ?
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{marginTop: 10}}>页面错误</Text>
-                        </View>
+                        <LoadFailTemplate/>
                         :
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <ActivityIndicator size="large"/>
-                            <Text style={{marginTop: 10}}>拼命加载中</Text>
-                        </View>
+                        <LoadingTemplate/>
                 }
 
             </View>

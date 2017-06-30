@@ -5,6 +5,8 @@ import MultiTitleComponent from '../components/multiTitleComponent';
 import SingleDataComponent from '../components/singleDataComponent';
 import px2dp from '../utils/pxtodpUtil';
 import theme from '../utils/themeUtil';
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 
 class CategoryPage extends Component{
 
@@ -16,11 +18,30 @@ class CategoryPage extends Component{
             didMount: false,
             hasError: false
         };
+        this.KEY = 'YWQDNEW';
     }
 
     componentDidMount(){
         InteractionManager.runAfterInteractions(() => {
-            this.fetchData();
+            storage.sync = this.fetchData;
+            storage.load({
+                key: this.KEY,
+                syncInBackground: false
+            }).then(result => {
+                let resData = [{categoryName:"大神新书",subList:[],more:""},{categoryName:"最新上架",subList:[],more:""},{categoryName:"畅销新书",subList:[],more:""}];
+                resData[0].subList = result.data.ds;
+                resData[0].more = result.data.dsMore;
+                resData[1].subList = result.data.new;
+                resData[1].more = result.data.newMore;
+                resData[2].subList = result.data.hot;
+                resData[2].more = result.data.hotMore;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(resData),
+                    didMount: true
+                });
+            }).catch(err => {
+                this.fetchData();
+            })
         });
     }
 
@@ -38,6 +59,11 @@ class CategoryPage extends Component{
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(resData),
                     didMount: true
+                });
+                storage.save({
+                    key: this.KEY,
+                    data: result,
+                    expires: 1000 * 3600
                 });
             })
             .catch((error)=>{
@@ -68,14 +94,9 @@ class CategoryPage extends Component{
                     />
                     :
                     this.state.hasError ?
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{marginTop: 10}}>页面错误</Text>
-                        </View>
+                        <LoadFailTemplate/>
                         :
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <ActivityIndicator size="large"/>
-                            <Text style={{marginTop: 10}}>拼命加载中</Text>
-                        </View>
+                        <LoadingTemplate/>
                 }
 
             </View>

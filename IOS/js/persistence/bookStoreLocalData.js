@@ -2,7 +2,7 @@
 
 import {AsyncStorage} from 'react-native';
 
-const YW_QD_BOOKSTORE_DATA = 'YW_QD_BOOKSTORE_DATA';
+const KEY = 'YW_QD_BOOKSTORE_DATA';
 
 export default class BookStoreLocalData{
 
@@ -11,7 +11,7 @@ export default class BookStoreLocalData{
             content: json
         };
         try {
-            AsyncStorage.setItem(YW_QD_BOOKSTORE_DATA, JSON.stringify(data));
+            AsyncStorage.setItem(KEY, JSON.stringify(data));
         } catch (error) {
 
         }
@@ -23,7 +23,7 @@ export default class BookStoreLocalData{
 
     fetchLocalData(){
         return new Promise((resolve, reject) => {
-            AsyncStorage.getItem(YW_QD_BOOKSTORE_DATA, (error, result)=>{
+            AsyncStorage.getItem(KEY, (error, result)=>{
                 if(!error){
                     const data = JSON.parse(result);
                     if(data) {

@@ -8,6 +8,8 @@ import NavigationBar from 'react-native-navigationbar'
 import SearchTopNav from '../components/SearchTopNav';
 import theme from '../utils/themeUtil';
 import SingleDataComponent from '../components/singleDataComponent';
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 
 class SearchResult extends Component{
 
@@ -126,14 +128,9 @@ class SearchResult extends Component{
                     />
                     :
                     this.state.hasError ?
-                    <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                        <Text style={{marginTop: 10}}>页面错误</Text>
-                    </View>
-                    :
-                    <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                        <ActivityIndicator size="large"/>
-                        <Text style={{marginTop: 10}}>拼命加载中</Text>
-                    </View>
+                        <LoadFailTemplate/>
+                        :
+                        <LoadingTemplate/>
                 }
             </View>
         );

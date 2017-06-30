@@ -19,6 +19,8 @@ import WebViewPage from './webview';
 
 import Align from '../components/Align';
 import SingleDataComponent from '../components/singleDataComponent';
+import LoadingTemplate from '../components/loadingTemplate';
+import LoadFailTemplate from '../components/loadFailTemplate';
 
 function encodeObj(obj) {
     if (!obj) {
@@ -152,14 +154,9 @@ class RankDetailPage extends Component {
                     />
                     :
                     this.state.hasError ?
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{marginTop: 10}}>页面错误</Text>
-                        </View>
+                        <LoadFailTemplate/>
                         :
-                        <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                            <ActivityIndicator size="large"/>
-                            <Text style={{marginTop: 10}}>拼命加载中</Text>
-                        </View>
+                        <LoadingTemplate/>
                 }
             </View>
         );

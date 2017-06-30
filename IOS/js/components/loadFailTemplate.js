@@ -8,7 +8,7 @@ class LoadFailTemplate extends Component {
         super(props);
     }
     render() {
-        let text = this.props.text || "页面加载失败";
+        let text = this.props.text || "Oooops~, 页面出错了，请检查你的网络或尝试刷新。";
         return(
             <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
                 <Text style={{marginTop: 10}}>{text}</Text>

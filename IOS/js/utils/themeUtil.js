@@ -9,5 +9,8 @@ export default {
     barTintColor:"#ff3955",
     touchableHighlightUnderlayColor: 'rgba(255,255,255,0.8)',
     touchableOpacityActiveOpacity: 0.8,
-    borderWidth:1/PixelRatio.get()
+    borderWidth:1/PixelRatio.get(),
+    bottomBarItemBgColor:"#fff",
+    bottomBarItemColor:"#aaa",
+    bottomBarItemSelectedColor:"#ff3955",
 }

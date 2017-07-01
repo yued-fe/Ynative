@@ -7,6 +7,7 @@ import {Navigator} from 'react-native-deprecated-custom-components';
 import {store} from './store/index';
 import IndexPage from './page/index';
 import BookStorePage from './page/bookStore';
+import BottomBar from './page/bottomBar';
 import SplashScreen from './native_modules/splashScreen';
 import cunstomSceneConfigs from './animation/myNavigatorScene';
 import Storage from 'react-native-storage';
@@ -17,7 +18,7 @@ export default class App extends React.Component{
         return(
             <Provider store={store}>
                 <Navigator
-                    initialRoute={{component: BookStorePage}}
+                    initialRoute={{component: BottomBar}}
                     renderScene={(route, navigator) =>
                         <route.component {...route.args} navigator={navigator} />
                     }

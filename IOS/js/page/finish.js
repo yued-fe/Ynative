@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.containerBackgroundColor
     },
     content: {
-        marginBottom: px2dp(16)
+        marginBottom: px2dp(1)
     },
     listContainer:{
         flex:1

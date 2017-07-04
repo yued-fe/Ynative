@@ -121,6 +121,7 @@ class BookStorePage extends Component{
                 data: result.data,
                 // 如果不指定过期时间，则会使用defaultExpires参数
                 // 如果设为null，则永不过期
+                //1个小时
                 expires: 1000 * 3600
             });
         })

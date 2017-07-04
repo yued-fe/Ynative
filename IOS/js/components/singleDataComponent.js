@@ -20,7 +20,7 @@ export default class SingleDataComponent extends Component{
                     <View style={styles.infoitem}>
                         <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+this.props.item.bid+"/150"}} />
                         <View style={[styles.infoword,this.props.frompage === "RankDetailPage" ? styles.rankwidth : null]}>
-                            <Text style={styles.infoname}>{this.props.item.bName}{this.props.navigator.getCurrentRoutes}</Text>
+                            <Text style={styles.infoname}>{this.props.item.bName}</Text>
                             <Text numberOfLines={2} style={styles.infodesc}>{this.props.item.desc}</Text>
                             <View style={styles.infometa}>
                                 <View style={styles.infometaleft}>

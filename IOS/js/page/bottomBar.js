@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Platform, View, Text, Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import BookStorePage from './bookStore';
-import CategoryPage from './category';
+import NewRankPage from './newrank';
 import BookShelfPage from './bookShelf';
 import FinishPage from './finish';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -41,7 +41,7 @@ class BottomBar extends Component{
                 >
                 {this._renderItem(BookStorePage, 'home', '书城', this.state.homeNormal, this.state.homeSelected)}
                 {this._renderItem(BookShelfPage, 'discovery', '书架', this.state.compassNormal, this.state.compassSelected)}
-                {this._renderItem(CategoryPage, 'collection', '分类', this.state.collectionNormal, this.state.collectionSelected)}
+                {this._renderItem(NewRankPage, 'collection', '排行榜', this.state.collectionNormal, this.state.collectionSelected)}
                 {this._renderItem(FinishPage, 'more', '完本', this.state.moreNormal, this.state.moreSelected)}
             </TabNavigator>
         );

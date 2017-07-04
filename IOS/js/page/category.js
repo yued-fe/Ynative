@@ -112,7 +112,7 @@ class CategoryPage extends Component{
                     {rowData.subList.map((item, index) => {
                         return(
                             <View style={[styles.infowrapper,((index+2)%4 ==0 || (index+1)%4 ==0)?{backgroundColor: "#fff"}:{backgroundColor: "#f6f7f9"}]} key={index}>
-                                <TouchableHighlight onPress={() => this.goCatDetailPage()}>
+                                <TouchableHighlight underlayColor={theme.touchableHighlightUnderlayColor} onPress={() => this.goCatDetailPage()}>
                                     <View style={styles.infoitem}>
                                         <Image style={styles.infoimg} source={{uri:"https://qidian.qpic.cn/qdbimg/349573/c_"+item.coverBid+"/90"}} />
                                         <View style={styles.infoword}>

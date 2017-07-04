@@ -6,7 +6,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import BookStorePage from './bookStore';
 import NewRankPage from './newrank';
 import BookShelfPage from './bookShelf';
-import FinishPage from './finish';
+import SideMenuPage from './sideMenu';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/pxtodpUtil';
 import theme from '../utils/themeUtil';
@@ -42,7 +42,7 @@ class BottomBar extends Component{
                 {this._renderItem(BookStorePage, 'home', '书城', this.state.homeNormal, this.state.homeSelected)}
                 {this._renderItem(BookShelfPage, 'discovery', '书架', this.state.compassNormal, this.state.compassSelected)}
                 {this._renderItem(NewRankPage, 'collection', '排行榜', this.state.collectionNormal, this.state.collectionSelected)}
-                {this._renderItem(FinishPage, 'more', '完本', this.state.moreNormal, this.state.moreSelected)}
+                {this._renderItem(SideMenuPage, 'more', '侧边栏', this.state.moreNormal, this.state.moreSelected)}
             </TabNavigator>
         );
     }

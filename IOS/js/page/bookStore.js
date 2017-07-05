@@ -71,7 +71,8 @@ class BookStorePage extends Component{
         }).catch(err => {
             //如果没有找到数据且没有sync方法，
             //或者有其他异常，则在catch中返回
-            console.warn(err.message);
+            //warn可以在底部显示
+            //console.warn(err.message);
             switch (err.name) {
                 case 'NotFoundError':
                     // TODO;

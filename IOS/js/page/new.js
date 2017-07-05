@@ -68,7 +68,7 @@ class CategoryPage extends Component{
             })
             .catch((error)=>{
                 this.setState({
-                    didMount: true,
+                    didMount: false,
                     hasError: true
                 });
             });

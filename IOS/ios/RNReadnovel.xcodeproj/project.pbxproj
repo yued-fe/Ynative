@@ -20,6 +20,9 @@
 		0836F31D1F0398E40041BAE0 /* RNView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0836F31C1F0398E40041BAE0 /* RNView.m */; };
 		0861F58F1EF927A20022A3C5 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 0861F58D1EF927A20022A3C5 /* assets */; };
 		0861F5901EF927A20022A3C5 /* index.ios.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0861F58E1EF927A20022A3C5 /* index.ios.jsbundle */; };
+		0867AC8A1F0CBC08000ED020 /* AdImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867AC851F0CBC08000ED020 /* AdImageTool.m */; };
+		0867AC8B1F0CBC08000ED020 /* AdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867AC871F0CBC08000ED020 /* AdvertiseView.m */; };
+		0867AC8C1F0CBC08000ED020 /* AdvertiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867AC891F0CBC08000ED020 /* AdvertiseViewController.m */; };
 		08A0A2E71EFBB47A0061C3D6 /* LaunchImage in Resources */ = {isa = PBXBuildFile; fileRef = 08A0A2E61EFBB47A0061C3D6 /* LaunchImage */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -308,6 +311,12 @@
 		0836F31C1F0398E40041BAE0 /* RNView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNView.m; path = RNReadnovel/RNView.m; sourceTree = "<group>"; };
 		0861F58D1EF927A20022A3C5 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = bundle/assets; sourceTree = "<group>"; };
 		0861F58E1EF927A20022A3C5 /* index.ios.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = index.ios.jsbundle; path = bundle/index.ios.jsbundle; sourceTree = "<group>"; };
+		0867AC841F0CBC08000ED020 /* AdImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdImageTool.h; sourceTree = "<group>"; };
+		0867AC851F0CBC08000ED020 /* AdImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdImageTool.m; sourceTree = "<group>"; };
+		0867AC861F0CBC08000ED020 /* AdvertiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseView.h; sourceTree = "<group>"; };
+		0867AC871F0CBC08000ED020 /* AdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseView.m; sourceTree = "<group>"; };
+		0867AC881F0CBC08000ED020 /* AdvertiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseViewController.h; sourceTree = "<group>"; };
+		0867AC891F0CBC08000ED020 /* AdvertiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseViewController.m; sourceTree = "<group>"; };
 		08A0A2E61EFBB47A0061C3D6 /* LaunchImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LaunchImage; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -470,6 +479,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0867AC831F0CBC08000ED020 /* AdvertiseView */ = {
+			isa = PBXGroup;
+			children = (
+				0867AC841F0CBC08000ED020 /* AdImageTool.h */,
+				0867AC851F0CBC08000ED020 /* AdImageTool.m */,
+				0867AC861F0CBC08000ED020 /* AdvertiseView.h */,
+				0867AC871F0CBC08000ED020 /* AdvertiseView.m */,
+				0867AC881F0CBC08000ED020 /* AdvertiseViewController.h */,
+				0867AC891F0CBC08000ED020 /* AdvertiseViewController.m */,
+			);
+			name = AdvertiseView;
+			path = RNReadnovel/AdvertiseView;
+			sourceTree = "<group>";
+		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +514,7 @@
 		13B07FAE1A68108700A75B9A /* RNReadnovel */ = {
 			isa = PBXGroup;
 			children = (
+				0867AC831F0CBC08000ED020 /* AdvertiseView */,
 				08A0A2E61EFBB47A0061C3D6 /* LaunchImage */,
 				0861F58D1EF927A20022A3C5 /* assets */,
 				0861F58E1EF927A20022A3C5 /* index.ios.jsbundle */,
@@ -1154,8 +1178,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0867AC8B1F0CBC08000ED020 /* AdvertiseView.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				0867AC8C1F0CBC08000ED020 /* AdvertiseViewController.m in Sources */,
 				0836F3171F038C760041BAE0 /* TestController.m in Sources */,
+				0867AC8A1F0CBC08000ED020 /* AdImageTool.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				0836F31A1F038CDF0041BAE0 /* PushNative.m in Sources */,
 				0836F31D1F0398E40041BAE0 /* RNView.m in Sources */,

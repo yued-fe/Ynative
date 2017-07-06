@@ -17,6 +17,7 @@ static int const showtime = 3;
 
 @implementation AdvertiseView
 
+
 - (NSTimer *)countTimer
 {
     if (!_countTimer) {
@@ -87,6 +88,10 @@ static int const showtime = 3;
     // 倒计时方法2：定时器
     [self startTimer];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
+  
+    window.windowLevel = UIWindowLevelAlert;//让图片层级变高 UIWindowLevelNormal<UIWindowLevelStatusBar<UIWindowLevelAlert
+    self.frame = window.bounds;
+  
     [window addSubview:self];
 }
 
@@ -128,7 +133,12 @@ static int const showtime = 3;
 {
     [self.countTimer invalidate];
     self.countTimer = nil;
-    
+  
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    window.windowLevel = UIWindowLevelNormal;//还原图片层级
+    self.frame = window.bounds;
+    [window addSubview:self];
+  
     [UIView animateWithDuration:0.3f animations:^{
         
         self.alpha = 0.f;

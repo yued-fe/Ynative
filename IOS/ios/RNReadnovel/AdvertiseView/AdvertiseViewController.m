@@ -11,15 +11,15 @@
 @implementation AdvertiseViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-  AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  [app.nav setNavigationBarHidden:NO animated:animated];
-  [super viewWillAppear:animated];
+    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [app.nav setNavigationBarHidden:NO animated:animated];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-  AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  [app.nav setNavigationBarHidden:YES animated:animated];
-  [super viewWillDisappear:animated];
+    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [app.nav setNavigationBarHidden:YES animated:animated];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidLoad {
@@ -59,7 +59,7 @@
 }
 
 - (void)goToBack {
-  [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

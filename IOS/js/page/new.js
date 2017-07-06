@@ -16,32 +16,58 @@ class CategoryPage extends Component{
         this.state = {
             dataSource: ds,
             didMount: false,
-            hasError: false
+            hasError: false,
+            hasLocalData: false
         };
         this.KEY = 'YWQDNEW';
+    }
+    /*
+    * 本地存储正确使用案例：在componentWillMount（render前）是判断有数据，就改变状态，直接渲染数据，不用出loading了
+    */
+    componentWillMount(){
+        storage.load({
+            key: this.KEY,
+            syncInBackground: false
+        }).then(result => {
+            let resData = [{categoryName:"大神新书",subList:[],more:""},{categoryName:"最新上架",subList:[],more:""},{categoryName:"畅销新书",subList:[],more:""}];
+            resData[0].subList = result.data.ds;
+            resData[0].more = result.data.dsMore;
+            resData[1].subList = result.data.new;
+            resData[1].more = result.data.newMore;
+            resData[2].subList = result.data.hot;
+            resData[2].more = result.data.hotMore;
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(resData),
+                didMount: true,
+                hasLocalData: true
+            });
+        }).catch(err => {
+        })
     }
 
     componentDidMount(){
         InteractionManager.runAfterInteractions(() => {
-            storage.sync = this.fetchData;
-            storage.load({
-                key: this.KEY,
-                syncInBackground: false
-            }).then(result => {
-                let resData = [{categoryName:"大神新书",subList:[],more:""},{categoryName:"最新上架",subList:[],more:""},{categoryName:"畅销新书",subList:[],more:""}];
-                resData[0].subList = result.data.ds;
-                resData[0].more = result.data.dsMore;
-                resData[1].subList = result.data.new;
-                resData[1].more = result.data.newMore;
-                resData[2].subList = result.data.hot;
-                resData[2].more = result.data.hotMore;
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(resData),
-                    didMount: true
-                });
-            }).catch(err => {
-                this.fetchData();
-            })
+            if(!this.state.hasLocalData){
+                storage.sync = this.fetchData;
+                storage.load({
+                    key: this.KEY,
+                    syncInBackground: false
+                }).then(result => {
+                    let resData = [{categoryName:"大神新书",subList:[],more:""},{categoryName:"最新上架",subList:[],more:""},{categoryName:"畅销新书",subList:[],more:""}];
+                    resData[0].subList = result.data.ds;
+                    resData[0].more = result.data.dsMore;
+                    resData[1].subList = result.data.new;
+                    resData[1].more = result.data.newMore;
+                    resData[2].subList = result.data.hot;
+                    resData[2].more = result.data.hotMore;
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(resData),
+                        didMount: true
+                    });
+                }).catch(err => {
+                    this.fetchData();
+                })
+            }
         });
     }
 

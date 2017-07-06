@@ -17,7 +17,7 @@
  */
 + (void)getAdvertisingImage
 {
-    NSString *imageUrl = @"http://img.zcool.cn/community/01d41957c7d3d10000012e7e8e6747.png";
+    NSString *imageUrl = @"https://raw.githubusercontent.com/yued-fe/Ynative/master/IOS/ios/LaunchImage/adpic.jpg";
         // 获取图片名
         NSArray *stringArr = [imageUrl componentsSeparatedByString:@"/"];
         NSString *imageName = stringArr.lastObject;

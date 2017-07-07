@@ -16,6 +16,9 @@ import CatDetailPage from './catdetail';
 import AnimatedPage from './animated';
 import CircleTransition from '../animation/circleTransition';
 import PushNative from '../native_modules/pushNative';
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import fontelloConfig from '../res/font/config.json';
+
 
 class IndexPage extends Component{
 
@@ -29,6 +32,7 @@ class IndexPage extends Component{
     }
 
     render(){
+        const Icon = createIconSetFromFontello(fontelloConfig);
         return(
             <View style={styles.container}>
                 <Text style={[styles.instructions,{fontSize:18,color:'red'}]}>
@@ -88,6 +92,10 @@ class IndexPage extends Component{
                 <Text style={styles.instructions} onPress={(evt) => this.startCircleTransition(evt,NewPage,{anim:"switchMain"})}>
                     点我跳转到新书页（转场17-circleTransition）
                 </Text>
+                <Text style={styles.instructions}>
+                    自定义图标：
+                </Text>
+                <Icon name="heart" size={20} color="#900" />
                 <CircleTransition
                     ref={(circle) => { this.circleTransition = circle }}
                     color={'orange'}

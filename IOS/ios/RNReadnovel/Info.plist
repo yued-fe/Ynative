@@ -50,6 +50,7 @@
 		<string>Ionicons.ttf</string>
 		<string>Foundation.ttf</string>
 		<string>FontAwesome.ttf</string>
+		<string>fontello.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

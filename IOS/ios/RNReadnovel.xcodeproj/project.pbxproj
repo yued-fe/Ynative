@@ -24,6 +24,7 @@
 		0867AC8B1F0CBC08000ED020 /* AdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867AC871F0CBC08000ED020 /* AdvertiseView.m */; };
 		0867AC8C1F0CBC08000ED020 /* AdvertiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867AC891F0CBC08000ED020 /* AdvertiseViewController.m */; };
 		08A0A2E71EFBB47A0061C3D6 /* LaunchImage in Resources */ = {isa = PBXBuildFile; fileRef = 08A0A2E61EFBB47A0061C3D6 /* LaunchImage */; };
+		08E504C21F0F596400550BAF /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08E504C11F0F596400550BAF /* fontello.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -318,6 +319,7 @@
 		0867AC881F0CBC08000ED020 /* AdvertiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseViewController.h; sourceTree = "<group>"; };
 		0867AC891F0CBC08000ED020 /* AdvertiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseViewController.m; sourceTree = "<group>"; };
 		08A0A2E61EFBB47A0061C3D6 /* LaunchImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LaunchImage; sourceTree = "<group>"; };
+		08E504C11F0F596400550BAF /* fontello.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = fontello.ttf; path = "../node_modules/react-native-vector-icons/Fonts/fontello.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B01413054C4227B3EDF61B /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 		724909A54E3843AB96DD4350 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				08E504C11F0F596400550BAF /* fontello.ttf */,
 				2FAFB3C9E4244AFFAD81EEA8 /* Entypo.ttf */,
 				1EDC648A3DA24AC1B430D981 /* EvilIcons.ttf */,
 				B84BEF745D5A4E32858695F5 /* FontAwesome.ttf */,
@@ -1098,6 +1101,7 @@
 				1AC9E41D7A9D425682A5FAAE /* Ionicons.ttf in Resources */,
 				D40FE5E85B0B41EDBCACEBDE /* MaterialCommunityIcons.ttf in Resources */,
 				B279A6F98EC64B5A807AC45B /* MaterialIcons.ttf in Resources */,
+				08E504C21F0F596400550BAF /* fontello.ttf in Resources */,
 				5C938C4E5F9F481580527D70 /* Octicons.ttf in Resources */,
 				347161843B4B4485BE63FCCD /* SimpleLineIcons.ttf in Resources */,
 				74E82A3EBBB0449ABA21EBFA /* Zocial.ttf in Resources */,
